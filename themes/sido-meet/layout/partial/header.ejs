@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="<%= config.language %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title><%= page.title || config.title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo"><a href="/">Sido</a></h1>
+        <nav class="nav">
+          <ul>
+            <% for (var link in theme.menu) {
+              var url = theme.menu[link];
+              var isActive = page.path === url.substring(1) || (page.path === '' && url === '/');
+            %>
+            <li class="<%= isActive ? 'active' : '' %>">
+              <a href="<%= url %>"><%= link %></a>
+            </li>
+            <% } %>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">

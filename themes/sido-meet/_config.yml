@@ -1,0 +1,20 @@
+# Theme Config
+title: Sido Meet
+subtitle: Personal Website
+description: "Personal website of Sido"
+author: Sido
+language: zh-CN
+timezone:
+
+# Navigation
+menu:
+  Home: /
+  Publications: /publications
+  Projects: /projects
+  Blogs: /blogs
+
+# Sidebar
+sidebar: false
+
+# Widgets
+widgets:

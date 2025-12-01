@@ -1,0 +1,59 @@
+<%- partial('partial/header') %>
+  <div class="blog-container">
+    <div class="blog-header">
+      <h1 class="blog-title">Blogs</h1>
+      <p class="blog-description">Welcome to my blog! Here you can find my latest posts about technology, research, and personal thoughts.</p>
+    </div>
+    
+    <div class="blog-content">
+      <div class="posts-section">
+        <h2 class="section-title">Latest Posts</h2>
+        
+        <div class="posts-grid">
+        <% site.posts.each(function(post) { %>
+          <article class="post-card">
+            <div class="post-card-header">
+              <span class="post-date"><%= post.date.format('YYYY-MM-DD') %></span>
+            </div>
+            <h3 class="post-card-title">
+              <a href="<%= url_for(post.path) %>"><%= post.title %></a>
+            </h3>
+            <% if (post.excerpt) { %>
+              <p class="post-card-excerpt"><%= post.excerpt.replace(/<[^>]*>/g, '').substring(0, 150) + '...' %></p>
+            <% } %>
+            <div class="post-card-footer">
+              <a href="<%= url_for(post.path) %>" class="read-more">Read More →</a>
+            </div>
+          </article>
+        <% }) %>
+        </div>
+      </div>
+      
+      <div class="sidebar">
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Categories</h3>
+          <div class="categories-list">
+            <% site.categories.each(function(category) { %>
+              <div class="category-item">
+                <a href="<%= url_for(category.path) %>"><%= category.name %></a>
+                <span class="category-count"><%= category.posts.length %></span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+        
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Recent Posts</h3>
+          <div class="recent-posts">
+            <% site.posts.limit(5).each(function(post) { %>
+              <div class="recent-post-item">
+                <a href="<%= url_for(post.path) %>"><%= post.title %></a>
+                <span class="recent-post-date"><%= post.date.format('YYYY-MM-DD') %></span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<%- partial('partial/footer') %>

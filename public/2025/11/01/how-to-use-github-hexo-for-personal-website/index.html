@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>如何使用 GitHub + Hexo 快速搭建个人网站</title>
+  <link rel="stylesheet" href="/css/style.css">
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo"><a href="/">Sido</a></h1>
+        <nav class="nav">
+          <ul>
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/publications">Publications</a>
+            </li>
+            
+            <li class="">
+              <a href="/projects">Projects</a>
+            </li>
+            
+            <li class="">
+              <a href="/blogs">Blogs</a>
+            </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <div class="post-container">
+    <article class="post">
+      <h1 class="post-title">如何使用 GitHub + Hexo 快速搭建个人网站</h1>
+      <div class="post-meta">
+        <span class="post-date">2025-11-01</span>
+      </div>
+      <div class="post-content">
+        <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>Hexo 是一款基于 Node.js 的静态博客框架，能快速将 Markdown 文章渲染为静态 HTML 页面；GitHub 则可提供免费的页面托管服务。两者结合能零成本搭建高性能个人网站，本文将带你完成从环境搭建到网站上线的全流程。</p>
+<h2 id="二、前置准备"><a href="#二、前置准备" class="headerlink" title="二、前置准备"></a>二、前置准备</h2><ol>
+<li>安装 Node.js（建议 v16+）和 Git（版本无特殊要求）</li>
+<li>注册 GitHub 账号</li>
+<li>配置 GitHub SSH 密钥（避免每次部署输入账号密码）</li>
+</ol>
+<h2 id="三、步骤-1：安装并初始化-Hexo-项目"><a href="#三、步骤-1：安装并初始化-Hexo-项目" class="headerlink" title="三、步骤 1：安装并初始化 Hexo 项目"></a>三、步骤 1：安装并初始化 Hexo 项目</h2><ol>
+<li>全局安装 Hexo CLI：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>初始化 Hexo 项目（替换为你的项目路径）：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init sido-meet.github.io</span><br><span class="line"><span class="built_in">cd</span> sido-meet.github.io</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>本地预览初始项目：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>访问 <code>http://localhost:4000</code> 即可查看默认页面。</p>
+<h2 id="四、步骤-2：配置-Hexo-基础参数"><a href="#四、步骤-2：配置-Hexo-基础参数" class="headerlink" title="四、步骤 2：配置 Hexo 基础参数"></a>四、步骤 2：配置 Hexo 基础参数</h2><p>修改项目根目录的 <mcfile name="_config.yml" path="/home/sido/projects/sido-meet.github.io/_config.yml"></mcfile> 文件：</p>
+<ul>
+<li>设置网站标题、描述、作者等信息</li>
+<li>配置语言（如 <code>language: zh-CN</code>）</li>
+<li>你的项目已配置部署类型为 Git（对应文件第 104 行的 <code>type: git</code>），后续仅需补充仓库地址即可。</li>
+</ul>
+<h2 id="三、步骤-3：创建-GitHub-托管仓库"><a href="#三、步骤-3：创建-GitHub-托管仓库" class="headerlink" title="三、步骤 3：创建 GitHub 托管仓库"></a>三、步骤 3：创建 GitHub 托管仓库</h2><ol>
+<li>登录 GitHub，创建名为 <code>[你的GitHub用户名].github.io</code> 的公开仓库</li>
+<li>复制仓库的 SSH 地址（如 <code>git@github.com:yourname/yourname.github.io.git</code>）</li>
+</ol>
+<h2 id="四、步骤-4：配置-Hexo-自动部署到-GitHub"><a href="#四、步骤-4：配置-Hexo-自动部署到-GitHub" class="headerlink" title="四、步骤 4：配置 Hexo 自动部署到 GitHub"></a>四、步骤 4：配置 Hexo 自动部署到 GitHub</h2><p>在 <mcfile name="_config.yml" path="/home/sido/projects/sido-meet.github.io/_config.yml"></mcfile> 中补充部署配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:yourname/yourname.github.io.git</span> <span class="comment"># 替换为你的仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+<p>安装部署插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、步骤-5：写文章并部署上线"><a href="#五、步骤-5：写文章并部署上线" class="headerlink" title="五、步骤 5：写文章并部署上线"></a>五、步骤 5：写文章并部署上线</h2><ol>
+<li>创建新文章（自动生成 Markdown 文件到 source&#x2F;_posts 目录）：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;我的第一篇文章&quot;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>生成静态文件并部署：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>访问 <code>https://[你的GitHub用户名].github.io</code> 即可查看上线后的网站。</li>
+</ol>
+<h2 id="六、常见问题排查"><a href="#六、常见问题排查" class="headerlink" title="六、常见问题排查"></a>六、常见问题排查</h2><ol>
+<li>部署失败：检查 SSH 密钥配置是否正确、仓库地址是否有误</li>
+<li>页面不更新：执行 <code>hexo clean</code> 清除缓存后重新生成部署</li>
+<li>样式异常：检查主题配置文件或静态资源路径</li>
+</ol>
+<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><p>通过 GitHub + Hexo 的组合，你可以快速拥有一个可自定义样式、支持 Markdown 写作的个人网站。后续可尝试更换主题、添加评论系统等扩展功能。</p>
+
+      </div>
+    </article>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Sido. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

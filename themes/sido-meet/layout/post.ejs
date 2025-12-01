@@ -1,0 +1,13 @@
+<%- partial('partial/header') %>
+  <div class="post-container">
+    <article class="post">
+      <h1 class="post-title"><%= page.title %></h1>
+      <div class="post-meta">
+        <span class="post-date"><%= page.date.format('YYYY-MM-DD') %></span>
+      </div>
+      <div class="post-content">
+        <%- page.content %>
+      </div>
+    </article>
+  </div>
+<%- partial('partial/footer') %>
