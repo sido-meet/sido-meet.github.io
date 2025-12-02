@@ -1,58 +1,56 @@
 ---
-title: Jason Website
-layout: page
+title: sido's Personal Website
+layout: home
+description: Personal website of sido, showcasing professional profile, research, projects and blog
 ---
 
-{% raw %}
-<div style="display: flex; align-items: flex-start; margin: 20px 0;">
-  <!-- Left Side: Personal Information -->
-  <div style="width: 200px; margin-right: 50px; text-align: center;">
-    <div style="width: 150px; height: 150px; border-radius: 50%; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 60px; color: #9e9e9e; margin: 0 auto 15px;">
-      JD
-    </div>
-    <h2 style="margin: 0 0 5px; font-size: 24px;">Jason</h2>
-    <p style="color: #666; margin: 0 0 20px;">Your biography can be written down here.</p>
-    
-    <!-- Social Media Links -->
-    <div style="margin-bottom: 15px;">
-      <a href="#" style="margin: 0 5px; color: #333; font-size: 18px;"><i class="fa fa-twitter"></i></a>
-      <a href="#" style="margin: 0 5px; color: #333; font-size: 18px;"><i class="fa fa-facebook"></i></a>
-      <a href="#" style="margin: 0 5px; color: #333; font-size: 18px;"><i class="fa fa-github"></i></a>
-      <a href="#" style="margin: 0 5px; color: #333; font-size: 18px;"><i class="fa fa-linkedin"></i></a>
-      <a href="#" style="margin: 0 5px; color: #333; font-size: 18px;"><i class="fa fa-instagram"></i></a>
-    </div>
-    
-    <div style="margin-bottom: 15px;">
-      <a href="#" style="margin: 0 5px; color: #333; font-size: 18px;"><i class="fa fa-weixin"></i></a>
-      <a href="#" style="margin: 0 5px; color: #333; font-size: 18px;"><i class="fa fa-weibo"></i></a>
-      <a href="#" style="margin: 0 5px; color: #333; font-size: 18px;"><i class="fa fa-envelope"></i></a>
-      <a href="#" style="margin: 0 5px; color: #333; font-size: 18px;"><i class="fa fa-rss"></i></a>
-    </div>
-    
-    <!-- Academic Links -->
-    <div>
-      <a href="#" style="display: block; margin: 5px 0; color: #333; text-decoration: none;"><i class="fa fa-graduation-cap"></i> Google Scholar</a>
-      <a href="#" style="display: block; margin: 5px 0; color: #333; text-decoration: none;"><i class="fa fa-id-card"></i> ORCID</a>
-      <a href="#" style="display: block; margin: 5px 0; color: #333; text-decoration: none;"><i class="fa fa-file-pdf-o"></i> My Detail CV</a>
-    </div>
-  </div>
-  
-  <!-- Right Side: Main Content -->
-  <div style="flex: 1;">
-    <h2 style="margin-top: 0; font-size: 28px; border-bottom: 1px solid #eee; padding-bottom: 10px;">About me</h2>
-    <p>This is a simple page for academic website based on Hexo. It just provides a theme frame and all depends on your <a href="#">markdown</a> posts' styles.</p>
-    <p>This is the index page which organized with the posts you write in markdown files.</p>
-    
-    <h2 style="margin-top: 30px; font-size: 24px; border-bottom: 1px solid #eee; padding-bottom: 10px;">News</h2>
-    <ul style="list-style-type: disc; padding-left: 20px;">
-      <li>2020-04-23: ver 1.2.0 publish, support pjax.</li>
-      <li>2020 February, Join in Test University.</li>
-      <li>A new theme for academic page is published.</li>
-    </ul>
-    
-    <h2 style="margin-top: 30px; font-size: 24px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Publications</h2>
-    <p>[1] Einstein, Albert, Boris Podolsky, and Nathan Rosen. "Can quantum-mechanical description of physical reality be considered complete?" Physical review 47.10 (1935): 777.</p>
-    <p>Add more informations in your posts...</p>
-  </div>
-</div>
-{% endraw %}
+# About Me
+
+I'm sido, a [Your Profession/Field] with expertise in [Your Expertise Areas]. I'm passionate about [Your Interests] and constantly exploring new technologies and methodologies in my field.
+
+## Professional Background
+
+With [X] years of experience in [Your Field], I have worked on various projects ranging from [Project Types]. My research interests include [Research Interests], and I'm always looking for opportunities to collaborate on innovative projects.
+
+## Education
+
+- [Degree], [Major] | [University Name], [Year]
+- [Degree], [Major] | [University Name], [Year]
+
+# News
+
+## Recent Updates
+
+- [Date]: [Latest News Item]
+- [Date]: [News Item]
+- [Date]: [News Item]
+
+# Selected Publications
+
+## Journal Papers
+
+1. [Author Names]. "[Paper Title]." *[Journal Name]* [Volume], [Issue] ([Year]): [Pages]. DOI: [DOI Link]
+
+## Conference Papers
+
+1. [Author Names]. "[Paper Title]." In Proceedings of [Conference Name], [Location], [Year], [Pages]. DOI: [DOI Link]
+
+# Projects
+
+## Research Projects
+
+- **[Project Name]**: [Brief description of the project, technologies used, and outcomes]
+- **[Project Name]**: [Brief description of the project, technologies used, and outcomes]
+
+## Personal Projects
+
+- **[Project Name]**: [Brief description of the personal project]
+- **[Project Name]**: [Brief description of the personal project]
+
+# Contact
+
+Feel free to reach out through the following channels:
+
+- Email: [sido.meet@gmail.com]
+- LinkedIn: [linkedin.com/in/sido-meet]
+- GitHub: [github.com/sido-meet]

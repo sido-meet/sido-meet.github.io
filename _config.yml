@@ -68,15 +68,27 @@ default_category: uncategorized
 category_map:
 tag_map:
 
-# Disable unnecessary generators
+# Generators configuration
+# Note: Even with enabled: false, if the generator plugins are installed in package.json,
+# they will still run. To completely disable, you need to either:
+# 1. Uninstall the generator plugins: npm uninstall hexo-generator-archive hexo-generator-category hexo-generator-tag
+# 2. Or set a more restrictive configuration
+
+# Disable archive generator
 archive_generator:
   enabled: false
 
+# Disable category generator
 category_generator:
   enabled: false
+  per_page: 0
+  order_by: -date
 
+# Disable tag generator
 tag_generator:
   enabled: false
+  per_page: 0
+  order_by: -date
 
 # Metadata elements
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
