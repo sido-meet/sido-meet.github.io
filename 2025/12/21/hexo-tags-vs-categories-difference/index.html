@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Hexo中--tags和--categories的区别详解</title>
+  <link rel="stylesheet" href="/css/style.css">
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo"><a href="/">Sido</a></h1>
+        <nav class="nav">
+          <ul>
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/publications">Publications</a>
+            </li>
+            
+            <li class="">
+              <a href="/projects">Projects</a>
+            </li>
+            
+            <li class="">
+              <a href="/blogs">Blogs</a>
+            </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <div class="post-container">
+    <article class="post">
+      <h1 class="post-title">Hexo中--tags和--categories的区别详解</h1>
+      <div class="post-meta">
+        <span class="post-date">2025-12-21</span>
+      </div>
+      <div class="post-content">
+        <p>在使用Hexo创建博客文章时，<code>--tags</code>和<code>--categories</code>是两个常用的命令行参数，用于为文章添加分类和标签。虽然它们看起来功能相似，但实际上有很大的区别和不同的使用场景。本文将详细介绍这两个参数的区别、使用方法和最佳实践。</p>
+<h2 id="一、基础概念区别"><a href="#一、基础概念区别" class="headerlink" title="一、基础概念区别"></a>一、基础概念区别</h2><h3 id="1-Categories（分类）"><a href="#1-Categories（分类）" class="headerlink" title="1. Categories（分类）"></a>1. Categories（分类）</h3><p>分类是一种<strong>层级化</strong>的内容组织方式，用于将文章划分为不同的主题领域。分类具有<strong>父子关系</strong>，可以创建多层级的分类结构。</p>
+<ul>
+<li>特点：层级关系、树状结构、每个文章至少属于一个分类</li>
+<li>作用：宏观组织内容，帮助读者了解网站的主要内容结构</li>
+</ul>
+<h3 id="2-Tags（标签）"><a href="#2-Tags（标签）" class="headerlink" title="2. Tags（标签）"></a>2. Tags（标签）</h3><p>标签是一种<strong>扁平化</strong>的内容组织方式，用于为文章添加特定的关键词或主题标记。标签之间没有层级关系，是相互独立的。</p>
+<ul>
+<li>特点：扁平化、无层级、可以有多个标签</li>
+<li>作用：微观标记内容，帮助读者找到特定主题的相关文章</li>
+</ul>
+<h2 id="二、命令行使用区别"><a href="#二、命令行使用区别" class="headerlink" title="二、命令行使用区别"></a>二、命令行使用区别</h2><h3 id="1-–categories参数"><a href="#1-–categories参数" class="headerlink" title="1. –categories参数"></a>1. –categories参数</h3><p>用于为文章添加分类，可以指定单个分类或多层级分类。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单个分类</span></span><br><span class="line">hexo new post <span class="string">&quot;Hexo入门教程&quot;</span> --categories=<span class="string">&quot;Hexo&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多层级分类（父分类/子分类）</span></span><br><span class="line">hexo new post <span class="string">&quot;Hexo主题开发&quot;</span> --categories=<span class="string">&quot;Hexo/主题开发&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个分类（不推荐，通常每个文章属于一个主要分类）</span></span><br><span class="line">hexo new post <span class="string">&quot;跨平台开发&quot;</span> --categories=<span class="string">&quot;前端开发,移动开发&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-–tags参数"><a href="#2-–tags参数" class="headerlink" title="2. –tags参数"></a>2. –tags参数</h3><p>用于为文章添加标签，可以添加多个标签，用逗号分隔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单个标签</span></span><br><span class="line">hexo new post <span class="string">&quot;JavaScript基础&quot;</span> --tags=<span class="string">&quot;JavaScript&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个标签</span></span><br><span class="line">hexo new post <span class="string">&quot;React组件开发&quot;</span> --tags=<span class="string">&quot;React,组件开发,前端框架&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 包含空格的标签（需要引号包裹）</span></span><br><span class="line">hexo new post <span class="string">&quot;生活随笔&quot;</span> --tags=<span class="string">&quot;生活,思考,个人成长&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、Front-matter中的表示区别"><a href="#三、Front-matter中的表示区别" class="headerlink" title="三、Front-matter中的表示区别"></a>三、Front-matter中的表示区别</h2><p>在生成的Markdown文件中，categories和tags在front-matter中的表示方式也不同：</p>
+<h3 id="1-Categories的表示"><a href="#1-Categories的表示" class="headerlink" title="1. Categories的表示"></a>1. Categories的表示</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Hexo主题开发</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2025-12-21</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">主题开发</span>  <span class="comment"># 多层级分类会显示为数组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Tags的表示"><a href="#2-Tags的表示" class="headerlink" title="2. Tags的表示"></a>2. Tags的表示</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">React组件开发</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2025-12-21</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">React</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">组件开发</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">前端框架</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">前端开发</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="四、网站显示区别"><a href="#四、网站显示区别" class="headerlink" title="四、网站显示区别"></a>四、网站显示区别</h2><h3 id="1-Categories在网站中的显示"><a href="#1-Categories在网站中的显示" class="headerlink" title="1. Categories在网站中的显示"></a>1. Categories在网站中的显示</h3><ul>
+<li>通常显示在文章页面的顶部或侧边栏</li>
+<li>可以展示完整的分类层级结构</li>
+<li>点击分类可以查看该分类下的所有文章</li>
+<li>适合用于网站的主导航或内容架构</li>
+</ul>
+<h3 id="2-Tags在网站中的显示"><a href="#2-Tags在网站中的显示" class="headerlink" title="2. Tags在网站中的显示"></a>2. Tags在网站中的显示</h3><ul>
+<li>通常显示在文章底部或侧边栏的标签云</li>
+<li>以扁平化方式展示，没有层级关系</li>
+<li>点击标签可以查看所有带有该标签的文章</li>
+<li>适合用于内容的交叉索引和发现</li>
+</ul>
+<h2 id="五、最佳实践"><a href="#五、最佳实践" class="headerlink" title="五、最佳实践"></a>五、最佳实践</h2><h3 id="1-Categories使用建议"><a href="#1-Categories使用建议" class="headerlink" title="1. Categories使用建议"></a>1. Categories使用建议</h3><ul>
+<li><strong>保持层级简洁</strong>：建议不超过3级分类</li>
+<li><strong>明确主题范围</strong>：每个分类应该有明确的主题范围</li>
+<li><strong>单一主要分类</strong>：每个文章最好只有一个主要分类</li>
+<li><strong>避免过度细分</strong>：不要创建过多的子分类</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 好的分类使用</span></span><br><span class="line">hexo new post <span class="string">&quot;Vue路由管理&quot;</span> --categories=<span class="string">&quot;前端开发/Vue/路由&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 避免的分类使用（层级过深）</span></span><br><span class="line">hexo new post <span class="string">&quot;Vue路由管理&quot;</span> --categories=<span class="string">&quot;前端开发/框架/Vue/核心功能/路由/管理&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Tags使用建议"><a href="#2-Tags使用建议" class="headerlink" title="2. Tags使用建议"></a>2. Tags使用建议</h3><ul>
+<li><strong>使用具体关键词</strong>：标签应该是具体的关键词，避免过于宽泛</li>
+<li><strong>控制标签数量</strong>：每个文章建议使用3-5个标签</li>
+<li><strong>保持标签一致性</strong>：使用统一的标签命名规范</li>
+<li><strong>避免重复标签</strong>：不要创建含义相同的不同标签</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 好的标签使用</span></span><br><span class="line">hexo new post <span class="string">&quot;JavaScript性能优化&quot;</span> --tags=<span class="string">&quot;JavaScript,性能优化,前端开发&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 避免的标签使用（标签过多且宽泛）</span></span><br><span class="line">hexo new post <span class="string">&quot;JavaScript性能优化&quot;</span> --tags=<span class="string">&quot;编程,技术,前端,JavaScript,JS,性能,优化,开发,代码,网站&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-两者结合使用"><a href="#3-两者结合使用" class="headerlink" title="3. 两者结合使用"></a>3. 两者结合使用</h3><p>分类和标签应该结合使用，形成互补的内容组织体系：</p>
+<ul>
+<li>使用<strong>分类</strong>构建网站的宏观内容结构</li>
+<li>使用<strong>标签</strong>标记文章的具体主题和关键词</li>
+<li>通过分类快速定位内容领域</li>
+<li>通过标签发现相关主题的文章</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 结合使用示例</span></span><br><span class="line">hexo new post <span class="string">&quot;Hexo命令行参数详解&quot;</span> --categories=<span class="string">&quot;博客开发/Hexo&quot;</span> --tags=<span class="string">&quot;Hexo,命令行,博客技巧&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="六、常见问题解答"><a href="#六、常见问题解答" class="headerlink" title="六、常见问题解答"></a>六、常见问题解答</h2><h3 id="Q-一个文章可以有多个分类吗？"><a href="#Q-一个文章可以有多个分类吗？" class="headerlink" title="Q: 一个文章可以有多个分类吗？"></a>Q: 一个文章可以有多个分类吗？</h3><p>A: 虽然Hexo支持为文章添加多个分类，但通常建议每个文章只有一个主要分类，这样可以保持内容结构的清晰性。</p>
+<h3 id="Q-标签可以有层级关系吗？"><a href="#Q-标签可以有层级关系吗？" class="headerlink" title="Q: 标签可以有层级关系吗？"></a>Q: 标签可以有层级关系吗？</h3><p>A: 不可以，标签是扁平化的内容组织方式，没有层级关系。如果需要层级结构，应该使用分类。</p>
+<h3 id="Q-如何修改文章的分类和标签？"><a href="#Q-如何修改文章的分类和标签？" class="headerlink" title="Q: 如何修改文章的分类和标签？"></a>Q: 如何修改文章的分类和标签？</h3><p>A: 可以直接编辑文章的front-matter部分，修改categories和tags字段，然后重新生成网站。</p>
+<h3 id="Q-如何查看网站的所有分类和标签？"><a href="#Q-如何查看网站的所有分类和标签？" class="headerlink" title="Q: 如何查看网站的所有分类和标签？"></a>Q: 如何查看网站的所有分类和标签？</h3><p>A: 大多数Hexo主题都会在侧边栏或专门的页面展示网站的所有分类和标签，你也可以通过修改主题模板来自定义显示方式。</p>
+<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><p><code>--tags</code>和<code>--categories</code>是Hexo中两个重要的命令行参数，它们在内容组织中扮演着不同的角色：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Categories（分类）</th>
+<th>Tags（标签）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>结构</td>
+<td>层级化（树状）</td>
+<td>扁平化（无层级）</td>
+</tr>
+<tr>
+<td>关系</td>
+<td>父子关系</td>
+<td>相互独立</td>
+</tr>
+<tr>
+<td>数量</td>
+<td>建议1-2个</td>
+<td>建议3-5个</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>宏观组织内容</td>
+<td>微观标记主题</td>
+</tr>
+<tr>
+<td>使用</td>
+<td>定义内容领域</td>
+<td>标记关键词</td>
+</tr>
+</tbody></table>
+<p>正确理解和使用这两个参数，可以帮助你更好地组织博客内容，提高读者的阅读体验和内容发现效率。希望本文能对你有所帮助！</p>
+
+      </div>
+    </article>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Sido. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
