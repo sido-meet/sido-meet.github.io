@@ -72,7 +72,7 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-md);
+  padding: 0;
 }
 
 /* Header Styles */
@@ -83,6 +83,14 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  transition: transform var(--transition-normal);
+}
+
+.header .container {
+  padding: 0 var(--space-md);
 }
 
 .header-content {
@@ -143,8 +151,17 @@ body {
 }
 
 /* Main Content Styles */
-.main-content {
-  padding: var(--space-xl) 0;
+.main {
+  background-color: var(--color-card);
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-md);
+  transition: border-radius var(--transition-normal);
+}
+
+.main .container {
+  padding: var(--space-xl) var(--space-md);
 }
 
 /* Hero Section */
