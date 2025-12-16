@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>工具导航</title>
+  <link rel="stylesheet" href="/css/style.css">
+<script src="/js/scroll.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo"><a href="/">Sido</a></h1>
+        <nav class="nav">
+          <ul>
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/publications">Publications</a>
+            </li>
+            
+            <li class="">
+              <a href="/projects">Projects</a>
+            </li>
+            
+            <li class="">
+              <a href="/blogs">Blogs</a>
+            </li>
+            
+            <li class="">
+              <a href="/tools">Tools</a>
+            </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <div class="page-container">
+    <h1 class="page-title">工具导航</h1>
+    <div class="page-content">
+      <p>精选实用工具合集，涵盖开发、设计、效率、学习和媒体等多个领域。</p>
+      
+      <!-- 搜索和筛选区域 -->
+      <div class="tools-filter-container">
+        <div class="tool-search">
+          <input type="text" id="tool-search-input" placeholder="搜索工具..." />
+        </div>
+        <div class="tool-filters">
+          <button class="filter-btn active" data-category="all">全部</button>
+          <button class="filter-btn" data-category="development">开发工具</button>
+          <button class="filter-btn" data-category="design">设计工具</button>
+          <button class="filter-btn" data-category="efficiency">效率工具</button>
+          <button class="filter-btn" data-category="learning">学习资源</button>
+          <button class="filter-btn" data-category="media">媒体工具</button>
+        </div>
+        <div class="tool-sort">
+          <select id="tool-sort-select">
+            <option value="newest">最新添加</option>
+            <option value="name">名称排序</option>
+            <option value="popular">热度排序</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- 工具列表区域 -->
+      <div id="tools-container">
+        
+          <div class="tools-grid" id="tools-grid">
+            
+              <div class="tool-card" data-category="development" data-name="GitHub" data-popularity="95">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>G</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a></h3>
+                </div>
+                <p class="tool-description">世界上最大的代码托管平台和开发者社区。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">代码托管</span>
+                    
+                      <span class="tool-tag">版本控制</span>
+                    
+                      <span class="tool-tag">开源</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://github.com" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="development" data-name="Visual Studio Code" data-popularity="98">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>V</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://code.visualstudio.com" target="_blank" rel="noopener noreferrer">Visual Studio Code</a></h3>
+                </div>
+                <p class="tool-description">微软开发的轻量级但功能强大的代码编辑器。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">代码编辑器</span>
+                    
+                      <span class="tool-tag">IDE</span>
+                    
+                      <span class="tool-tag">开发工具</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://code.visualstudio.com" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="design" data-name="Figma" data-popularity="92">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>F</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://www.figma.com" target="_blank" rel="noopener noreferrer">Figma</a></h3>
+                </div>
+                <p class="tool-description">基于浏览器的协作设计工具，支持UI/UX设计和原型制作。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">UI设计</span>
+                    
+                      <span class="tool-tag">UX设计</span>
+                    
+                      <span class="tool-tag">协作工具</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://www.figma.com" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="design" data-name="Canva" data-popularity="90">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>C</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://www.canva.com" target="_blank" rel="noopener noreferrer">Canva</a></h3>
+                </div>
+                <p class="tool-description">简单易用的在线图形设计工具，适合各种设计需求。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">图形设计</span>
+                    
+                      <span class="tool-tag">海报制作</span>
+                    
+                      <span class="tool-tag">社交媒体设计</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://www.canva.com" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="efficiency" data-name="Notion" data-popularity="88">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>N</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://www.notion.so" target="_blank" rel="noopener noreferrer">Notion</a></h3>
+                </div>
+                <p class="tool-description">集成了笔记、任务管理、知识库等功能的全能协作工具。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">笔记</span>
+                    
+                      <span class="tool-tag">任务管理</span>
+                    
+                      <span class="tool-tag">知识库</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://www.notion.so" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="efficiency" data-name="Trello" data-popularity="85">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>T</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://trello.com" target="_blank" rel="noopener noreferrer">Trello</a></h3>
+                </div>
+                <p class="tool-description">基于看板的任务管理工具，帮助团队和个人组织工作。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">任务管理</span>
+                    
+                      <span class="tool-tag">看板</span>
+                    
+                      <span class="tool-tag">项目管理</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://trello.com" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="learning" data-name="Coursera" data-popularity="89">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>C</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://www.coursera.org" target="_blank" rel="noopener noreferrer">Coursera</a></h3>
+                </div>
+                <p class="tool-description">提供来自世界顶尖大学和公司的在线课程平台。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">在线课程</span>
+                    
+                      <span class="tool-tag">MOOC</span>
+                    
+                      <span class="tool-tag">学习平台</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://www.coursera.org" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="learning" data-name="LeetCode" data-popularity="87">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>L</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://leetcode.com" target="_blank" rel="noopener noreferrer">LeetCode</a></h3>
+                </div>
+                <p class="tool-description">提供编程面试题和算法练习的在线平台。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">编程练习</span>
+                    
+                      <span class="tool-tag">算法</span>
+                    
+                      <span class="tool-tag">面试准备</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://leetcode.com" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="media" data-name="Unsplash" data-popularity="93">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>U</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a></h3>
+                </div>
+                <p class="tool-description">提供高质量免费图片的摄影社区。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">图片资源</span>
+                    
+                      <span class="tool-tag">免费图片</span>
+                    
+                      <span class="tool-tag">摄影</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://unsplash.com" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="media" data-name="FFmpeg" data-popularity="86">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>F</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://ffmpeg.org" target="_blank" rel="noopener noreferrer">FFmpeg</a></h3>
+                </div>
+                <p class="tool-description">强大的跨平台多媒体处理工具。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">视频处理</span>
+                    
+                      <span class="tool-tag">音频处理</span>
+                    
+                      <span class="tool-tag">格式转换</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://ffmpeg.org" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="development" data-name="Postman" data-popularity="91">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>P</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://www.postman.com" target="_blank" rel="noopener noreferrer">Postman</a></h3>
+                </div>
+                <p class="tool-description">API开发和测试的协作平台。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">API测试</span>
+                    
+                      <span class="tool-tag">API开发</span>
+                    
+                      <span class="tool-tag">协作工具</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://www.postman.com" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+              <div class="tool-card" data-category="development" data-name="GitHub Copilot" data-popularity="94">
+                <div class="tool-header">
+                  <div class="tool-icon">
+                    
+                      <div class="tool-icon-placeholder">
+                        <span>G</span>
+                      </div>
+                    
+                  </div>
+                  <h3 class="tool-name"><a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer">GitHub Copilot</a></h3>
+                </div>
+                <p class="tool-description">基于AI的代码生成工具，帮助开发者提高编码效率。</p>
+                <div class="tool-tags">
+                  
+                    
+                      <span class="tool-tag">AI工具</span>
+                    
+                      <span class="tool-tag">代码生成</span>
+                    
+                      <span class="tool-tag">开发辅助</span>
+                    
+                  
+                </div>
+                <div class="tool-footer">
+                  <a href="https://github.com/features/copilot" class="tool-button" target="_blank" rel="noopener noreferrer">访问网站 →</a>
+                </div>
+              </div>
+            
+          </div>
+        
+      </div>
+      
+      <!-- 工具页面样式 -->
+      <style>
+        /* 工具筛选容器 */
+        .tools-filter-container {
+          background: var(--color-card);
+          padding: var(--space-lg);
+          border-radius: var(--border-radius-md);
+          margin-bottom: var(--space-xl);
+          box-shadow: var(--shadow-sm);
+        }
+        
+        /* 搜索框样式 */
+        .tool-search {
+          margin-bottom: var(--space-md);
+        }
+        
+        #tool-search-input {
+          width: 100%;
+          padding: var(--space-md);
+          border: 1px solid var(--color-border);
+          border-radius: var(--border-radius-sm);
+          font-size: var(--font-size-base);
+          background: var(--color-background);
+          color: var(--color-text);
+        }
+        
+        #tool-search-input:focus {
+          outline: none;
+          border-color: var(--color-primary);
+          box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+        
+        /* 筛选按钮样式 */
+        .tool-filters {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--space-sm);
+          margin-bottom: var(--space-md);
+        }
+        
+        .filter-btn {
+          padding: var(--space-sm) var(--space-md);
+          border: 1px solid var(--color-border);
+          border-radius: var(--border-radius-sm);
+          background: var(--color-background);
+          color: var(--color-text);
+          font-size: var(--font-size-sm);
+          cursor: pointer;
+          transition: all var(--transition-normal);
+        }
+        
+        .filter-btn:hover {
+          background: var(--color-primary);
+          color: white;
+          border-color: var(--color-primary);
+        }
+        
+        .filter-btn.active {
+          background: var(--color-primary);
+          color: white;
+          border-color: var(--color-primary);
+        }
+        
+        /* 排序下拉框样式 */
+        .tool-sort {
+          margin-bottom: var(--space-md);
+        }
+        
+        #tool-sort-select {
+          padding: var(--space-sm) var(--space-md);
+          border: 1px solid var(--color-border);
+          border-radius: var(--border-radius-sm);
+          background: var(--color-background);
+          color: var(--color-text);
+          font-size: var(--font-size-sm);
+          cursor: pointer;
+        }
+        
+        /* 工具网格布局 */
+        .tools-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: var(--space-lg);
+          margin-top: var(--space-lg);
+        }
+        
+        /* 工具卡片样式 */
+        .tool-card {
+          background: var(--color-card);
+          padding: var(--space-lg);
+          border-radius: var(--border-radius-md);
+          box-shadow: var(--shadow-sm);
+          transition: all var(--transition-normal);
+        }
+        
+        .tool-card:hover {
+          transform: translateY(-5px);
+          box-shadow: var(--shadow-md);
+        }
+        
+        /* 工具卡片头部 */
+        .tool-header {
+          display: flex;
+          align-items: center;
+          gap: var(--space-md);
+          margin-bottom: var(--space-md);
+        }
+        
+        .tool-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: var(--border-radius-sm);
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--color-background);
+        }
+        
+        .tool-icon img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .tool-icon-placeholder {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--color-primary);
+          color: white;
+          font-size: 24px;
+          font-weight: bold;
+        }
+        
+        .tool-name {
+          margin: 0;
+          font-size: var(--font-size-xl);
+        }
+        
+        .tool-name a {
+          color: var(--color-text);
+          text-decoration: none;
+        }
+        
+        .tool-name a:hover {
+          color: var(--color-primary);
+          text-decoration: underline;
+        }
+        
+        /* 工具描述 */
+        .tool-description {
+          color: var(--color-text-light);
+          margin-bottom: var(--space-md);
+          line-height: 1.5;
+        }
+        
+        /* 工具标签 */
+        .tool-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--space-xs);
+          margin-bottom: var(--space-md);
+        }
+        
+        .tool-tag {
+          padding: 2px 8px;
+          background: var(--color-background);
+          border: 1px solid var(--color-border);
+          border-radius: 12px;
+          font-size: var(--font-size-xs);
+          color: var(--color-text-light);
+        }
+        
+        /* 工具底部按钮 */
+        .tool-footer {
+          margin-top: var(--space-md);
+        }
+        
+        .tool-button {
+          display: inline-block;
+          padding: var(--space-sm) var(--space-md);
+          background: var(--color-primary);
+          color: white;
+          text-decoration: none;
+          border-radius: var(--border-radius-sm);
+          transition: background var(--transition-normal);
+          font-size: var(--font-size-sm);
+        }
+        
+        .tool-button:hover {
+          background: var(--color-primary-dark);
+        }
+        
+        /* 无工具消息 */
+        .no-tools-message {
+          text-align: center;
+          padding: var(--space-xl);
+          background: var(--color-card);
+          border-radius: var(--border-radius-md);
+          color: var(--color-text-light);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+          .tools-filter-container {
+            padding: var(--space-md);
+          }
+          
+          .tools-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      </style>
+      
+      <!-- 工具页面JavaScript -->
+      <script>
+        // 工具页面交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+          const toolCards = document.querySelectorAll('.tool-card');
+          const searchInput = document.getElementById('tool-search-input');
+          const filterBtns = document.querySelectorAll('.filter-btn');
+          const sortSelect = document.getElementById('tool-sort-select');
+          const toolsGrid = document.getElementById('tools-grid');
+          
+          // 搜索功能
+          searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            toolCards.forEach(card => {
+              const toolName = card.dataset.name.toLowerCase();
+              const isVisible = toolName.includes(searchTerm);
+              card.style.display = isVisible ? 'block' : 'none';
+            });
+          });
+          
+          // 筛选功能
+          filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+              // 更新按钮状态
+              filterBtns.forEach(b => b.classList.remove('active'));
+              this.classList.add('active');
+              
+              const category = this.dataset.category;
+              toolCards.forEach(card => {
+                const cardCategory = card.dataset.category;
+                const isVisible = category === 'all' || cardCategory === category;
+                card.style.display = isVisible ? 'block' : 'none';
+              });
+            });
+          });
+          
+          // 排序功能
+          sortSelect.addEventListener('change', function() {
+            const sortValue = this.value;
+            const cardsArray = Array.from(toolCards);
+            
+            // 根据选择的排序方式排序
+            cardsArray.sort((a, b) => {
+              switch(sortValue) {
+                case 'name':
+                  return a.dataset.name.localeCompare(b.dataset.name);
+                case 'popular':
+                  return parseInt(b.dataset.popularity) - parseInt(a.dataset.popularity);
+                case 'newest':
+                default:
+                  // 默认按添加顺序（数据文件中的顺序）
+                  return 0;
+              }
+            });
+            
+            // 重新排列卡片
+            cardsArray.forEach(card => {
+              toolsGrid.appendChild(card);
+            });
+          });
+        });
+      </script>
+    </div>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Sido. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
