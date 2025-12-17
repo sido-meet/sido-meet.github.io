@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>【论文阅读笔记】DTS-SQL: Decomposed Text-to-SQL with Small Large Language Models</title>
+  <link rel="stylesheet" href="/css/style.css">
+<script src="/js/scroll.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo"><a href="/">Sido</a></h1>
+        <nav class="nav">
+          <ul>
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/publications">Publications</a>
+            </li>
+            
+            <li class="">
+              <a href="/projects">Projects</a>
+            </li>
+            
+            <li class="">
+              <a href="/blogs">Blogs</a>
+            </li>
+            
+            <li class="">
+              <a href="/tools">Tools</a>
+            </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <div class="post-container">
+    <article class="post">
+      <h1 class="post-title">【论文阅读笔记】DTS-SQL: Decomposed Text-to-SQL with Small Large Language Models</h1>
+      <div class="post-meta">
+        <span class="post-date">2025-12-17</span>
+      </div>
+      <div class="post-content">
+        <blockquote>
+<p><strong>论文标题</strong>：DTS-SQL: Decomposed Text-to-SQL with Small Large Language Models<br><strong>论文作者</strong>：Mohammadreza Pourreza, Davood Rafiei<br><strong>论文链接</strong>：<a target="_blank" rel="noopener" href="https://aclanthology.org/2024.findings-emnlp.481/">https://aclanthology.org/2024.findings-emnlp.481/</a><br><strong>论文代码</strong>：<a target="_blank" rel="noopener" href="https://github.com/MohammadrezaPourreza/DTS-SQL">https://github.com/MohammadrezaPourreza/DTS-SQL</a></p>
+</blockquote>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在Text2SQL任务中，较小的开源模型与闭源的商业模型性能有较大差异。为了缓解该问题，作者提出将Text2SQL任务分解为两个子任务，分别为<code>schema linking</code>和<code>SQL generation</code>。相比于一阶段微调有3%-7%的EX提升。</p>
+<h1 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h1><ul>
+<li>开源小模型在性能上比不过闭源商业模型</li>
+<li>一步生成SQL语句对于小模型来说是困难的，这个从实验中可以看到，相比一步生成，小模型可能会选错表，导致生成错误的SQL语句。因此，分为两阶段，先提升模型的<code>schema linking</code>能力，再提升<code>SQL generation</code>能力。</li>
+</ul>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>主要是Schema linking fine-tuning和SQL generation fine-tuning。</p>
+<p>从 Spider 1.0 和 BIRD 2023 的数据集中构造，通过 gold SQL 提取 table。论文中是说提取了表和列，但是代码中直用了表。</p>
+<ul>
+<li>针对schema linking任务，输入是问题，数据库schema，输出是将用来生成SQL的表</li>
+<li>针对SQL generation任务，输入是问题，将用来生成SQL的表的schema，输出是SQL语句</li>
+</ul>
+<p>二者可以同时训练，分别增强模型的schema linking能力和SQL generation的能力。</p>
+<h1 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h1><ul>
+<li>相较于一步生成SQL，两阶段可以提升模型性能<br><img src="https://raw.githubusercontent.com/sido-meet/pic_bed/main/self-webimage.png" alt="image"></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>针对小模型，上下文有限，能力较弱，分解任务是有效的</li>
+<li>但是该论文仅局限于表粒度，可以探索更多的列粒度及值粒度</li>
+<li>能力提升归咎于SQL generation还是schmea linking，存在疑问</li>
+</ul>
+
+      </div>
+    </article>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Sido. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
