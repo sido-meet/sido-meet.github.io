@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Text2SQL性能榜单</title>
+  <link rel="stylesheet" href="/css/style.css">
+<script src="/js/scroll.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo"><a href="/">Sido</a></h1>
+        <nav class="nav">
+          <ul>
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/publications">Publications</a>
+            </li>
+            
+            <li class="">
+              <a href="/projects">Projects</a>
+            </li>
+            
+            <li class="">
+              <a href="/blogs">Blogs</a>
+            </li>
+            
+            <li class="">
+              <a href="/tools">Tools</a>
+            </li>
+            
+            <li class="">
+              <a href="/text2sql">Text2SQL榜单</a>
+            </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <div class="page-container">
+    <h1 class="page-title">Text2SQL性能榜单</h1>
+    <div class="page-content">
+      <p>各种模型在Text2SQL任务上的性能对比，包括单模型、多阶段模型和Agent模型。</p>
+      
+      <!-- 筛选和排序区域 -->
+      <div class="leaderboard-filter-container">
+        <!-- 模型类型筛选 -->
+        <div class="filter-section">
+          <label>模型类型：</label>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-type="all">全部</button>
+            <button class="filter-btn" data-type="single">单模型</button>
+            <button class="filter-btn" data-type="agent">Agent模型</button>
+            <button class="filter-btn" data-type="multi-stage">多阶段模型</button>
+          </div>
+        </div>
+        
+        <!-- 开源状态筛选 -->
+        <div class="filter-section">
+          <label>开源状态：</label>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-open-source="all">全部</button>
+            <button class="filter-btn" data-open-source="true">开源</button>
+            <button class="filter-btn" data-open-source="false">闭源</button>
+          </div>
+        </div>
+        
+        <!-- 模型大小筛选 -->
+        <div class="filter-section">
+          <label>模型大小：</label>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-size="all">全部</button>
+            <button class="filter-btn" data-size="s">小型 (1B-10B)</button>
+            <button class="filter-btn" data-size="m">中型 (10B-50B)</button>
+            <button class="filter-btn" data-size="l">大型 (50B-200B)</button>
+            <button class="filter-btn" data-size="xl">超大型 (200B+)</button>
+          </div>
+        </div>
+        
+        <!-- 排序方式选择 -->
+        <div class="filter-section">
+          <label>排序方式：</label>
+          <select id="sort-select">
+            <option value="execution_accuracy-desc">执行准确率 (降序)</option>
+            <option value="execution_accuracy-asc">执行准确率 (升序)</option>
+            <option value="logical_equivalence-desc">逻辑等价性 (降序)</option>
+            <option value="response_time-desc">响应时间 (降序)</option>
+            <option value="response_time-asc">响应时间 (升序)</option>
+            <option value="complex_query-desc">复杂查询 (降序)</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- 榜单表格区域 -->
+      <div id="leaderboard-container">
+        
+          <div class="table-responsive">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>排名</th>
+                  <th>模型名称</th>
+                  <th>公司</th>
+                  <th>类型</th>
+                  <th>开源状态</th>
+                  <th>模型大小</th>
+                  <th>执行准确率</th>
+                  <th>逻辑等价性</th>
+                  <th>响应时间</th>
+                  <th>复杂查询</th>
+                  <th>数据集</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-body">
+                <!-- 模型数据将通过JavaScript动态生成 -->
+              </tbody>
+            </table>
+          </div>
+        
+      </div>
+      
+      <!-- 榜单页面样式 -->
+      <style>
+        /* 筛选容器 */
+        .leaderboard-filter-container {
+          background: var(--color-card);
+          padding: var(--space-lg);
+          border-radius: var(--border-radius-md);
+          margin-bottom: var(--space-xl);
+          box-shadow: var(--shadow-sm);
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--space-lg);
+          align-items: center;
+        }
+        
+        .filter-section {
+          display: flex;
+          align-items: center;
+          gap: var(--space-sm);
+        }
+        
+        .filter-section label {
+          font-weight: 500;
+          color: var(--color-text);
+          white-space: nowrap;
+        }
+        
+        /* 筛选按钮组 */
+        .filter-buttons {
+          display: flex;
+          gap: var(--space-xs);
+          flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+          padding: var(--space-xs) var(--space-sm);
+          border: 1px solid var(--color-border);
+          border-radius: var(--border-radius-sm);
+          background: var(--color-background);
+          color: var(--color-text);
+          font-size: var(--font-size-sm);
+          cursor: pointer;
+          transition: all var(--transition-normal);
+        }
+        
+        .filter-btn:hover {
+          background: var(--color-primary);
+          color: white;
+          border-color: var(--color-primary);
+        }
+        
+        .filter-btn.active {
+          background: var(--color-primary);
+          color: white;
+          border-color: var(--color-primary);
+        }
+        
+        /* 排序选择框 */
+        #sort-select {
+          padding: var(--space-xs) var(--space-sm);
+          border: 1px solid var(--color-border);
+          border-radius: var(--border-radius-sm);
+          background: var(--color-background);
+          color: var(--color-text);
+          font-size: var(--font-size-sm);
+          cursor: pointer;
+        }
+        
+        /* 响应式表格容器 */
+        .table-responsive {
+          overflow-x: auto;
+          background: var(--color-card);
+          border-radius: var(--border-radius-md);
+          box-shadow: var(--shadow-sm);
+        }
+        
+        /* 榜单表格样式 */
+        .leaderboard-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: var(--font-size-sm);
+        }
+        
+        .leaderboard-table th,
+        .leaderboard-table td {
+          padding: var(--space-sm) var(--space-md);
+          text-align: left;
+          border-bottom: 1px solid var(--color-border);
+        }
+        
+        .leaderboard-table th {
+          background: var(--color-background);
+          font-weight: 600;
+          color: var(--color-text);
+          white-space: nowrap;
+        }
+        
+        .leaderboard-table tbody tr {
+          transition: background var(--transition-normal);
+        }
+        
+        .leaderboard-table tbody tr:hover {
+          background: var(--color-background);
+        }
+        
+        /* 排名样式 */
+        .rank {
+          font-weight: 600;
+          color: var(--color-primary);
+          width: 60px;
+        }
+        
+        /* 类型标签样式 */
+        .type-badge {
+          display: inline-block;
+          padding: 2px 8px;
+          border-radius: 12px;
+          font-size: var(--font-size-xs);
+          font-weight: 500;
+        }
+        
+        .type-single {
+          background: #e6f7ff;
+          color: #1890ff;
+        }
+        
+        .type-agent {
+          background: #f6ffed;
+          color: #52c41a;
+        }
+        
+        .type-multi-stage {
+          background: #fff7e6;
+          color: #fa8c16;
+        }
+        
+        /* 开源状态样式 */
+        .open-source {
+          color: #52c41a;
+          font-weight: 500;
+        }
+        
+        .closed-source {
+          color: #fa541c;
+          font-weight: 500;
+        }
+        
+        /* 数据集标签 */
+        .datasets {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+        }
+        
+        .dataset-tag {
+          padding: 2px 6px;
+          background: var(--color-background);
+          border: 1px solid var(--color-border);
+          border-radius: 10px;
+          font-size: var(--font-size-xs);
+          color: var(--color-text-light);
+        }
+        
+        /* 无数据消息 */
+        .no-data-message {
+          text-align: center;
+          padding: var(--space-xl);
+          background: var(--color-card);
+          border-radius: var(--border-radius-md);
+          color: var(--color-text-light);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+          .leaderboard-filter-container {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          
+          .filter-section {
+            width: 100%;
+          }
+          
+          .filter-buttons {
+            flex: 1;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .leaderboard-filter-container {
+            padding: var(--space-md);
+          }
+          
+          .leaderboard-table th,
+          .leaderboard-table td {
+            padding: var(--space-xs);
+            font-size: var(--font-size-xs);
+          }
+        }
+      </style>
+      
+      <!-- 榜单页面JavaScript -->
+      <script>
+        // 榜单数据
+        const leaderboardData = [{&#34;id&#34;:&#34;model-001&#34;,&#34;name&#34;:&#34;GPT-4&#34;,&#34;company&#34;:&#34;OpenAI&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:false,&#34;model_size&#34;:&#34;1.7T&#34;,&#34;size_category&#34;:&#34;xl&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:92.5,&#34;logical_equivalence&#34;:90.2,&#34;response_time&#34;:1.2,&#34;complex_query&#34;:88.7},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;,&#34;ATIS&#34;],&#34;year&#34;:2023,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-002&#34;,&#34;name&#34;:&#34;Llama 3 70B&#34;,&#34;company&#34;:&#34;Meta&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:true,&#34;model_size&#34;:&#34;70B&#34;,&#34;size_category&#34;:&#34;l&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:89.3,&#34;logical_equivalence&#34;:87.1,&#34;response_time&#34;:0.9,&#34;complex_query&#34;:85.2},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;],&#34;year&#34;:2024,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-003&#34;,&#34;name&#34;:&#34;Claude 3 Opus&#34;,&#34;company&#34;:&#34;Anthropic&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:false,&#34;model_size&#34;:&#34;1T&#34;,&#34;size_category&#34;:&#34;xl&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:91.8,&#34;logical_equivalence&#34;:89.5,&#34;response_time&#34;:1.5,&#34;complex_query&#34;:87.9},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;,&#34;BIRD&#34;],&#34;year&#34;:2024,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-004&#34;,&#34;name&#34;:&#34;Mixtral 8x7B&#34;,&#34;company&#34;:&#34;Mistral AI&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:true,&#34;model_size&#34;:&#34;47B&#34;,&#34;size_category&#34;:&#34;l&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:87.6,&#34;logical_equivalence&#34;:85.3,&#34;response_time&#34;:0.8,&#34;complex_query&#34;:83.1},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;],&#34;year&#34;:2024,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-005&#34;,&#34;name&#34;:&#34;Gemini Ultra&#34;,&#34;company&#34;:&#34;Google&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:false,&#34;model_size&#34;:&#34;1.5T&#34;,&#34;size_category&#34;:&#34;xl&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:90.7,&#34;logical_equivalence&#34;:88.4,&#34;response_time&#34;:1.3,&#34;complex_query&#34;:86.8},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;,&#34;ATIS&#34;],&#34;year&#34;:2024,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-006&#34;,&#34;name&#34;:&#34;Llama 3 8B&#34;,&#34;company&#34;:&#34;Meta&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:true,&#34;model_size&#34;:&#34;8B&#34;,&#34;size_category&#34;:&#34;m&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:82.4,&#34;logical_equivalence&#34;:80.1,&#34;response_time&#34;:0.3,&#34;complex_query&#34;:78.2},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;],&#34;year&#34;:2024,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-007&#34;,&#34;name&#34;:&#34;Mistral 7B&#34;,&#34;company&#34;:&#34;Mistral AI&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:true,&#34;model_size&#34;:&#34;7B&#34;,&#34;size_category&#34;:&#34;m&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:81.9,&#34;logical_equivalence&#34;:79.6,&#34;response_time&#34;:0.2,&#34;complex_query&#34;:77.8},&#34;datasets&#34;:[&#34;Spider&#34;],&#34;year&#34;:2023,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-008&#34;,&#34;name&#34;:&#34;Qwen 14B&#34;,&#34;company&#34;:&#34;Alibaba&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:true,&#34;model_size&#34;:&#34;14B&#34;,&#34;size_category&#34;:&#34;m&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:84.7,&#34;logical_equivalence&#34;:82.5,&#34;response_time&#34;:0.5,&#34;complex_query&#34;:80.3},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;,&#34;ATIS&#34;],&#34;year&#34;:2024,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-009&#34;,&#34;name&#34;:&#34;SQL Agent Pro&#34;,&#34;company&#34;:&#34;AI Labs&#34;,&#34;type&#34;:&#34;agent&#34;,&#34;is_open_source&#34;:false,&#34;model_size&#34;:&#34;200B&#34;,&#34;size_category&#34;:&#34;l&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:88.9,&#34;logical_equivalence&#34;:86.7,&#34;response_time&#34;:2.1,&#34;complex_query&#34;:89.2},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;BIRD&#34;,&#34;Spider-Syn&#34;],&#34;year&#34;:2025,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-010&#34;,&#34;name&#34;:&#34;OpenSQL Agent&#34;,&#34;company&#34;:&#34;OpenAI Community&#34;,&#34;type&#34;:&#34;agent&#34;,&#34;is_open_source&#34;:true,&#34;model_size&#34;:&#34;70B&#34;,&#34;size_category&#34;:&#34;l&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:85.3,&#34;logical_equivalence&#34;:83.1,&#34;response_time&#34;:1.8,&#34;complex_query&#34;:84.6},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;],&#34;year&#34;:2025,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-011&#34;,&#34;name&#34;:&#34;SQL Chain V2&#34;,&#34;company&#34;:&#34;ChainAI&#34;,&#34;type&#34;:&#34;multi-stage&#34;,&#34;is_open_source&#34;:false,&#34;model_size&#34;:&#34;500B&#34;,&#34;size_category&#34;:&#34;xl&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:89.7,&#34;logical_equivalence&#34;:87.5,&#34;response_time&#34;:1.9,&#34;complex_query&#34;:88.1},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;BIRD&#34;,&#34;Spider-Syn&#34;],&#34;year&#34;:2025,&#34;stage_config&#34;:{&#34;stages&#34;:[&#34;parsing&#34;,&#34;planning&#34;,&#34;generation&#34;,&#34;validation&#34;]}},{&#34;id&#34;:&#34;model-012&#34;,&#34;name&#34;:&#34;TinySQL-1B&#34;,&#34;company&#34;:&#34;TinyML Inc.&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:true,&#34;model_size&#34;:&#34;1B&#34;,&#34;size_category&#34;:&#34;s&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:75.2,&#34;logical_equivalence&#34;:73,&#34;response_time&#34;:0.1,&#34;complex_query&#34;:70.8},&#34;datasets&#34;:[&#34;Spider&#34;],&#34;year&#34;:2024,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-013&#34;,&#34;name&#34;:&#34;SQLite GPT&#34;,&#34;company&#34;:&#34;Database AI&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:true,&#34;model_size&#34;:&#34;3B&#34;,&#34;size_category&#34;:&#34;s&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:78.5,&#34;logical_equivalence&#34;:76.3,&#34;response_time&#34;:0.2,&#34;complex_query&#34;:74.1},&#34;datasets&#34;:[&#34;WikiSQL&#34;],&#34;year&#34;:2024,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-014&#34;,&#34;name&#34;:&#34;GPT-3.5 Turbo&#34;,&#34;company&#34;:&#34;OpenAI&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:false,&#34;model_size&#34;:&#34;175B&#34;,&#34;size_category&#34;:&#34;l&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:86.8,&#34;logical_equivalence&#34;:84.6,&#34;response_time&#34;:0.7,&#34;complex_query&#34;:82.4},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;,&#34;ATIS&#34;],&#34;year&#34;:2023,&#34;stage_config&#34;:null},{&#34;id&#34;:&#34;model-015&#34;,&#34;name&#34;:&#34;DeepSQL 20B&#34;,&#34;company&#34;:&#34;DeepAI&#34;,&#34;type&#34;:&#34;single&#34;,&#34;is_open_source&#34;:true,&#34;model_size&#34;:&#34;20B&#34;,&#34;size_category&#34;:&#34;m&#34;,&#34;metrics&#34;:{&#34;execution_accuracy&#34;:85.1,&#34;logical_equivalence&#34;:82.8,&#34;response_time&#34;:0.6,&#34;complex_query&#34;:80.7},&#34;datasets&#34;:[&#34;Spider&#34;,&#34;WikiSQL&#34;],&#34;year&#34;:2024,&#34;stage_config&#34;:null}];
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+          // 获取DOM元素
+          const filterBtns = document.querySelectorAll('.filter-btn');
+          const sortSelect = document.getElementById('sort-select');
+          const leaderboardBody = document.getElementById('leaderboard-body');
+          
+          // 当前筛选条件
+          let currentFilters = {
+            type: 'all',
+            openSource: 'all',
+            size: 'all',
+            sortBy: 'execution_accuracy-desc'
+          };
+          
+          // 渲染榜单
+          function renderLeaderboard() {
+            // 应用筛选
+            let filteredData = [...leaderboardData];
+            
+            // 按类型筛选
+            if (currentFilters.type !== 'all') {
+              filteredData = filteredData.filter(model => model.type === currentFilters.type);
+            }
+            
+            // 按开源状态筛选
+            if (currentFilters.openSource !== 'all') {
+              const isOpenSource = currentFilters.openSource === 'true';
+              filteredData = filteredData.filter(model => model.is_open_source === isOpenSource);
+            }
+            
+            // 按模型大小筛选
+            if (currentFilters.size !== 'all') {
+              filteredData = filteredData.filter(model => model.size_category === currentFilters.size);
+            }
+            
+            // 应用排序
+            const [sortField, sortOrder] = currentFilters.sortBy.split('-');
+            filteredData.sort((a, b) => {
+              let aValue, bValue;
+              
+              // 处理嵌套字段（metrics.*）
+              if (sortField.includes('.')) {
+                const [parent, child] = sortField.split('.');
+                aValue = a[parent][child];
+                bValue = b[parent][child];
+              } else {
+                aValue = a[sortField];
+                bValue = b[sortField];
+              }
+              
+              // 数字排序
+              if (typeof aValue === 'number' && typeof bValue === 'number') {
+                return sortOrder === 'desc' ? bValue - aValue : aValue - bValue;
+              }
+              
+              // 字符串排序
+              return sortOrder === 'desc' 
+                ? bValue.localeCompare(aValue)
+                : aValue.localeCompare(bValue);
+            });
+            
+            // 渲染表格
+            leaderboardBody.innerHTML = '';
+            
+            filteredData.forEach((model, index) => {
+              const row = document.createElement('tr');
+              row.className = 'model-row';
+              row.dataset.type = model.type;
+              row.dataset.openSource = model.is_open_source;
+              row.dataset.size = model.size_category;
+              row.dataset.executionAccuracy = model.metrics.execution_accuracy;
+              
+              row.innerHTML = `
+                <td class="rank">${index + 1}</td>
+                <td class="model-name">${model.name}</td>
+                <td class="company">${model.company}</td>
+                <td class="model-type">
+                  <span class="type-badge type-${model.type}">
+                    ${model.type === 'single' ? '单模型' : model.type === 'agent' ? 'Agent' : '多阶段'}
+                  </span>
+                </td>
+                <td class="open-source-status">
+                  <span class="${model.is_open_source ? 'open-source' : 'closed-source'}">
+                    ${model.is_open_source ? '开源' : '闭源'}
+                  </span>
+                </td>
+                <td class="model-size">${model.model_size}</td>
+                <td class="metric execution">${model.metrics.execution_accuracy.toFixed(1)}%</td>
+                <td class="metric logical">${model.metrics.logical_equivalence.toFixed(1)}%</td>
+                <td class="metric response">${model.metrics.response_time.toFixed(1)}s</td>
+                <td class="metric complex">${model.metrics.complex_query.toFixed(1)}%</td>
+                <td class="datasets">
+                  ${model.datasets.map(dataset => `<span class="dataset-tag">${dataset}</span>`).join('')}
+                </td>
+              `;
+              
+              leaderboardBody.appendChild(row);
+            });
+          }
+          
+          // 筛选按钮点击事件
+          filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+              // 确定筛选类型
+              let filterType;
+              if (this.dataset.type) filterType = 'type';
+              if (this.dataset.openSource) filterType = 'openSource';
+              if (this.dataset.size) filterType = 'size';
+              
+              // 更新按钮状态
+              const siblings = Array.from(this.parentElement.children);
+              siblings.forEach(sibling => sibling.classList.remove('active'));
+              this.classList.add('active');
+              
+              // 更新筛选条件
+              if (filterType === 'type') {
+                currentFilters.type = this.dataset.type;
+              } else if (filterType === 'openSource') {
+                currentFilters.openSource = this.dataset.openSource;
+              } else if (filterType === 'size') {
+                currentFilters.size = this.dataset.size;
+              }
+              
+              // 重新渲染榜单
+              renderLeaderboard();
+            });
+          });
+          
+          // 排序选择事件
+          sortSelect.addEventListener('change', function() {
+            currentFilters.sortBy = this.value;
+            renderLeaderboard();
+          });
+          
+          // 初始化渲染
+          renderLeaderboard();
+        });
+      </script>
+    </div>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Sido. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
