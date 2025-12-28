@@ -55,11 +55,18 @@
     
     <div class="blog-content">
       <div class="posts-section">
-        <h2 class="section-title">Latest Posts</h2>
+        <div class="section-header">
+          <h2 class="section-title">Latest Posts</h2>
+          <div class="sort-controls">
+            <span class="sort-label">Sort by date:</span>
+            <button class="sort-btn active" data-sort="desc">Newest First</button>
+            <button class="sort-btn" data-sort="asc">Oldest First</button>
+          </div>
+        </div>
         
-        <div class="posts-grid">
+        <div class="posts-grid" id="posts-grid">
         
-          <article class="post-card">
+          <article class="post-card" data-date="1764253816">
             <div class="post-card-header">
               <span class="post-date">2025-11-27</span>
             </div>
@@ -72,7 +79,7 @@
             </div>
           </article>
         
-          <article class="post-card">
+          <article class="post-card" data-date="1765383380">
             <div class="post-card-header">
               <span class="post-date">2025-12-11</span>
             </div>
@@ -85,7 +92,7 @@
             </div>
           </article>
         
-          <article class="post-card">
+          <article class="post-card" data-date="1766246400">
             <div class="post-card-header">
               <span class="post-date">2025-12-21</span>
             </div>
@@ -98,7 +105,7 @@
             </div>
           </article>
         
-          <article class="post-card">
+          <article class="post-card" data-date="1766160000">
             <div class="post-card-header">
               <span class="post-date">2025-12-20</span>
             </div>
@@ -111,7 +118,7 @@
             </div>
           </article>
         
-          <article class="post-card">
+          <article class="post-card" data-date="1761962400">
             <div class="post-card-header">
               <span class="post-date">2025-11-01</span>
             </div>
@@ -124,7 +131,7 @@
             </div>
           </article>
         
-          <article class="post-card">
+          <article class="post-card" data-date="1765814400">
             <div class="post-card-header">
               <span class="post-date">2025-12-16</span>
             </div>
@@ -137,7 +144,7 @@
             </div>
           </article>
         
-          <article class="post-card">
+          <article class="post-card" data-date="1765381929">
             <div class="post-card-header">
               <span class="post-date">2025-12-10</span>
             </div>
@@ -150,7 +157,7 @@
             </div>
           </article>
         
-          <article class="post-card">
+          <article class="post-card" data-date="1765980040">
             <div class="post-card-header">
               <span class="post-date">2025-12-17</span>
             </div>
@@ -165,6 +172,39 @@
         
         </div>
       </div>
+      
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const postsGrid = document.getElementById('posts-grid');
+          const sortBtns = document.querySelectorAll('.sort-btn');
+          let posts = Array.from(postsGrid.children);
+          
+          function sortPosts(order, btn) {
+            posts.sort(function(a, b) {
+              const dateA = parseInt(a.dataset.date);
+              const dateB = parseInt(b.dataset.date);
+              
+              if (order === 'asc') {
+                return dateA - dateB;
+              } else {
+                return dateB - dateA;
+              }
+            });
+            
+            posts.forEach(post => postsGrid.appendChild(post));
+            
+            sortBtns.forEach(btn => btn.classList.remove('active'));
+            btn.classList.add('active');
+          }
+          
+          sortBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+              const order = this.dataset.sort;
+              sortPosts(order, this);
+            });
+          });
+        });
+      </script>
       
       <div class="sidebar">
         <div class="sidebar-widget">
