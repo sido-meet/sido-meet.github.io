@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Publications</title>
+  <title>登录</title>
   <link rel="stylesheet" href="/css/style.css">
 <script src="/js/scroll.js"></script>
 <meta name="generator" content="Hexo 8.1.1"></head>
@@ -51,21 +51,46 @@
     <div class="container">
 
   <div class="page-container">
-    <h1 class="page-title">Publications</h1>
+    <h1 class="page-title">登录</h1>
     <div class="page-content">
-      <h1 id="Publications"><a href="#Publications" class="headerlink" title="Publications"></a>Publications</h1><h2 id="Journal-Papers"><a href="#Journal-Papers" class="headerlink" title="Journal Papers"></a>Journal Papers</h2><ol>
-<li><p>Einstein, Albert, Boris Podolsky, and Nathan Rosen. “Can quantum-mechanical description of physical reality be considered complete?” Physical review 47.10 (1935): 777.</p>
-</li>
-<li><p>Schrödinger, Erwin. “Die gegenwärtige situation in der quantenmechanik.” Naturwissenschaften 23.48 (1935): 807-812.</p>
-</li>
-</ol>
-<h2 id="Conference-Papers"><a href="#Conference-Papers" class="headerlink" title="Conference Papers"></a>Conference Papers</h2><ol>
-<li><p>Feynman, Richard P. “Space-time approach to non-relativistic quantum mechanics.” Reviews of Modern Physics 20.2 (1948): 367.</p>
-</li>
-<li><p>Dirac, Paul AM. “The quantum theory of the electron.” Proceedings of the Royal Society of London. Series A, Mathematical and Physical Sciences 117.778 (1928): 610-624.</p>
-</li>
-</ol>
+      <div class="login-container">
+  <h2>用户登录</h2>
+  <form class="login-form" onsubmit="event.preventDefault(); handleLogin();">
+    <div class="form-group">
+      <label for="username">用户名</label>
+      <input type="text" id="username" name="username" placeholder="请输入用户名" required>
+    </div>
+    <div class="form-group">
+      <label for="password">密码</label>
+      <input type="password" id="password" name="password" placeholder="请输入密码" required>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="login-button">登录</button>
+      <a href="/" class="cancel-button">取消</a>
+    </div>
+  </form>
+</div>
 
+<script>
+function handleLogin() {
+  // 获取表单数据
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  
+  // 简单的前端验证
+  if (!username || !password) {
+    alert('请输入用户名和密码');
+    return;
+  }
+  
+  // 这里可以添加实际的登录逻辑，比如调用API
+  // 目前我们只是模拟登录成功，然后返回原页面
+  alert('登录成功！');
+  
+  // 返回上一个页面
+  window.history.back();
+}
+</script>
     </div>
   </div>
     </div>
