@@ -72,7 +72,7 @@
 </div>
 
 <script>
-function handleLogin() {
+async function handleLogin() {
   // 获取表单数据
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
@@ -83,12 +83,81 @@ function handleLogin() {
     return;
   }
   
-  // 这里可以添加实际的登录逻辑，比如调用API
-  // 目前我们只是模拟登录成功，然后返回原页面
-  alert('登录成功！');
+  try {
+    // 调用后端登录API
+    const response = await fetch('http://47.100.112.221:8000/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || '登录失败');
+    }
+    
+    // 解析响应数据
+    const data = await response.json();
+    
+    // 存储JWT令牌到localStorage
+    localStorage.setItem('token', data.access_token);
+    localStorage.setItem('token_type', data.token_type);
+    
+    // 显示成功消息
+    alert('登录成功！');
+    
+    // 返回上一个页面
+    window.history.back();
+  } catch (error) {
+    // 处理错误
+    alert('登录失败：' + error.message);
+  }
+}
+
+// 注册功能
+async function handleRegister() {
+  // 获取表单数据
+  const username = document.getElementById('register-username').value;
+  const email = document.getElementById('register-email').value;
+  const password = document.getElementById('register-password').value;
   
-  // 返回上一个页面
-  window.history.back();
+  // 简单的前端验证
+  if (!username || !email || !password) {
+    alert('请填写所有必填字段');
+    return;
+  }
+  
+  try {
+    // 调用后端注册API
+    const response = await fetch('http://47.100.112.221:8000/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        email: email,
+        password: password
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || '注册失败');
+    }
+    
+    // 显示成功消息
+    alert('注册成功！请登录');
+    
+    // 切换到登录表单
+    document.getElementById('register-form').style.display = 'none';
+    document.getElementById('login-form').style.display = 'block';
+  } catch (error) {
+    // 处理错误
+    alert('注册失败：' + error.message);
+  }
 }
 </script>
     </div>
@@ -97,7 +166,7 @@ function handleLogin() {
   </main>
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2025 Sido. All rights reserved.</p>
+      <p>&copy; 2026 Sido. All rights reserved.</p>
     </div>
   </footer>
 </body>
