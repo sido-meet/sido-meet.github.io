@@ -1,5 +1,5 @@
 // API 请求基础配置
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = '/api';  // 使用相对路径，通过 Nginx 代理访问后端
 
 // Token 管理
 const TOKEN_KEY = 'auth_token';
@@ -42,7 +42,7 @@ function showMessage(message, type = 'info') {
 // 登录功能
 async function login(username, password) {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -71,7 +71,7 @@ async function login(username, password) {
 // 注册功能
 async function register(username, email, password) {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ async function getCurrentUser() {
       throw new Error('未登录');
     }
     
-    const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
+    const response = await fetch(`${API_BASE_URL}/auth/me`, {
       headers: {
         'Authorization': `Bearer ${token}`
       },
@@ -127,8 +127,42 @@ function logout() {
   window.location.href = '/login';
 }
 
+// 密码显示/隐藏功能
+function initPasswordToggle() {
+  let passwordTimeout;
+  const passwordToggle = document.getElementById('password-toggle');
+  const passwordInput = document.getElementById('password');
+  
+  if (passwordToggle && passwordInput) {
+    passwordToggle.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      
+      // 改变图标
+      this.innerHTML = type === 'password' ? '👁️' : '👁️‍🗨️';
+      
+      // 如果是显示密码，3秒后自动隐藏
+      if (type === 'text') {
+        // 清除之前的超时
+        if (passwordTimeout) {
+          clearTimeout(passwordTimeout);
+        }
+        
+        // 设置新的超时，3秒后自动隐藏
+        passwordTimeout = setTimeout(() => {
+          passwordInput.setAttribute('type', 'password');
+          passwordToggle.innerHTML = '👁️';
+        }, 3000);
+      }
+    });
+  }
+}
+
 // 页面加载完成后初始化事件监听器
 document.addEventListener('DOMContentLoaded', function() {
+  // 初始化密码显示/隐藏功能
+  initPasswordToggle();
+  
   // 登录表单处理
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
