@@ -1,0 +1,341 @@
+.post-container {
+  background-color: $color-card;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $space-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  transition: all $transition-normal;
+}
+.post-title {
+  font-size: $font-size-3xl;
+  font-weight: 700;
+  margin-bottom: $space-lg;
+  color: $color-secondary;
+  line-height: 1.3;
+}
+.post-meta {
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  margin-bottom: $space-xl;
+  padding-bottom: $space-lg;
+  border-bottom: 1px solid $color-border;
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+}
+.post-date {
+  display: flex;
+  align-items: center;
+  gap: $space-xs;
+}
+.post-content {
+  color: $color-text;
+  font-size: $font-size-base;
+  line-height: 1.8;
+}
+.post-comments {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+.post-comments .comments-title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+.post-comments iframe.giscus-frame {
+  width: 100%;
+  border: none;
+  overflow: hidden;
+}
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  color: $color-secondary;
+  margin-top: $space-xxl;
+  margin-bottom: $space-lg;
+  line-height: 1.3;
+  font-weight: 700;
+}
+.post-content h1 {
+  font-size: $font-size-3xl;
+  position: relative;
+  padding-bottom: $space-md;
+  margin-top: 0;
+}
+.post-content h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, $color-primary 0%, transparent 100%);
+  border-radius: 2px;
+}
+.post-content h2 {
+  font-size: $font-size-2xl;
+  position: relative;
+  padding-bottom: $space-sm;
+}
+.post-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: $color-primary;
+  border-radius: 1.5px;
+}
+.post-content h3 {
+  font-size: $font-size-xl;
+}
+.post-content h4 {
+  font-size: $font-size-lg;
+}
+.post-content h5 {
+  font-size: $font-size-base;
+}
+.post-content h6 {
+  font-size: $font-size-sm;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.post-content ul,
+.post-content ol {
+  margin-bottom: $space-lg;
+  padding-left: $space-xl;
+}
+.post-content ul {
+  list-style-type: disc;
+}
+.post-content ol {
+  list-style-type: decimal;
+}
+.post-content li {
+  margin-bottom: $space-sm;
+  line-height: 1.7;
+}
+.post-content li ul,
+.post-content li ol {
+  margin-top: $space-sm;
+  margin-bottom: 0;
+}
+.post-content a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: all $transition-normal;
+  position: relative;
+  padding-bottom: 2px;
+}
+.post-content a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: $color-primary;
+  transition: width $transition-normal;
+}
+.post-content a:hover {
+  color: $color-secondary;
+}
+.post-content a:hover::after {
+  width: 100%;
+}
+.post-content code {
+  background-color: $color-background;
+  color: $color-accent;
+  padding: 0.2rem 0.4rem;
+  border-radius: $border-radius-sm;
+  font-family: $font-family-mono;
+  font-size: 0.9em;
+  transition: all $transition-normal;
+}
+.post-content .highlight {
+  background-color: $color-code-bg;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  margin-bottom: $space-lg;
+  box-shadow: $shadow-md;
+  transition: all $transition-normal;
+}
+.post-content .highlight table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.post-content .highlight tbody {
+  margin: 0;
+  padding: 0;
+}
+.post-content .highlight tr {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+.post-content .highlight .gutter {
+  background-color: $color-code-gutter;
+  color: $color-code-line-number;
+  padding: $space-lg 0;
+  text-align: right;
+  vertical-align: top;
+  width: 50px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  user-select: none;
+}
+.post-content .highlight .gutter pre {
+  background: transparent;
+  color: inherit;
+  margin: 0;
+  padding: 0 12px;
+  font-family: $font-family-mono;
+  font-size: $font-size-sm;
+  line-height: 1.5;
+  white-space: pre;
+  border-radius: 0;
+  box-shadow: none;
+}
+.post-content .highlight .code {
+  padding: 0;
+  vertical-align: top;
+  width: 100%;
+}
+.post-content .highlight .code pre {
+  background: transparent;
+  color: $color-code-text;
+  margin: 0;
+  padding: $space-lg;
+  font-family: $font-family-mono;
+  font-size: $font-size-sm;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+  border-radius: 0;
+  box-shadow: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+.post-content pre {
+  background-color: $color-code-bg;
+  color: $color-code-text;
+  padding: $space-lg;
+  border-radius: $border-radius-md;
+  overflow-x: auto;
+  margin-bottom: $space-lg;
+  font-family: $font-family-mono;
+  font-size: $font-size-sm;
+  line-height: 1.5;
+  box-shadow: $shadow-md;
+  transition: all $transition-normal;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+.post-content pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+}
+.post-content .highlight .keyword {
+  color: $color-code-keyword;
+}
+.post-content .highlight .string {
+  color: $color-code-string;
+}
+.post-content .highlight .comment {
+  color: $color-code-comment;
+  font-style: italic;
+}
+.post-content .highlight .function {
+  color: $color-code-function;
+}
+.post-content .highlight .variable {
+  color: $color-code-variable;
+}
+.post-content .highlight .number {
+  color: $color-code-number;
+}
+.post-content .highlight .operator {
+  color: $color-code-text;
+}
+.post-content .highlight .punctuation {
+  color: $color-code-text;
+}
+.post-content .highlight .tag {
+  color: $color-primary;
+}
+.post-content .highlight .attr {
+  color: $color-code-number;
+}
+.post-content .highlight .selector {
+  color: $color-code-keyword;
+}
+.post-content .highlight .property {
+  color: $color-code-variable;
+}
+.post-content .highlight .builtin {
+  color: $color-code-function;
+}
+.post-content blockquote {
+  border-left: 4px solid $color-primary;
+  padding: $space-md $space-lg;
+  margin-bottom: $space-lg;
+  background-color: $color-background;
+  color: $color-text-light;
+  font-style: italic;
+  border-radius: 0 $border-radius-sm $border-radius-sm 0;
+}
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: $border-radius-md;
+  display: block;
+  margin: $space-lg auto;
+  box-shadow: $shadow-sm;
+  transition: transform $transition-normal, box-shadow $transition-normal;
+}
+.post-content img:hover {
+  transform: translateY(-2px);
+  box-shadow: $shadow-md;
+}
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $space-lg;
+  background-color: $color-card;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  box-shadow: $shadow-sm;
+}
+.post-content th,
+.post-content td {
+  padding: $space-md;
+  text-align: left;
+  border-bottom: 1px solid $color-border;
+}
+.post-content th {
+  background-color: $color-background;
+  font-weight: 600;
+  color: $color-secondary;
+}
+.post-content tr:last-child td {
+  border-bottom: none;
+}
+.post-content hr {
+  border: none;
+  height: 1px;
+  background-color: $color-border;
+  margin: $space-xxl 0;
+}

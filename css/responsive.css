@@ -1,0 +1,82 @@
+@media (max-width: 575px) {
+  :root {
+    --font-size-4xl: 2rem;
+    --font-size-3xl: 1.75rem;
+    --font-size-2xl: 1.5rem;
+    --space-xl: 1.5rem;
+    --space-xxl: 2rem;
+  }
+  .home-layout {
+    grid-template-columns: 1fr;
+  }
+  .profile-sidebar {
+    position: static;
+    margin-bottom: $space-xl;
+  }
+  .header-content {
+    flex-direction: column;
+    gap: $space-md;
+    text-align: center;
+  }
+  .nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: $space-md;
+  }
+  .hero-section {
+    padding: $space-xl 0;
+  }
+  .hero-title {
+    font-size: $font-size-3xl;
+  }
+  .content-area,
+  .profile-card {
+    padding: $space-lg;
+  }
+  .avatar-placeholder {
+    width: 100px;
+    height: 100px;
+  }
+  .initials {
+    font-size: 2rem;
+  }
+}
+@media (min-width: 576px) and (max-width: 767px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+  }
+  .profile-sidebar {
+    position: static;
+    margin-bottom: $space-xl;
+  }
+  .header-content {
+    flex-direction: column;
+    gap: $space-md;
+  }
+  .nav ul {
+    justify-content: center;
+    gap: $space-lg;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .home-layout {
+    grid-template-columns: 250px 1fr;
+    gap: $space-lg;
+  }
+  .nav ul {
+    gap: $space-lg;
+  }
+  .hero-title {
+    font-size: $font-size-3xl;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .home-layout {
+    grid-template-columns: 280px 1fr;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    padding: 0;
+  }
+}

@@ -1,0 +1,98 @@
+.header {
+  background-color: $color-card;
+  box-shadow: $shadow-sm;
+  padding: $space-md 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: $border-radius-lg $border-radius-lg 0 0;
+  transition: transform $transition-normal;
+}
+.header .container {
+  padding: 0 $space-md;
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-size: $font-size-xl;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+.logo a {
+  color: $color-secondary;
+  text-decoration: none;
+  transition: color $transition-normal;
+  line-height: inherit;
+}
+.logo a:hover {
+  color: $color-primary;
+}
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: $space-xl;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+.nav li {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+.nav a {
+  color: $color-text;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: $font-size-lg;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all $transition-normal;
+  position: relative;
+  line-height: 1;
+  padding: $space-sm 0;
+}
+.nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: $color-primary;
+  transition: width $transition-normal;
+}
+.nav a:hover,
+.nav .active a {
+  color: $color-primary;
+}
+.nav a:hover::after,
+.nav .active a::after {
+  width: 100%;
+}
+.nav li.login-button {
+  margin-left: auto;
+}
+.nav li.login-button a {
+  background-color: $color-primary;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius-sm;
+  transition: all $transition-normal;
+}
+.nav li.login-button a:hover {
+  background-color: $color-secondary;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: $shadow-md;
+}
+.nav li.login-button a::after {
+  display: none;
+}
