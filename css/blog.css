@@ -1,0 +1,223 @@
+.blog-container {
+  background-color: $color-card;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+}
+.blog-header {
+  padding: $space-xxl;
+  background: $color-gradient-primary;
+  color: $color-card;
+  text-align: center;
+}
+.blog-title {
+  font-size: $font-size-4xl;
+  margin-bottom: $space-lg;
+  color: $color-card;
+  border-bottom: none;
+}
+.blog-description {
+  font-size: $font-size-lg;
+  opacity: 0.9;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.blog-content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: $space-xl;
+  padding: $space-xl;
+}
+.posts-section {
+  grid-column: 1;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $space-xl;
+}
+.section-title {
+  font-size: $font-size-2xl;
+  margin-bottom: 0;
+  color: $color-secondary;
+  position: relative;
+  padding-bottom: $space-sm;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: $color-gradient-primary;
+  border-radius: $border-radius-sm;
+}
+.posts-grid {
+  display: grid;
+  gap: $space-lg;
+}
+.post-card {
+  background-color: $color-blog-card;
+  border: 1px solid $color-blog-border;
+  border-radius: $border-radius-md;
+  padding: $space-lg;
+  transition: all $transition-normal;
+}
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: $shadow-lg;
+  border-color: $color-blog-highlight;
+}
+.post-card-header {
+  margin-bottom: $space-md;
+}
+.post-date {
+  color: $color-text-light;
+  font-size: $font-size-sm;
+  font-weight: 500;
+}
+.post-card-title {
+  font-size: $font-size-xl;
+  margin-bottom: $space-md;
+  line-height: 1.4;
+}
+.post-card-title a {
+  color: $color-secondary;
+  text-decoration: none;
+  transition: color $transition-normal;
+}
+.post-card-title a:hover {
+  color: $color-blog-highlight;
+}
+.post-card-excerpt {
+  color: $color-text-light;
+  line-height: 1.6;
+  margin-bottom: $space-lg;
+}
+.post-card-footer {
+  text-align: right;
+}
+.read-more {
+  color: $color-blog-highlight;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all $transition-normal;
+}
+.read-more:hover {
+  color: $color-blog-highlight-alt;
+  text-decoration: underline;
+}
+.sidebar {
+  grid-column: 2;
+}
+.sidebar-widget {
+  background-color: $color-blog-card;
+  border: 1px solid $color-blog-border;
+  border-radius: $border-radius-md;
+  padding: $space-lg;
+  margin-bottom: $space-lg;
+}
+.widget-title {
+  font-size: $font-size-lg;
+  margin-bottom: $space-md;
+  color: $color-secondary;
+  position: relative;
+  padding-bottom: $space-xs;
+}
+.widget-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: $color-gradient-primary;
+  border-radius: $border-radius-sm;
+}
+.categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-sm 0;
+  border-bottom: 1px solid $color-blog-border;
+}
+.category-item:last-child {
+  border-bottom: none;
+}
+.category-item a {
+  color: $color-secondary;
+  text-decoration: none;
+  transition: color $transition-normal;
+}
+.category-item a:hover {
+  color: $color-blog-highlight;
+}
+.category-count {
+  background-color: $color-blog-highlight;
+  color: $color-card;
+  font-size: $font-size-xs;
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.recent-posts {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+.recent-post-item {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  padding: $space-sm 0;
+  border-bottom: 1px solid $color-blog-border;
+}
+.recent-post-item:last-child {
+  border-bottom: none;
+}
+.recent-post-item a {
+  color: $color-secondary;
+  text-decoration: none;
+  transition: color $transition-normal;
+  font-size: $font-size-sm;
+  line-height: 1.4;
+}
+.recent-post-item a:hover {
+  color: $color-blog-highlight;
+}
+.recent-post-date {
+  color: $color-text-light;
+  font-size: $font-size-xs;
+}
+@media (max-width: 992px) {
+  .blog-content {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .sidebar {
+    grid-template-columns: 1fr;
+  }
+  .blog-header {
+    padding: 2rem 1rem;
+  }
+  .blog-title {
+    font-size: 2rem;
+  }
+  .blog-content {
+    padding: 1rem;
+  }
+}

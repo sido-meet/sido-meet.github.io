@@ -1,0 +1,11 @@
+.footer {
+  background-color: $color-secondary;
+  color: $color-card;
+  text-align: center;
+  padding: $space-lg 0;
+  margin-top: $space-xl;
+}
+.footer p {
+  color: inherit;
+  margin-bottom: 0;
+}
