@@ -1,0 +1,161 @@
+.btn {
+  display: inline-block;
+  padding: $space-sm $space-lg;
+  border: none;
+  border-radius: $border-radius-md;
+  font-size: $font-size-base;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition-normal;
+  text-decoration: none;
+  text-align: center;
+}
+.btn-primary {
+  background-color: $color-primary;
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: $color-secondary;
+  transform: translateY(-2px);
+  box-shadow: $shadow-md;
+}
+.card {
+  background-color: $color-card;
+  border-radius: $border-radius-lg;
+  padding: $space-xl;
+  box-shadow: $shadow-md;
+  transition: all $transition-normal;
+}
+.card:hover {
+  box-shadow: $shadow-lg;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+.form-group label {
+  font-weight: 600;
+  color: $color-text;
+  font-size: $font-size-sm;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: $space-md;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  font-size: $font-size-base;
+  transition: all $transition-normal;
+  background-color: $color-background;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: $color-primary;
+  box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+  background-color: $color-card;
+}
+.password-container .password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.password-container .password-input-wrapper input {
+  flex: 1;
+  padding-right: $space-xl;
+}
+.password-container .password-toggle {
+  position: absolute;
+  right: $space-md;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: $font-size-lg;
+  color: $color-text-light;
+  padding: 0;
+  width: $space-lg;
+  height: $space-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color $transition-normal;
+}
+.password-container .password-toggle:hover {
+  color: $color-primary;
+}
+.form-actions {
+  display: flex;
+  gap: $space-md;
+  justify-content: center;
+  margin-top: $space-lg;
+}
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: $space-xs;
+}
+.sort-btn {
+  background-color: $color-background;
+  border: 1px solid $color-border;
+  color: $color-primary;
+  padding: $space-xs $space-sm;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-lg;
+  cursor: pointer;
+  transition: all $transition-normal;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.sort-btn:hover {
+  background-color: $color-primary;
+  color: $color-card;
+  border-color: $color-primary;
+}
+.sort-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+.sort-icon-up,
+.sort-icon-down {
+  position: absolute;
+  transition: opacity $transition-normal, transform $transition-normal;
+}
+.sort-icon-up {
+  top: 0;
+  opacity: 0.4;
+}
+.sort-icon-down {
+  bottom: 0;
+  opacity: 1;
+}
+.sort-btn[data-sort="asc"] .sort-icon-up {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+.sort-btn[data-sort="asc"] .sort-icon-down {
+  opacity: 0.4;
+  transform: translateY(2px);
+}
+.sort-btn[data-sort="desc"] .sort-icon-down {
+  opacity: 1;
+  transform: translateY(2px);
+}
+.sort-btn[data-sort="desc"] .sort-icon-up {
+  opacity: 0.4;
+  transform: translateY(-2px);
+}

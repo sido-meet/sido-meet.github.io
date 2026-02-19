@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/scroll.js"></script>
+  <script src="/js/sort.js"></script>
+  <script src="/js/code-block.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo"><a href="/">SIDO</a></h1>
+        <nav class="nav">
+          <ul id="main-nav">
+            
+            <li class="nav-item " data-nav-link="Home">
+              <a href="/">HOME</a>
+            </li>
+            
+            <li class="nav-item " data-nav-link="Links">
+              <a href="/links.html">LINKS</a>
+            </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <div class="post-container">
+    <article class="post">
+      <h1 class="post-title">Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</h1>
+      <div class="post-meta">
+        <div class="post-meta-row">
+          <span class="post-meta-item">
+            <span class="meta-icon">📅</span>
+            发表于2025-12-11
+          </span>
+          
+            <span class="post-meta-item">
+              <span class="meta-icon">🔄</span>
+              更新于2026-02-19
+            </span>
+          
+        </div>
+        <div class="post-meta-row">
+          
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <span class="post-meta-item">
+              <span class="meta-icon">📝</span>
+              字数总计:691
+            </span>
+            <span class="post-meta-item">
+              <span class="meta-icon">⏱️</span>
+              阅读时长:3分钟
+            </span>
+          
+          <span class="post-meta-item">
+            <span class="meta-icon">👁️</span>
+            阅读量:<span id="post-views-count">0</span>
+          </span>
+          
+        </div>
+      </div>
+      <script>
+        // 阅读量统计
+        (function() {
+          var postPath = '2025/12/11/Hexo-中-hexo-generate-之前都需要使用-hexo-clean-命令吗？/';
+          var storageKey = 'post_views_' + postPath;
+          var views = localStorage.getItem(storageKey) || 0;
+          views = parseInt(views) + 1;
+          localStorage.setItem(storageKey, views);
+          document.getElementById('post-views-count').textContent = views;
+        })();
+      </script>
+      <div class="post-content">
+        <p>在使用 Hexo 构建博客的过程中，经常会遇到 <code>hexo clean</code> 和 <code>hexo generate</code> 这两个命令。很多初学者可能会有疑问：<strong>每次执行 <code>hexo generate</code> 前都必须运行 <code>hexo clean</code> 吗？</strong> 本文将详细解答这个问题，并提供最佳实践指南。</p>
+<h2 id="一、命令作用区别"><a href="#一、命令作用区别" class="headerlink" title="一、命令作用区别"></a>一、命令作用区别</h2><p>首先，让我们明确这两个命令的基本作用：</p>
+<h3 id="1-hexo-clean"><a href="#1-hexo-clean" class="headerlink" title="1. hexo clean"></a>1. <code>hexo clean</code></h3><p>清除 Hexo 的缓存文件 (<code>db.json</code>) 和已生成的静态文件 (<code>public</code> 目录)：</p>
+<ul>
+<li><strong>缓存文件 <code>db.json</code></strong>：包含站点内容索引，用于提高生成效率</li>
+<li><strong>静态文件目录 <code>public</code></strong>：最终生成的网站文件，用于部署到服务器</li>
+</ul>
+<h3 id="2-hexo-generate"><a href="#2-hexo-generate" class="headerlink" title="2. hexo generate"></a>2. <code>hexo generate</code></h3><p>根据当前配置和内容，生成新的静态文件到 <code>public</code> 目录：</p>
+<ul>
+<li>默认基于缓存进行<strong>增量更新</strong>，只重新生成有变化的内容</li>
+<li>使用 <code>--force</code> 参数可强制重新生成所有文件</li>
+</ul>
+<h2 id="二、什么时候需要先执行-hexo-clean？"><a href="#二、什么时候需要先执行-hexo-clean？" class="headerlink" title="二、什么时候需要先执行 hexo clean？"></a>二、什么时候需要先执行 <code>hexo clean</code>？</h2><p>以下情况<strong>建议先运行 <code>hexo clean</code></strong>，再执行 <code>hexo generate</code>：</p>
+<p>✅ <strong>修改了站点核心配置</strong>（<code>_config.yml</code>）<br>✅ <strong>切换或修改了主题</strong>（包括主题配置 <code>themes/主题名/_config.yml</code>）<br>✅ <strong>修改了模板文件</strong>（<code>.ejs</code>、<code>.pug</code> 等布局文件）<br>✅ <strong>安装或卸载了插件</strong>，特别是影响生成过程的插件<br>✅ <strong>网站显示异常</strong>（如旧内容未更新、样式错乱等）<br>✅ <strong>需要完全重新生成网站</strong>（如发布前的最终检查）</p>
+<h2 id="三、什么时候可以直接执行-hexo-generate？"><a href="#三、什么时候可以直接执行-hexo-generate？" class="headerlink" title="三、什么时候可以直接执行 hexo generate？"></a>三、什么时候可以直接执行 <code>hexo generate</code>？</h2><p>以下情况<strong>可以跳过 <code>hexo clean</code></strong>，直接执行 <code>hexo generate</code>：</p>
+<p>✅ <strong>仅修改了文章内容</strong>（<code>.md</code> 文件）<br>✅ <strong>仅添加了新文章或页面</strong><br>✅ <strong>仅修改了文章的 front-matter</strong>（标题、标签、日期等）<br>✅ <strong>开发过程中的快速预览</strong>（使用 <code>hexo server</code> 时会自动重新生成）</p>
+<h2 id="四、最佳实践总结"><a href="#四、最佳实践总结" class="headerlink" title="四、最佳实践总结"></a>四、最佳实践总结</h2><h3 id="1-日常写作流程"><a href="#1-日常写作流程" class="headerlink" title="1. 日常写作流程"></a>1. 日常写作流程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建新文章</span></span><br><span class="line">hexo new post <span class="string">&quot;文章标题&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 编辑文章内容（Markdown）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 本地预览</span></span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 直接生成（无需 clean）</span></span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-配置或主题变更流程"><a href="#2-配置或主题变更流程" class="headerlink" title="2. 配置或主题变更流程"></a>2. 配置或主题变更流程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 修改配置文件或主题</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 清除缓存和旧文件</span></span><br><span class="line">hexo clean</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 重新生成站点</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 本地预览确认</span></span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-发布前流程"><a href="#3-发布前流程" class="headerlink" title="3. 发布前流程"></a>3. 发布前流程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清除缓存，确保生成完整文件</span></span><br><span class="line">hexo clean</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成站点</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署到服务器</span></span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、命令组合技巧"><a href="#五、命令组合技巧" class="headerlink" title="五、命令组合技巧"></a>五、命令组合技巧</h2><p>Hexo 支持命令组合，可以简化操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清除并重新生成</span></span><br><span class="line">hexo clean &amp;&amp; hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除、生成并部署</span></span><br><span class="line">hexo clean &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、常见问题解答"><a href="#六、常见问题解答" class="headerlink" title="六、常见问题解答"></a>六、常见问题解答</h2><h3 id="Q-为什么我修改了配置，但生成的网站没有变化？"><a href="#Q-为什么我修改了配置，但生成的网站没有变化？" class="headerlink" title="Q: 为什么我修改了配置，但生成的网站没有变化？"></a>Q: 为什么我修改了配置，但生成的网站没有变化？</h3><p>A: 可能是缓存导致的，尝试先执行 <code>hexo clean</code> 再重新生成。</p>
+<h3 id="Q-hexo-clean-会删除我的文章吗？"><a href="#Q-hexo-clean-会删除我的文章吗？" class="headerlink" title="Q: hexo clean 会删除我的文章吗？"></a>Q: <code>hexo clean</code> 会删除我的文章吗？</h3><p>A: 不会，它只会删除缓存文件和生成的静态文件，不会影响 <code>source</code> 目录中的原始文章。</p>
+<h3 id="Q-增量更新和强制更新有什么区别？"><a href="#Q-增量更新和强制更新有什么区别？" class="headerlink" title="Q: 增量更新和强制更新有什么区别？"></a>Q: 增量更新和强制更新有什么区别？</h3><p>A: 增量更新只处理变化的内容，生成速度更快；强制更新会重新生成所有文件，确保内容完全一致。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>不是每次执行 <code>hexo generate</code> 都需要先运行 <code>hexo clean</code></strong>，这取决于你的具体操作场景。合理使用这两个命令可以提高工作效率：</p>
+<ul>
+<li><strong>日常写作</strong>：直接使用 <code>hexo generate</code> 或 <code>hexo server</code></li>
+<li><strong>配置变更</strong>：先 <code>hexo clean</code> 再 <code>hexo generate</code></li>
+<li><strong>发布前</strong>：执行 <code>hexo clean &amp;&amp; hexo generate</code> 确保完整性</li>
+</ul>
+<p>希望本文能帮助你更好地理解和使用 Hexo 的这两个核心命令！</p>
+
+      </div>
+      
+
+      
+      
+      <div class="post-comments">
+        <h3 class="comments-title">评论</h3>
+        <script src="https://giscus.app/client.js"
+                data-repo="sido-meet/sido-meet.github.io"
+                data-repo-id="R_kgDOQePF5Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOQePF5c4C1irw"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="light"
+                data-lang="zh-CN"
+                data-loading="eager"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+      
+    </article>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 SIDO. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

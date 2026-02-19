@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>为什么导航栏跳转没有反应</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/scroll.js"></script>
+  <script src="/js/sort.js"></script>
+  <script src="/js/code-block.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo"><a href="/">SIDO</a></h1>
+        <nav class="nav">
+          <ul id="main-nav">
+            
+            <li class="nav-item " data-nav-link="Home">
+              <a href="/">HOME</a>
+            </li>
+            
+            <li class="nav-item " data-nav-link="Links">
+              <a href="/links.html">LINKS</a>
+            </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <div class="post-container">
+    <article class="post">
+      <h1 class="post-title">为什么导航栏跳转没有反应</h1>
+      <div class="post-meta">
+        <div class="post-meta-row">
+          <span class="post-meta-item">
+            <span class="meta-icon">📅</span>
+            发表于2025-12-16
+          </span>
+          
+            <span class="post-meta-item">
+              <span class="meta-icon">🔄</span>
+              更新于2026-02-19
+            </span>
+          
+        </div>
+        <div class="post-meta-row">
+          
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <span class="post-meta-item">
+              <span class="meta-icon">📝</span>
+              字数总计:976
+            </span>
+            <span class="post-meta-item">
+              <span class="meta-icon">⏱️</span>
+              阅读时长:4分钟
+            </span>
+          
+          <span class="post-meta-item">
+            <span class="meta-icon">👁️</span>
+            阅读量:<span id="post-views-count">0</span>
+          </span>
+          
+        </div>
+      </div>
+      <script>
+        // 阅读量统计
+        (function() {
+          var postPath = '2025/12/16/why-navigation-links-not-working/';
+          var storageKey = 'post_views_' + postPath;
+          var views = localStorage.getItem(storageKey) || 0;
+          views = parseInt(views) + 1;
+          localStorage.setItem(storageKey, views);
+          document.getElementById('post-views-count').textContent = views;
+        })();
+      </script>
+      <div class="post-content">
+        <p>在开发个人网站或博客时，导航栏是用户访问不同页面的重要入口。最近我在使用Hexo搭建个人博客时，遇到了一个问题：点击导航栏的链接（如Home、Blogs、Projects等）时，页面没有任何跳转反应。这个问题很影响用户体验，于是我进行了深入排查并成功解决。今天就来分享一下这个问题的解决过程。</p>
+<h2 id="一、问题描述"><a href="#一、问题描述" class="headerlink" title="一、问题描述"></a>一、问题描述</h2><p>网站导航栏包含多个链接：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/publications&quot;</span>&gt;</span>Publications<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/projects&quot;</span>&gt;</span>Projects<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/blogs&quot;</span>&gt;</span>Blogs<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>点击这些链接时，页面没有任何跳转，浏览器地址栏也没有变化。</p>
+<h2 id="二、问题代码分析"><a href="#二、问题代码分析" class="headerlink" title="二、问题代码分析"></a>二、问题代码分析</h2><p>经过排查，我发现问题出在最近添加的<code>scroll.js</code>文件中，该文件用于实现导航栏的滚动收起效果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Scroll listener for header behavior</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;scroll&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// ... 导航栏滚动逻辑</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Smooth scroll for navigation links</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> navLinks = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.nav a&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  navLinks.<span class="title function_">forEach</span>(<span class="function"><span class="params">link</span> =&gt;</span> &#123;</span><br><span class="line">    link.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> href = <span class="variable language_">this</span>.<span class="title function_">getAttribute</span>(<span class="string">&#x27;href&#x27;</span>);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// Only handle internal links</span></span><br><span class="line">      <span class="keyword">if</span> (href.<span class="title function_">startsWith</span>(<span class="string">&#x27;#&#x27;</span>) || href.<span class="title function_">startsWith</span>(<span class="string">&#x27;/&#x27;</span>)) &#123;</span><br><span class="line">        e.<span class="title function_">preventDefault</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Scroll to target</span></span><br><span class="line">        <span class="keyword">const</span> target = href.<span class="title function_">startsWith</span>(<span class="string">&#x27;#&#x27;</span>) ? <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(href) : <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;top&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span> (target) &#123;</span><br><span class="line">          target.<span class="title function_">scrollIntoView</span>(&#123; <span class="attr">behavior</span>: <span class="string">&#x27;smooth&#x27;</span> &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、问题原因"><a href="#三、问题原因" class="headerlink" title="三、问题原因"></a>三、问题原因</h2><p>问题出在这段代码的第26行：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (href.<span class="title function_">startsWith</span>(<span class="string">&#x27;#&#x27;</span>) || href.<span class="title function_">startsWith</span>(<span class="string">&#x27;/&#x27;</span>)) &#123;</span><br><span class="line">  e.<span class="title function_">preventDefault</span>();</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码的意图是：</p>
+<ol>
+<li>对所有内部链接（以<code>#</code>或<code>/</code>开头的链接）应用平滑滚动效果</li>
+<li>使用<code>e.preventDefault()</code>阻止默认的链接跳转行为</li>
+<li>然后根据链接类型执行相应的滚动操作</li>
+</ol>
+<p>然而，这里存在一个严重的逻辑错误：</p>
+<ul>
+<li>对于以<code>#</code>开头的锚点链接（如<code>#section1</code>），我们确实想要阻止默认跳转并应用平滑滚动</li>
+<li>但对于以<code>/</code>开头的页面导航链接（如<code>/blogs</code>），我们不应该阻止默认跳转行为！</li>
+</ul>
+<p>当代码执行到<code>e.preventDefault()</code>时，它完全阻止了浏览器的默认链接跳转行为，导致所有以<code>/</code>开头的链接都无法正常跳转到目标页面。</p>
+<h2 id="四、解决方案"><a href="#四、解决方案" class="headerlink" title="四、解决方案"></a>四、解决方案</h2><p>修复这个问题很简单，我们只需要修改条件判断逻辑，仅对以<code>#</code>开头的锚点链接应用平滑滚动和<code>e.preventDefault()</code>，而让以<code>/</code>开头的导航链接保持默认的跳转行为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Smooth scroll for navigation links</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> navLinks = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.nav a&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  navLinks.<span class="title function_">forEach</span>(<span class="function"><span class="params">link</span> =&gt;</span> &#123;</span><br><span class="line">    link.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> href = <span class="variable language_">this</span>.<span class="title function_">getAttribute</span>(<span class="string">&#x27;href&#x27;</span>);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// Only apply smooth scroll to internal anchor links</span></span><br><span class="line">      <span class="keyword">if</span> (href.<span class="title function_">startsWith</span>(<span class="string">&#x27;#&#x27;</span>)) &#123;</span><br><span class="line">        e.<span class="title function_">preventDefault</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Scroll to target</span></span><br><span class="line">        <span class="keyword">const</span> target = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(href);</span><br><span class="line">        <span class="keyword">if</span> (target) &#123;</span><br><span class="line">          target.<span class="title function_">scrollIntoView</span>(&#123; <span class="attr">behavior</span>: <span class="string">&#x27;smooth&#x27;</span> &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// For links starting with &#x27;/&#x27;, let the browser handle the navigation normally</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、如何避免类似问题"><a href="#五、如何避免类似问题" class="headerlink" title="五、如何避免类似问题"></a>五、如何避免类似问题</h2><ol>
+<li><p><strong>明确功能边界</strong>：在实现功能时，要明确区分不同类型的元素和交互行为。锚点链接和页面导航链接是两种不同的元素，应该有不同的处理方式。</p>
+</li>
+<li><p><strong>使用精确的条件判断</strong>：避免使用过于宽泛的条件判断。在这个例子中，<code>href.startsWith(&#39;#&#39;) || href.startsWith(&#39;/&#39;)</code>就是一个过于宽泛的条件，导致了非预期的行为。</p>
+</li>
+<li><p><strong>测试各种场景</strong>：在实现功能后，要测试各种可能的使用场景。不仅要测试功能正常的情况，还要测试边界情况和异常情况。</p>
+</li>
+<li><p><strong>理解事件处理机制</strong>：要深入理解JavaScript的事件处理机制，特别是<code>event.preventDefault()</code>的作用和影响范围。</p>
+</li>
+<li><p><strong>模块化设计</strong>：将不同的功能模块分开实现，避免一个功能模块影响另一个功能模块。在这个例子中，滚动效果和链接跳转是两个不同的功能，应该尽量减少它们之间的相互影响。</p>
+</li>
+</ol>
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>导航栏链接无法跳转的问题是一个典型的JavaScript事件处理错误。通过仔细分析代码，我们找到了问题所在：错误地对所有以<code>/</code>开头的链接应用了<code>e.preventDefault()</code>。修复方法是调整条件判断逻辑，仅对以<code>#</code>开头的锚点链接应用平滑滚动效果。</p>
+<p>这个问题提醒我们，在编写JavaScript代码时，要非常小心地处理事件默认行为，特别是当一个功能模块影响多个元素类型时。通过明确功能边界、使用精确的条件判断和充分测试，可以避免类似问题的发生。</p>
+<p>希望这篇文章能帮助你解决类似的导航栏跳转问题，也能让你在编写JavaScript代码时更加注意这些细节。</p>
+<hr>
+<p><strong>本文由AI辅助生成，作者：sido</strong></p>
+
+      </div>
+      
+
+      
+      
+      <div class="post-comments">
+        <h3 class="comments-title">评论</h3>
+        <script src="https://giscus.app/client.js"
+                data-repo="sido-meet/sido-meet.github.io"
+                data-repo-id="R_kgDOQePF5Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOQePF5c4C1irw"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="light"
+                data-lang="zh-CN"
+                data-loading="eager"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+      
+    </article>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 SIDO. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

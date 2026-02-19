@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>不知道写啥？</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/scroll.js"></script>
+  <script src="/js/sort.js"></script>
+  <script src="/js/code-block.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo"><a href="/">SIDO</a></h1>
+        <nav class="nav">
+          <ul id="main-nav">
+            
+            <li class="nav-item " data-nav-link="Home">
+              <a href="/">HOME</a>
+            </li>
+            
+            <li class="nav-item " data-nav-link="Links">
+              <a href="/links.html">LINKS</a>
+            </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <div class="post-container">
+    <article class="post">
+      <h1 class="post-title">不知道写啥？</h1>
+      <div class="post-meta">
+        <div class="post-meta-row">
+          <span class="post-meta-item">
+            <span class="meta-icon">📅</span>
+            发表于2025-12-10
+          </span>
+          
+            <span class="post-meta-item">
+              <span class="meta-icon">🔄</span>
+              更新于2026-02-19
+            </span>
+          
+        </div>
+        <div class="post-meta-row">
+          
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <span class="post-meta-item">
+              <span class="meta-icon">📝</span>
+              字数总计:156
+            </span>
+            <span class="post-meta-item">
+              <span class="meta-icon">⏱️</span>
+              阅读时长:1分钟
+            </span>
+          
+          <span class="post-meta-item">
+            <span class="meta-icon">👁️</span>
+            阅读量:<span id="post-views-count">0</span>
+          </span>
+          
+        </div>
+      </div>
+      <script>
+        // 阅读量统计
+        (function() {
+          var postPath = '2025/12/10/不知道写啥？/';
+          var storageKey = 'post_views_' + postPath;
+          var views = localStorage.getItem(storageKey) || 0;
+          views = parseInt(views) + 1;
+          localStorage.setItem(storageKey, views);
+          document.getElementById('post-views-count').textContent = views;
+        })();
+      </script>
+      <div class="post-content">
+        <h1 id="学啥写啥？"><a href="#学啥写啥？" class="headerlink" title="学啥写啥？"></a>学啥写啥？</h1><p>今天学了啥呢，怎么控制<code>hexo</code>生成一个新的文章，首先要通过<code>new</code>的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &lt;layout&gt; <span class="string">&quot;文章名&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这个命令会调用scaffolds下面的模板创建，创建<strong>post</strong>的layout为<code>post</code>，通过layout下的post.md控制，<br>可以在post.md中设置文章的标题、标签、分类等信息。例如：</p>
+<blockquote>
+<hr>
+<p>title: 不知道写啥？<br>date: 1765410729000<br>tags:</p>
+</blockquote>
+<hr>
+<p>这个就在生成文章时自动填充。同时也可以通过命令控制，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">&quot;文章名&quot;</span> --tags=<span class="string">&quot;思考,随笔,生活&quot;</span></span><br></pre></td></tr></table></figure>
+<p>可以控制的参数有<code>--author</code>、<code>--categories</code>、<code>--date</code>、<code>--tags</code>等。具体可以查阅<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/front-matter">hexo文档</a>。</p>
+
+      </div>
+      
+
+      
+      
+      <div class="post-comments">
+        <h3 class="comments-title">评论</h3>
+        <script src="https://giscus.app/client.js"
+                data-repo="sido-meet/sido-meet.github.io"
+                data-repo-id="R_kgDOQePF5Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOQePF5c4C1irw"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="light"
+                data-lang="zh-CN"
+                data-loading="eager"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+      
+    </article>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 SIDO. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
