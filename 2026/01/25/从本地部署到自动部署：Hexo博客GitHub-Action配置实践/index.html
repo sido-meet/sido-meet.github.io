@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>从本地部署到自动部署：Hexo博客GitHub Action配置实践</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/menu.js"></script>
+  <script src="/js/scroll.js"></script>
+  <script src="/js/animation.js"></script>
+  <script src="/js/sort.js"></script>
+  <script src="/js/code-block.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header" id="main-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <h1 class="logo"><a href="/">SIDO</a></h1>
+          <p class="brand-subtitle">Personal Website</p>
+        </div>
+        <!-- Desktop Navigation -->
+        <nav class="nav desktop-nav">
+          <ul class="nav-list">
+            
+            <li class="nav-item ", data-nav-link="Home">
+              <a href="/" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Home</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="博客">
+              <a href="/blogs.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">博客</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="随想">
+              <a href="/thoughts.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">随想</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="词条">
+              <a href="/terms.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">词条</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="Links">
+              <a href="/links.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Links</span>
+              </a>
+            </li>
+            
+          </ul>
+        </nav>
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle mobile menu">
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav mobile-nav" id="mobile-nav">
+      <div class="container">
+        <ul class="nav-list">
+          
+          <li class="nav-item ", data-nav-link="Home">
+            <a href="/" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="博客">
+            <a href="/blogs.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">博客</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="随想">
+            <a href="/thoughts.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                  <path d="M9 18h6"></path>
+                  <path d="M10 22h4"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">随想</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="词条">
+            <a href="/terms.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">词条</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="Links">
+            <a href="/links.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Links</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <!-- Post Header -->
+  <section class="post-header" data-aos="fade-up">
+    <div class="container">
+      <div class="post-header-content" data-aos="fade-up">
+        
+        
+          <div class="post-category">
+            <a href="/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/">技术实践</a>
+          </div>
+        
+        <h1 class="post-title">从本地部署到自动部署：Hexo博客GitHub Action配置实践</h1>
+        <div class="post-meta">
+          <div class="post-meta-row">
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              2026-01-25
+            </span>
+            
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23,4 23,10 17,10"></polyline>
+                  <polyline points="1,20 1,14 7,14"></polyline>
+                  <path d="M3.51,9a9,9,0,0,1,14.85-3.36L23,10M1,14l4.64,4.36A9,9,0,0,0,20.49,15"></path>
+                </svg>
+                更新于 2026-02-28
+              </span>
+            
+          </div>
+          <div class="post-meta-row">
+            
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14,2H6A2,2,0,0,0,4,4V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V8Z"></path>
+                  <polyline points="14,2 14,8 20,8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10,9 9,9 8,9"></polyline>
+                </svg>
+                1229 字
+              </span>
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12,6 12,12 16,14"></polyline>
+                </svg>
+                5 分钟阅读
+              </span>
+            
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2,12s3-7,10-7,10,7,10,7-3,7-10,7S2,12,2,12Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              阅读量: <span id="post-views-count">0</span>
+            </span>
+            
+          </div>
+        </div>
+        
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Hexo/" class="post-tag">Hexo</a>
+            
+              <a href="/tags/GitHub-Actions/" class="post-tag">GitHub Actions</a>
+            
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" class="post-tag">自动化部署</a>
+            
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/" class="post-tag">博客</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Post Content -->
+  <section class="post-content-section" data-aos="fade-up">
+    <div class="container">
+      <article class="post">
+        <div class="post-content" data-aos="fade-up">
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>一直以来，我都是使用传统的本地部署方式来管理Hexo博客：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>每次写完文章后都需要手动执行这些命令，虽然不算麻烦，但总觉得不够现代化。最近终于下定决心，将博客部署流程自动化，使用GitHub Action实现”写完即发布”的效果。</p>
+<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><p>我的项目结构比较特殊：</p>
+<ul>
+<li><strong>源码仓库</strong>：私有仓库，保存Hexo源码和配置文件</li>
+<li><strong>静态网页仓库</strong>：公开仓库，专门用于GitHub Pages部署</li>
+</ul>
+<p>目标很明确：修改源码后推送到私有仓库，自动触发GitHub Action，构建静态页面并部署到GitHub Pages。</p>
+<h2 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h2><h3 id="1-权限设置"><a href="#1-权限设置" class="headerlink" title="1. 权限设置"></a>1. 权限设置</h3><p>首先需要在私有仓库中配置GitHub Actions的权限：</p>
+<ol>
+<li>进入私有仓库的Settings → Actions → General</li>
+<li>找到”Workflow permissions”选项</li>
+<li>选择”Read and write permissions”（读写权限）</li>
+<li>保存设置</li>
+</ol>
+<h3 id="2-GitHub-Action配置"><a href="#2-GitHub-Action配置" class="headerlink" title="2. GitHub Action配置"></a>2. GitHub Action配置</h3><p>创建<code>.github/workflows/frontend-deploy.yml</code>文件，配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Frontend</span> <span class="string">Hexo</span> <span class="string">Deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;source/**&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;themes/**&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;_config.yml&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;package.json&#x27;</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-and-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span> <span class="string">code</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">submodules:</span> <span class="literal">true</span></span><br><span class="line">          <span class="attr">fetch-depth:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Setup</span> <span class="string">Node.js</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">&#x27;18&#x27;</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">&#x27;npm&#x27;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">dependencies</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Clean</span> <span class="string">Hexo</span> <span class="string">cache</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">clean</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">Hexo</span> <span class="string">site</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">to</span> <span class="string">GitHub</span> <span class="string">Pages</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">peaceiris/actions-gh-pages@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">github_token:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">publish_dir:</span> <span class="string">./public</span></span><br><span class="line">          <span class="attr">publish_branch:</span> <span class="string">main</span></span><br><span class="line">          <span class="attr">external_repository:</span> <span class="string">your-username/your-username.github.io</span></span><br><span class="line">          <span class="attr">cname:</span> <span class="string">your-username.github.io</span></span><br><span class="line">          <span class="attr">force_orphan:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-SSH密钥配置"><a href="#3-SSH密钥配置" class="headerlink" title="3. SSH密钥配置"></a>3. SSH密钥配置</h3><p>由于需要部署到外部仓库，我们使用SSH密钥方式进行认证，这是最可靠和安全的方式。</p>
+<h4 id="生成SSH密钥对"><a href="#生成SSH密钥对" class="headerlink" title="生成SSH密钥对"></a>生成SSH密钥对</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="添加公钥到静态网页仓库"><a href="#添加公钥到静态网页仓库" class="headerlink" title="添加公钥到静态网页仓库"></a>添加公钥到静态网页仓库</h4><ol>
+<li>进入静态网页仓库 <code>your-username/your-username.github.io</code></li>
+<li>点击 Settings → Deploy keys</li>
+<li>添加生成的公钥（<code>~/.ssh/id_rsa.pub</code>）</li>
+<li>勾选 “Allow write access”</li>
+</ol>
+<h4 id="添加私钥到源码仓库Secrets"><a href="#添加私钥到源码仓库Secrets" class="headerlink" title="添加私钥到源码仓库Secrets"></a>添加私钥到源码仓库Secrets</h4><ol>
+<li>进入源码仓库 <code>your-username/your-username.github.io.source</code></li>
+<li>点击 Settings → Secrets and variables → Actions</li>
+<li>添加新的Secret：<ul>
+<li>Name: <code>DEPLOY_KEY</code></li>
+<li>Value: 私钥内容（<code>~/.ssh/id_rsa</code>）</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-Hexo配置验证"><a href="#4-Hexo配置验证" class="headerlink" title="4. Hexo配置验证"></a>4. Hexo配置验证</h3><p>确保<code>_config.yml</code>中的部署配置正确：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:your-username/your-username.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="部署验证"><a href="#部署验证" class="headerlink" title="部署验证"></a>部署验证</h2><h3 id="1-测试部署流程"><a href="#1-测试部署流程" class="headerlink" title="1. 测试部署流程"></a>1. 测试部署流程</h3><p>完成配置后，我们可以通过以下步骤验证部署是否成功：</p>
+<ol>
+<li><strong>准备测试内容</strong>：对博客内容做一个微小的修改</li>
+<li><strong>推送测试提交</strong>：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;测试GitHub Action部署&quot;</span></span><br><span class="line">git push origin main</span><br></pre></td></tr></table></figure></li>
+<li><strong>查看Action运行状态</strong>：<ul>
+<li>进入私有仓库的Actions页面</li>
+<li>查看刚刚触发的workflow运行记录</li>
+<li>检查每一步的运行状态</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-验证部署结果"><a href="#2-验证部署结果" class="headerlink" title="2. 验证部署结果"></a>2. 验证部署结果</h3><ol>
+<li><strong>等待Action完成</strong>：通常需要1-2分钟</li>
+<li><strong>检查静态网页仓库</strong>：查看是否有新的提交</li>
+<li><strong>访问网站</strong>：打开GitHub Pages地址，验证修改是否生效</li>
+</ol>
+<h2 id="常见问题与解决方案"><a href="#常见问题与解决方案" class="headerlink" title="常见问题与解决方案"></a>常见问题与解决方案</h2><h3 id="1-跨仓库访问权限"><a href="#1-跨仓库访问权限" class="headerlink" title="1. 跨仓库访问权限"></a>1. 跨仓库访问权限</h3><p><strong>问题</strong>：私有仓库的Action是否能访问到公开的静态网页仓库？</p>
+<p><strong>解答</strong>：是的，我们使用SSH密钥方式，只要在静态网页仓库中添加了对应的公钥，并在源码仓库中配置了私钥Secret，GitHub Action就能成功访问并部署到外部仓库。</p>
+<h3 id="2-部署失败排查"><a href="#2-部署失败排查" class="headerlink" title="2. 部署失败排查"></a>2. 部署失败排查</h3><p>如果部署失败，可以从以下几个方面排查：</p>
+<ol>
+<li><strong>查看详细日志</strong>：进入Action运行记录，查看每一步的输出</li>
+<li><strong>检查依赖安装</strong>：<code>npm install</code>是否成功</li>
+<li><strong>检查构建过程</strong>：<code>hexo generate</code>是否生成了静态文件</li>
+<li><strong>检查部署配置</strong>：外部仓库地址和分支是否正确</li>
+<li><strong>检查SSH密钥配置</strong>：<ul>
+<li>公钥是否已添加到静态网页仓库</li>
+<li>私钥是否已正确添加到源码仓库的Secrets</li>
+<li>Secret名称是否为<code>DEPLOY_KEY</code></li>
+<li>公钥是否勾选了”Allow write access”</li>
+</ul>
+</li>
+</ol>
+<h2 id="优势总结"><a href="#优势总结" class="headerlink" title="优势总结"></a>优势总结</h2><p>相比传统的本地部署方式，GitHub Action自动部署具有以下优势：</p>
+<ol>
+<li><strong>自动化</strong>：无需手动执行部署命令，写完即发布</li>
+<li><strong>一致性</strong>：每次部署环境相同，减少部署差异</li>
+<li><strong>可追溯</strong>：每一次部署都有完整的日志记录</li>
+<li><strong>安全</strong>：无需在本地保存部署密钥</li>
+<li><strong>高效</strong>：节省手动部署的时间和精力</li>
+</ol>
+<h2 id="使用建议"><a href="#使用建议" class="headerlink" title="使用建议"></a>使用建议</h2><ol>
+<li><strong>合理设置触发条件</strong>：只在修改关键文件时触发部署</li>
+<li><strong>定期检查部署日志</strong>：确保部署流程正常运行</li>
+<li><strong>备份配置文件</strong>：将GitHub Action配置纳入版本控制</li>
+<li><strong>测试部署流程</strong>：新配置后进行测试，确保正常工作</li>
+<li><strong>关注GitHub Pages状态</strong>：定期访问网站，确保正常运行</li>
+</ol>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过GitHub Action实现Hexo博客的自动部署，是一次现代化开发流程的实践。配置完成后，我只需要专注于创作内容，剩下的部署工作全部交给自动化流程处理。这种”写完即发布”的体验，让博客创作变得更加高效和愉悦。</p>
+<p>如果你也在使用Hexo博客，不妨尝试配置GitHub Action自动部署，体验一下自动化带来的便利！</p>
+
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Related Posts -->
+  <section class="related-posts" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">相关文章</h2>
+      </div>
+      <div class="posts-grid">
+        
+        
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="0s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2025-12-11</span>
+                  
+                  
+                    <span class="post-category">博客开发</span>
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/">Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="100s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2026-02-14</span>
+                  
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/">Hexo主题优化：简化category和tag页面实现</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="200s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2026-01-27</span>
+                  
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/">Hexo博客评论系统方案对比</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Comments -->
+  
+  <section class="post-comments" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">评论</h2>
+      </div>
+      <div class="comments-container" data-aos="fade-up">
+        <script src="https://giscus.app/client.js"
+                data-repo="sido-meet/sido-meet.github.io"
+                data-repo-id="R_kgDOQePF5Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOQePF5c4C1irw"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="light"
+                data-lang="zh-CN"
+                data-loading="eager"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+    </div>
+  </section>
+  
+
+  <script>
+    // 阅读量统计
+    (function() {
+      var postPath = '2026/01/25/从本地部署到自动部署：Hexo博客GitHub-Action配置实践/';
+      var storageKey = 'post_views_' + postPath;
+      var views = localStorage.getItem(storageKey) || 0;
+      views = parseInt(views) + 1;
+      localStorage.setItem(storageKey, views);
+      document.getElementById('post-views-count').textContent = views;
+    })();
+
+    // 阅读进度条
+    window.addEventListener('scroll', function() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("reading-progress").style.width = scrolled + "%";
+    });
+  </script>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <!-- Brand Section -->
+        <div class="footer-brand">
+          <h3 class="footer-logo">SIDO</h3>
+          <p class="footer-subtitle">Personal Website</p>
+          <p class="footer-description">
+            A personal space for sharing thoughts, knowledge, and experiences.
+          </p>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-link-list">
+            
+            <li class="footer-link-item">
+              <a href="/" class="footer-link">Home</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/blogs.html" class="footer-link">博客</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/thoughts.html" class="footer-link">随想</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/terms.html" class="footer-link">词条</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/links.html" class="footer-link">Links</a>
+            </li>
+            
+          </ul>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>contact@sido-meet.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Beijing, China</span>
+          </div>
+        </div>
+        
+        <!-- Social Media -->
+        <div class="footer-social">
+          <h4 class="footer-heading">Follow Me</h4>
+          <div class="footer-social-links">
+            <a href="#" class="footer-social-link" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Copyright Section -->
+      <div class="footer-copyright">
+        <p>&copy; 2026 SIDO. All rights reserved.</p>
+        <p class="footer-copyright-text">
+          Designed with ❤️ using Hexo
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

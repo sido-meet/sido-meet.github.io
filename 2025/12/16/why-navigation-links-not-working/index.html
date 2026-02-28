@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>为什么导航栏跳转没有反应</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/menu.js"></script>
+  <script src="/js/scroll.js"></script>
+  <script src="/js/animation.js"></script>
+  <script src="/js/sort.js"></script>
+  <script src="/js/code-block.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header" id="main-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <h1 class="logo"><a href="/">SIDO</a></h1>
+          <p class="brand-subtitle">Personal Website</p>
+        </div>
+        <!-- Desktop Navigation -->
+        <nav class="nav desktop-nav">
+          <ul class="nav-list">
+            
+            <li class="nav-item ", data-nav-link="Home">
+              <a href="/" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Home</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="博客">
+              <a href="/blogs.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">博客</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="随想">
+              <a href="/thoughts.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">随想</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="词条">
+              <a href="/terms.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">词条</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="Links">
+              <a href="/links.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Links</span>
+              </a>
+            </li>
+            
+          </ul>
+        </nav>
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle mobile menu">
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav mobile-nav" id="mobile-nav">
+      <div class="container">
+        <ul class="nav-list">
+          
+          <li class="nav-item ", data-nav-link="Home">
+            <a href="/" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="博客">
+            <a href="/blogs.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">博客</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="随想">
+            <a href="/thoughts.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                  <path d="M9 18h6"></path>
+                  <path d="M10 22h4"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">随想</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="词条">
+            <a href="/terms.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">词条</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="Links">
+            <a href="/links.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Links</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <!-- Post Header -->
+  <section class="post-header" data-aos="fade-up">
+    <div class="container">
+      <div class="post-header-content" data-aos="fade-up">
+        
+        
+          <div class="post-category">
+            <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/">博客开发</a>
+          </div>
+        
+        <h1 class="post-title">为什么导航栏跳转没有反应</h1>
+        <div class="post-meta">
+          <div class="post-meta-row">
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              2025-12-16
+            </span>
+            
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23,4 23,10 17,10"></polyline>
+                  <polyline points="1,20 1,14 7,14"></polyline>
+                  <path d="M3.51,9a9,9,0,0,1,14.85-3.36L23,10M1,14l4.64,4.36A9,9,0,0,0,20.49,15"></path>
+                </svg>
+                更新于 2026-02-28
+              </span>
+            
+          </div>
+          <div class="post-meta-row">
+            
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14,2H6A2,2,0,0,0,4,4V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V8Z"></path>
+                  <polyline points="14,2 14,8 20,8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10,9 9,9 8,9"></polyline>
+                </svg>
+                976 字
+              </span>
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12,6 12,12 16,14"></polyline>
+                </svg>
+                4 分钟阅读
+              </span>
+            
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2,12s3-7,10-7,10,7,10,7-3,7-10,7S2,12,2,12Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              阅读量: <span id="post-views-count">0</span>
+            </span>
+            
+          </div>
+        </div>
+        
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Hexo/" class="post-tag">Hexo</a>
+            
+              <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%8A%80%E5%B7%A7/" class="post-tag">博客技巧</a>
+            
+              <a href="/tags/JavaScript/" class="post-tag">JavaScript</a>
+            
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" class="post-tag">前端开发</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Post Content -->
+  <section class="post-content-section" data-aos="fade-up">
+    <div class="container">
+      <article class="post">
+        <div class="post-content" data-aos="fade-up">
+          <p>在开发个人网站或博客时，导航栏是用户访问不同页面的重要入口。最近我在使用Hexo搭建个人博客时，遇到了一个问题：点击导航栏的链接（如Home、Blogs、Projects等）时，页面没有任何跳转反应。这个问题很影响用户体验，于是我进行了深入排查并成功解决。今天就来分享一下这个问题的解决过程。</p>
+<h2 id="一、问题描述"><a href="#一、问题描述" class="headerlink" title="一、问题描述"></a>一、问题描述</h2><p>网站导航栏包含多个链接：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/publications&quot;</span>&gt;</span>Publications<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/projects&quot;</span>&gt;</span>Projects<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/blogs&quot;</span>&gt;</span>Blogs<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>点击这些链接时，页面没有任何跳转，浏览器地址栏也没有变化。</p>
+<h2 id="二、问题代码分析"><a href="#二、问题代码分析" class="headerlink" title="二、问题代码分析"></a>二、问题代码分析</h2><p>经过排查，我发现问题出在最近添加的<code>scroll.js</code>文件中，该文件用于实现导航栏的滚动收起效果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Scroll listener for header behavior</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;scroll&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// ... 导航栏滚动逻辑</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Smooth scroll for navigation links</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> navLinks = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.nav a&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  navLinks.<span class="title function_">forEach</span>(<span class="function"><span class="params">link</span> =&gt;</span> &#123;</span><br><span class="line">    link.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> href = <span class="variable language_">this</span>.<span class="title function_">getAttribute</span>(<span class="string">&#x27;href&#x27;</span>);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// Only handle internal links</span></span><br><span class="line">      <span class="keyword">if</span> (href.<span class="title function_">startsWith</span>(<span class="string">&#x27;#&#x27;</span>) || href.<span class="title function_">startsWith</span>(<span class="string">&#x27;/&#x27;</span>)) &#123;</span><br><span class="line">        e.<span class="title function_">preventDefault</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Scroll to target</span></span><br><span class="line">        <span class="keyword">const</span> target = href.<span class="title function_">startsWith</span>(<span class="string">&#x27;#&#x27;</span>) ? <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(href) : <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;top&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span> (target) &#123;</span><br><span class="line">          target.<span class="title function_">scrollIntoView</span>(&#123; <span class="attr">behavior</span>: <span class="string">&#x27;smooth&#x27;</span> &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、问题原因"><a href="#三、问题原因" class="headerlink" title="三、问题原因"></a>三、问题原因</h2><p>问题出在这段代码的第26行：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (href.<span class="title function_">startsWith</span>(<span class="string">&#x27;#&#x27;</span>) || href.<span class="title function_">startsWith</span>(<span class="string">&#x27;/&#x27;</span>)) &#123;</span><br><span class="line">  e.<span class="title function_">preventDefault</span>();</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码的意图是：</p>
+<ol>
+<li>对所有内部链接（以<code>#</code>或<code>/</code>开头的链接）应用平滑滚动效果</li>
+<li>使用<code>e.preventDefault()</code>阻止默认的链接跳转行为</li>
+<li>然后根据链接类型执行相应的滚动操作</li>
+</ol>
+<p>然而，这里存在一个严重的逻辑错误：</p>
+<ul>
+<li>对于以<code>#</code>开头的锚点链接（如<code>#section1</code>），我们确实想要阻止默认跳转并应用平滑滚动</li>
+<li>但对于以<code>/</code>开头的页面导航链接（如<code>/blogs</code>），我们不应该阻止默认跳转行为！</li>
+</ul>
+<p>当代码执行到<code>e.preventDefault()</code>时，它完全阻止了浏览器的默认链接跳转行为，导致所有以<code>/</code>开头的链接都无法正常跳转到目标页面。</p>
+<h2 id="四、解决方案"><a href="#四、解决方案" class="headerlink" title="四、解决方案"></a>四、解决方案</h2><p>修复这个问题很简单，我们只需要修改条件判断逻辑，仅对以<code>#</code>开头的锚点链接应用平滑滚动和<code>e.preventDefault()</code>，而让以<code>/</code>开头的导航链接保持默认的跳转行为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Smooth scroll for navigation links</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> navLinks = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.nav a&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  navLinks.<span class="title function_">forEach</span>(<span class="function"><span class="params">link</span> =&gt;</span> &#123;</span><br><span class="line">    link.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> href = <span class="variable language_">this</span>.<span class="title function_">getAttribute</span>(<span class="string">&#x27;href&#x27;</span>);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// Only apply smooth scroll to internal anchor links</span></span><br><span class="line">      <span class="keyword">if</span> (href.<span class="title function_">startsWith</span>(<span class="string">&#x27;#&#x27;</span>)) &#123;</span><br><span class="line">        e.<span class="title function_">preventDefault</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Scroll to target</span></span><br><span class="line">        <span class="keyword">const</span> target = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(href);</span><br><span class="line">        <span class="keyword">if</span> (target) &#123;</span><br><span class="line">          target.<span class="title function_">scrollIntoView</span>(&#123; <span class="attr">behavior</span>: <span class="string">&#x27;smooth&#x27;</span> &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// For links starting with &#x27;/&#x27;, let the browser handle the navigation normally</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、如何避免类似问题"><a href="#五、如何避免类似问题" class="headerlink" title="五、如何避免类似问题"></a>五、如何避免类似问题</h2><ol>
+<li><p><strong>明确功能边界</strong>：在实现功能时，要明确区分不同类型的元素和交互行为。锚点链接和页面导航链接是两种不同的元素，应该有不同的处理方式。</p>
+</li>
+<li><p><strong>使用精确的条件判断</strong>：避免使用过于宽泛的条件判断。在这个例子中，<code>href.startsWith(&#39;#&#39;) || href.startsWith(&#39;/&#39;)</code>就是一个过于宽泛的条件，导致了非预期的行为。</p>
+</li>
+<li><p><strong>测试各种场景</strong>：在实现功能后，要测试各种可能的使用场景。不仅要测试功能正常的情况，还要测试边界情况和异常情况。</p>
+</li>
+<li><p><strong>理解事件处理机制</strong>：要深入理解JavaScript的事件处理机制，特别是<code>event.preventDefault()</code>的作用和影响范围。</p>
+</li>
+<li><p><strong>模块化设计</strong>：将不同的功能模块分开实现，避免一个功能模块影响另一个功能模块。在这个例子中，滚动效果和链接跳转是两个不同的功能，应该尽量减少它们之间的相互影响。</p>
+</li>
+</ol>
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>导航栏链接无法跳转的问题是一个典型的JavaScript事件处理错误。通过仔细分析代码，我们找到了问题所在：错误地对所有以<code>/</code>开头的链接应用了<code>e.preventDefault()</code>。修复方法是调整条件判断逻辑，仅对以<code>#</code>开头的锚点链接应用平滑滚动效果。</p>
+<p>这个问题提醒我们，在编写JavaScript代码时，要非常小心地处理事件默认行为，特别是当一个功能模块影响多个元素类型时。通过明确功能边界、使用精确的条件判断和充分测试，可以避免类似问题的发生。</p>
+<p>希望这篇文章能帮助你解决类似的导航栏跳转问题，也能让你在编写JavaScript代码时更加注意这些细节。</p>
+<hr>
+<p><strong>本文由AI辅助生成，作者：sido</strong></p>
+
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Related Posts -->
+  <section class="related-posts" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">相关文章</h2>
+      </div>
+      <div class="posts-grid">
+        
+        
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="0s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2025-12-11</span>
+                  
+                  
+                    <span class="post-category">博客开发</span>
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/">Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="100s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2026-02-14</span>
+                  
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/">Hexo主题优化：简化category和tag页面实现</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="200s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2026-01-27</span>
+                  
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/">Hexo博客评论系统方案对比</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Comments -->
+  
+  <section class="post-comments" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">评论</h2>
+      </div>
+      <div class="comments-container" data-aos="fade-up">
+        <script src="https://giscus.app/client.js"
+                data-repo="sido-meet/sido-meet.github.io"
+                data-repo-id="R_kgDOQePF5Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOQePF5c4C1irw"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="light"
+                data-lang="zh-CN"
+                data-loading="eager"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+    </div>
+  </section>
+  
+
+  <script>
+    // 阅读量统计
+    (function() {
+      var postPath = '2025/12/16/why-navigation-links-not-working/';
+      var storageKey = 'post_views_' + postPath;
+      var views = localStorage.getItem(storageKey) || 0;
+      views = parseInt(views) + 1;
+      localStorage.setItem(storageKey, views);
+      document.getElementById('post-views-count').textContent = views;
+    })();
+
+    // 阅读进度条
+    window.addEventListener('scroll', function() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("reading-progress").style.width = scrolled + "%";
+    });
+  </script>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <!-- Brand Section -->
+        <div class="footer-brand">
+          <h3 class="footer-logo">SIDO</h3>
+          <p class="footer-subtitle">Personal Website</p>
+          <p class="footer-description">
+            A personal space for sharing thoughts, knowledge, and experiences.
+          </p>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-link-list">
+            
+            <li class="footer-link-item">
+              <a href="/" class="footer-link">Home</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/blogs.html" class="footer-link">博客</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/thoughts.html" class="footer-link">随想</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/terms.html" class="footer-link">词条</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/links.html" class="footer-link">Links</a>
+            </li>
+            
+          </ul>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>contact@sido-meet.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Beijing, China</span>
+          </div>
+        </div>
+        
+        <!-- Social Media -->
+        <div class="footer-social">
+          <h4 class="footer-heading">Follow Me</h4>
+          <div class="footer-social-links">
+            <a href="#" class="footer-social-link" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Copyright Section -->
+      <div class="footer-copyright">
+        <p>&copy; 2026 SIDO. All rights reserved.</p>
+        <p class="footer-copyright-text">
+          Designed with ❤️ using Hexo
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

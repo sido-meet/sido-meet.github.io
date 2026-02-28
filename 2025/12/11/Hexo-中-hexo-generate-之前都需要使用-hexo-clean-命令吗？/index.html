@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/menu.js"></script>
+  <script src="/js/scroll.js"></script>
+  <script src="/js/animation.js"></script>
+  <script src="/js/sort.js"></script>
+  <script src="/js/code-block.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header" id="main-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <h1 class="logo"><a href="/">SIDO</a></h1>
+          <p class="brand-subtitle">Personal Website</p>
+        </div>
+        <!-- Desktop Navigation -->
+        <nav class="nav desktop-nav">
+          <ul class="nav-list">
+            
+            <li class="nav-item ", data-nav-link="Home">
+              <a href="/" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Home</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="博客">
+              <a href="/blogs.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">博客</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="随想">
+              <a href="/thoughts.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">随想</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="词条">
+              <a href="/terms.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">词条</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="Links">
+              <a href="/links.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Links</span>
+              </a>
+            </li>
+            
+          </ul>
+        </nav>
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle mobile menu">
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav mobile-nav" id="mobile-nav">
+      <div class="container">
+        <ul class="nav-list">
+          
+          <li class="nav-item ", data-nav-link="Home">
+            <a href="/" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="博客">
+            <a href="/blogs.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">博客</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="随想">
+            <a href="/thoughts.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                  <path d="M9 18h6"></path>
+                  <path d="M10 22h4"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">随想</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="词条">
+            <a href="/terms.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">词条</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="Links">
+            <a href="/links.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Links</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <!-- Post Header -->
+  <section class="post-header" data-aos="fade-up">
+    <div class="container">
+      <div class="post-header-content" data-aos="fade-up">
+        
+        
+          <div class="post-category">
+            <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/">博客开发</a>
+          </div>
+        
+        <h1 class="post-title">Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</h1>
+        <div class="post-meta">
+          <div class="post-meta-row">
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              2025-12-11
+            </span>
+            
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23,4 23,10 17,10"></polyline>
+                  <polyline points="1,20 1,14 7,14"></polyline>
+                  <path d="M3.51,9a9,9,0,0,1,14.85-3.36L23,10M1,14l4.64,4.36A9,9,0,0,0,20.49,15"></path>
+                </svg>
+                更新于 2026-02-28
+              </span>
+            
+          </div>
+          <div class="post-meta-row">
+            
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14,2H6A2,2,0,0,0,4,4V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V8Z"></path>
+                  <polyline points="14,2 14,8 20,8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10,9 9,9 8,9"></polyline>
+                </svg>
+                691 字
+              </span>
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12,6 12,12 16,14"></polyline>
+                </svg>
+                3 分钟阅读
+              </span>
+            
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2,12s3-7,10-7,10,7,10,7-3,7-10,7S2,12,2,12Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              阅读量: <span id="post-views-count">0</span>
+            </span>
+            
+          </div>
+        </div>
+        
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Hexo/" class="post-tag">Hexo</a>
+            
+              <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%8A%80%E5%B7%A7/" class="post-tag">博客技巧</a>
+            
+              <a href="/tags/%E5%91%BD%E4%BB%A4%E6%8C%87%E5%8D%97/" class="post-tag">命令指南</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Post Content -->
+  <section class="post-content-section" data-aos="fade-up">
+    <div class="container">
+      <article class="post">
+        <div class="post-content" data-aos="fade-up">
+          <p>在使用 Hexo 构建博客的过程中，经常会遇到 <code>hexo clean</code> 和 <code>hexo generate</code> 这两个命令。很多初学者可能会有疑问：<strong>每次执行 <code>hexo generate</code> 前都必须运行 <code>hexo clean</code> 吗？</strong> 本文将详细解答这个问题，并提供最佳实践指南。</p>
+<h2 id="一、命令作用区别"><a href="#一、命令作用区别" class="headerlink" title="一、命令作用区别"></a>一、命令作用区别</h2><p>首先，让我们明确这两个命令的基本作用：</p>
+<h3 id="1-hexo-clean"><a href="#1-hexo-clean" class="headerlink" title="1. hexo clean"></a>1. <code>hexo clean</code></h3><p>清除 Hexo 的缓存文件 (<code>db.json</code>) 和已生成的静态文件 (<code>public</code> 目录)：</p>
+<ul>
+<li><strong>缓存文件 <code>db.json</code></strong>：包含站点内容索引，用于提高生成效率</li>
+<li><strong>静态文件目录 <code>public</code></strong>：最终生成的网站文件，用于部署到服务器</li>
+</ul>
+<h3 id="2-hexo-generate"><a href="#2-hexo-generate" class="headerlink" title="2. hexo generate"></a>2. <code>hexo generate</code></h3><p>根据当前配置和内容，生成新的静态文件到 <code>public</code> 目录：</p>
+<ul>
+<li>默认基于缓存进行<strong>增量更新</strong>，只重新生成有变化的内容</li>
+<li>使用 <code>--force</code> 参数可强制重新生成所有文件</li>
+</ul>
+<h2 id="二、什么时候需要先执行-hexo-clean？"><a href="#二、什么时候需要先执行-hexo-clean？" class="headerlink" title="二、什么时候需要先执行 hexo clean？"></a>二、什么时候需要先执行 <code>hexo clean</code>？</h2><p>以下情况<strong>建议先运行 <code>hexo clean</code></strong>，再执行 <code>hexo generate</code>：</p>
+<p>✅ <strong>修改了站点核心配置</strong>（<code>_config.yml</code>）<br>✅ <strong>切换或修改了主题</strong>（包括主题配置 <code>themes/主题名/_config.yml</code>）<br>✅ <strong>修改了模板文件</strong>（<code>.ejs</code>、<code>.pug</code> 等布局文件）<br>✅ <strong>安装或卸载了插件</strong>，特别是影响生成过程的插件<br>✅ <strong>网站显示异常</strong>（如旧内容未更新、样式错乱等）<br>✅ <strong>需要完全重新生成网站</strong>（如发布前的最终检查）</p>
+<h2 id="三、什么时候可以直接执行-hexo-generate？"><a href="#三、什么时候可以直接执行-hexo-generate？" class="headerlink" title="三、什么时候可以直接执行 hexo generate？"></a>三、什么时候可以直接执行 <code>hexo generate</code>？</h2><p>以下情况<strong>可以跳过 <code>hexo clean</code></strong>，直接执行 <code>hexo generate</code>：</p>
+<p>✅ <strong>仅修改了文章内容</strong>（<code>.md</code> 文件）<br>✅ <strong>仅添加了新文章或页面</strong><br>✅ <strong>仅修改了文章的 front-matter</strong>（标题、标签、日期等）<br>✅ <strong>开发过程中的快速预览</strong>（使用 <code>hexo server</code> 时会自动重新生成）</p>
+<h2 id="四、最佳实践总结"><a href="#四、最佳实践总结" class="headerlink" title="四、最佳实践总结"></a>四、最佳实践总结</h2><h3 id="1-日常写作流程"><a href="#1-日常写作流程" class="headerlink" title="1. 日常写作流程"></a>1. 日常写作流程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建新文章</span></span><br><span class="line">hexo new post <span class="string">&quot;文章标题&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 编辑文章内容（Markdown）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 本地预览</span></span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 直接生成（无需 clean）</span></span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-配置或主题变更流程"><a href="#2-配置或主题变更流程" class="headerlink" title="2. 配置或主题变更流程"></a>2. 配置或主题变更流程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 修改配置文件或主题</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 清除缓存和旧文件</span></span><br><span class="line">hexo clean</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 重新生成站点</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 本地预览确认</span></span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-发布前流程"><a href="#3-发布前流程" class="headerlink" title="3. 发布前流程"></a>3. 发布前流程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清除缓存，确保生成完整文件</span></span><br><span class="line">hexo clean</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成站点</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署到服务器</span></span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、命令组合技巧"><a href="#五、命令组合技巧" class="headerlink" title="五、命令组合技巧"></a>五、命令组合技巧</h2><p>Hexo 支持命令组合，可以简化操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清除并重新生成</span></span><br><span class="line">hexo clean &amp;&amp; hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除、生成并部署</span></span><br><span class="line">hexo clean &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、常见问题解答"><a href="#六、常见问题解答" class="headerlink" title="六、常见问题解答"></a>六、常见问题解答</h2><h3 id="Q-为什么我修改了配置，但生成的网站没有变化？"><a href="#Q-为什么我修改了配置，但生成的网站没有变化？" class="headerlink" title="Q: 为什么我修改了配置，但生成的网站没有变化？"></a>Q: 为什么我修改了配置，但生成的网站没有变化？</h3><p>A: 可能是缓存导致的，尝试先执行 <code>hexo clean</code> 再重新生成。</p>
+<h3 id="Q-hexo-clean-会删除我的文章吗？"><a href="#Q-hexo-clean-会删除我的文章吗？" class="headerlink" title="Q: hexo clean 会删除我的文章吗？"></a>Q: <code>hexo clean</code> 会删除我的文章吗？</h3><p>A: 不会，它只会删除缓存文件和生成的静态文件，不会影响 <code>source</code> 目录中的原始文章。</p>
+<h3 id="Q-增量更新和强制更新有什么区别？"><a href="#Q-增量更新和强制更新有什么区别？" class="headerlink" title="Q: 增量更新和强制更新有什么区别？"></a>Q: 增量更新和强制更新有什么区别？</h3><p>A: 增量更新只处理变化的内容，生成速度更快；强制更新会重新生成所有文件，确保内容完全一致。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>不是每次执行 <code>hexo generate</code> 都需要先运行 <code>hexo clean</code></strong>，这取决于你的具体操作场景。合理使用这两个命令可以提高工作效率：</p>
+<ul>
+<li><strong>日常写作</strong>：直接使用 <code>hexo generate</code> 或 <code>hexo server</code></li>
+<li><strong>配置变更</strong>：先 <code>hexo clean</code> 再 <code>hexo generate</code></li>
+<li><strong>发布前</strong>：执行 <code>hexo clean &amp;&amp; hexo generate</code> 确保完整性</li>
+</ul>
+<p>希望本文能帮助你更好地理解和使用 Hexo 的这两个核心命令！</p>
+
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Related Posts -->
+  <section class="related-posts" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">相关文章</h2>
+      </div>
+      <div class="posts-grid">
+        
+        
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="0s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2026-02-14</span>
+                  
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/">Hexo主题优化：简化category和tag页面实现</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="100s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2026-01-27</span>
+                  
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/">Hexo博客评论系统方案对比</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="200s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2025-12-20</span>
+                  
+                  
+                    <span class="post-category">博客开发</span>
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2025/12/20/hexo-command-line-parameters-guide/">Hexo命令行参数详解：除了--tags和--categories还可以使用哪些？</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2025/12/20/hexo-command-line-parameters-guide/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Comments -->
+  
+  <section class="post-comments" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">评论</h2>
+      </div>
+      <div class="comments-container" data-aos="fade-up">
+        <script src="https://giscus.app/client.js"
+                data-repo="sido-meet/sido-meet.github.io"
+                data-repo-id="R_kgDOQePF5Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOQePF5c4C1irw"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="light"
+                data-lang="zh-CN"
+                data-loading="eager"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+    </div>
+  </section>
+  
+
+  <script>
+    // 阅读量统计
+    (function() {
+      var postPath = '2025/12/11/Hexo-中-hexo-generate-之前都需要使用-hexo-clean-命令吗？/';
+      var storageKey = 'post_views_' + postPath;
+      var views = localStorage.getItem(storageKey) || 0;
+      views = parseInt(views) + 1;
+      localStorage.setItem(storageKey, views);
+      document.getElementById('post-views-count').textContent = views;
+    })();
+
+    // 阅读进度条
+    window.addEventListener('scroll', function() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("reading-progress").style.width = scrolled + "%";
+    });
+  </script>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <!-- Brand Section -->
+        <div class="footer-brand">
+          <h3 class="footer-logo">SIDO</h3>
+          <p class="footer-subtitle">Personal Website</p>
+          <p class="footer-description">
+            A personal space for sharing thoughts, knowledge, and experiences.
+          </p>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-link-list">
+            
+            <li class="footer-link-item">
+              <a href="/" class="footer-link">Home</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/blogs.html" class="footer-link">博客</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/thoughts.html" class="footer-link">随想</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/terms.html" class="footer-link">词条</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/links.html" class="footer-link">Links</a>
+            </li>
+            
+          </ul>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>contact@sido-meet.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Beijing, China</span>
+          </div>
+        </div>
+        
+        <!-- Social Media -->
+        <div class="footer-social">
+          <h4 class="footer-heading">Follow Me</h4>
+          <div class="footer-social-links">
+            <a href="#" class="footer-social-link" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Copyright Section -->
+      <div class="footer-copyright">
+        <p>&copy; 2026 SIDO. All rights reserved.</p>
+        <p class="footer-copyright-text">
+          Designed with ❤️ using Hexo
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

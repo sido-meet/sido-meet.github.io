@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Hexo主题优化：简化category和tag页面实现</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/menu.js"></script>
+  <script src="/js/scroll.js"></script>
+  <script src="/js/animation.js"></script>
+  <script src="/js/sort.js"></script>
+  <script src="/js/code-block.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header" id="main-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <h1 class="logo"><a href="/">SIDO</a></h1>
+          <p class="brand-subtitle">Personal Website</p>
+        </div>
+        <!-- Desktop Navigation -->
+        <nav class="nav desktop-nav">
+          <ul class="nav-list">
+            
+            <li class="nav-item ", data-nav-link="Home">
+              <a href="/" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Home</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="博客">
+              <a href="/blogs.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">博客</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="随想">
+              <a href="/thoughts.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">随想</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="词条">
+              <a href="/terms.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">词条</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="Links">
+              <a href="/links.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Links</span>
+              </a>
+            </li>
+            
+          </ul>
+        </nav>
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle mobile menu">
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav mobile-nav" id="mobile-nav">
+      <div class="container">
+        <ul class="nav-list">
+          
+          <li class="nav-item ", data-nav-link="Home">
+            <a href="/" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="博客">
+            <a href="/blogs.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">博客</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="随想">
+            <a href="/thoughts.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                  <path d="M9 18h6"></path>
+                  <path d="M10 22h4"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">随想</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="词条">
+            <a href="/terms.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">词条</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="Links">
+            <a href="/links.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Links</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <!-- Post Header -->
+  <section class="post-header" data-aos="fade-up">
+    <div class="container">
+      <div class="post-header-content" data-aos="fade-up">
+        
+        
+        <h1 class="post-title">Hexo主题优化：简化category和tag页面实现</h1>
+        <div class="post-meta">
+          <div class="post-meta-row">
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              2026-02-14
+            </span>
+            
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23,4 23,10 17,10"></polyline>
+                  <polyline points="1,20 1,14 7,14"></polyline>
+                  <path d="M3.51,9a9,9,0,0,1,14.85-3.36L23,10M1,14l4.64,4.36A9,9,0,0,0,20.49,15"></path>
+                </svg>
+                更新于 2026-02-28
+              </span>
+            
+          </div>
+          <div class="post-meta-row">
+            
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14,2H6A2,2,0,0,0,4,4V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V8Z"></path>
+                  <polyline points="14,2 14,8 20,8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10,9 9,9 8,9"></polyline>
+                </svg>
+                1000 字
+              </span>
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12,6 12,12 16,14"></polyline>
+                </svg>
+                4 分钟阅读
+              </span>
+            
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2,12s3-7,10-7,10,7,10,7-3,7-10,7S2,12,2,12Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              阅读量: <span id="post-views-count">0</span>
+            </span>
+            
+          </div>
+        </div>
+        
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Hexo/" class="post-tag">Hexo</a>
+            
+              <a href="/tags/%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96/" class="post-tag">主题优化</a>
+            
+              <a href="/tags/%E4%BB%A3%E7%A0%81%E7%AE%80%E5%8C%96/" class="post-tag">代码简化</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Post Content -->
+  <section class="post-content-section" data-aos="fade-up">
+    <div class="container">
+      <article class="post">
+        <div class="post-content" data-aos="fade-up">
+          <h1 id="Hexo主题优化：简化category和tag页面实现"><a href="#Hexo主题优化：简化category和tag页面实现" class="headerlink" title="Hexo主题优化：简化category和tag页面实现"></a>Hexo主题优化：简化category和tag页面实现</h1><h2 id="优化背景"><a href="#优化背景" class="headerlink" title="优化背景"></a>优化背景</h2><p>最近在维护个人Hexo博客时，发现主题中的<code>category.ejs</code>和<code>tag.ejs</code>文件实现较为复杂，代码冗余度较高。这两个文件包含了大量重复代码，只是在页面标题和描述上有所不同。</p>
+<p>同时，我注意到官方的hexo-theme-landscape主题在实现这两个页面时非常简洁，每个文件只有一行代码。这引起了我的兴趣，决定参考其实现方式来优化自己的主题。</p>
+<h2 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h2><ol>
+<li><strong>简化代码结构</strong>：减少代码冗余，提高代码可读性</li>
+<li><strong>提高可维护性</strong>：将通用逻辑集中到一个模板中，后续修改只需更新一个文件</li>
+<li><strong>保持原有功能</strong>：确保优化后所有原有功能都能正常工作</li>
+<li><strong>遵循最佳实践</strong>：参考官方主题的实现方式，采用更合理的代码组织方式</li>
+</ol>
+<h2 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h2><p>参考hexo-theme-landscape主题的实现方式，我采用了以下方案：</p>
+<ol>
+<li><strong>创建通用模板</strong>：在<code>themes/sido-meet/layout/partial/</code>目录下创建<code>archive.ejs</code>模板文件，包含所有列表页面的通用结构</li>
+<li><strong>修改category.ejs</strong>：使用<code>&lt;%- partial(&#39;partial/archive&#39;, { ... }) %&gt;</code>引用通用模板，并传递相应参数</li>
+<li><strong>修改tag.ejs</strong>：与category.ejs类似，使用通用模板并传递相应参数</li>
+<li><strong>清理冗余文件</strong>：删除不必要的文件，保持代码结构整洁</li>
+</ol>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><h3 id="1-创建通用模板"><a href="#1-创建通用模板" class="headerlink" title="1. 创建通用模板"></a>1. 创建通用模板</h3><p>在<code>themes/sido-meet/layout/partial/</code>目录下创建<code>archive.ejs</code>模板文件，包含以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;blog-container&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;blog-header&quot;&gt;</span><br><span class="line">    &lt;h1 class=&quot;blog-title&quot;&gt;&lt;%= page_title %&gt;&lt;/h1&gt;</span><br><span class="line">    &lt;p class=&quot;blog-description&quot;&gt;&lt;%= page_description %&gt;&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;div class=&quot;blog-content&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;posts-section&quot;&gt;</span><br><span class="line">      &lt;div class=&quot;section-header&quot;&gt;</span><br><span class="line">        &lt;h2 class=&quot;section-title&quot;&gt;Posts&lt;/h2&gt;</span><br><span class="line">        &lt;div class=&quot;sort-controls&quot;&gt;</span><br><span class="line">          &lt;%- partial(&#x27;partial/sort-button&#x27;) %&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;div class=&quot;posts-list&quot;&gt;</span><br><span class="line">        &lt;% page.posts.each(function(post) &#123; %&gt;</span><br><span class="line">          &lt;article class=&quot;post-card&quot; data-date=&quot;&lt;%= post.date.unix() %&gt;&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;post-card-header&quot;&gt;</span><br><span class="line">              &lt;span class=&quot;post-date&quot;&gt;&lt;%= post.date.format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) %&gt;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;h3 class=&quot;post-card-title&quot;&gt;</span><br><span class="line">              &lt;a href=&quot;&lt;%= url_for(post.path) %&gt;&quot;&gt;&lt;%= post.title %&gt;&lt;/a&gt;</span><br><span class="line">            &lt;/h3&gt;</span><br><span class="line">            &lt;% if (post.excerpt) &#123; %&gt;</span><br><span class="line">              &lt;p class=&quot;post-card-excerpt&quot;&gt;&lt;%= post.excerpt.replace(/&lt;[^&gt;]*&gt;/g, &#x27;&#x27;).substring(0, 150) + &#x27;...&#x27; %&gt;&lt;/p&gt;</span><br><span class="line">            &lt;% &#125; %&gt;</span><br><span class="line">            &lt;div class=&quot;post-card-footer&quot;&gt;</span><br><span class="line">              &lt;a href=&quot;&lt;%= url_for(post.path) %&gt;&quot; class=&quot;read-more&quot;&gt;Read More →&lt;/a&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          &lt;/article&gt;</span><br><span class="line">        &lt;% &#125;) %&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;div class=&quot;sidebar&quot;&gt;</span><br><span class="line">      &lt;div class=&quot;sidebar-widget&quot;&gt;</span><br><span class="line">        &lt;h3 class=&quot;widget-title&quot;&gt;Categories&lt;/h3&gt;</span><br><span class="line">        &lt;div class=&quot;categories-list&quot;&gt;</span><br><span class="line">          &lt;% site.categories.each(function(category) &#123; %&gt;</span><br><span class="line">            &lt;div class=&quot;category-item&quot;&gt;</span><br><span class="line">              &lt;a href=&quot;&lt;%= url_for(category.path) %&gt;&quot;&gt;&lt;%= category.name %&gt;&lt;/a&gt;</span><br><span class="line">              &lt;span class=&quot;category-count&quot;&gt;&lt;%= category.posts.length %&gt;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          &lt;% &#125;) %&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;div class=&quot;sidebar-widget&quot;&gt;</span><br><span class="line">        &lt;h3 class=&quot;widget-title&quot;&gt;Recent Posts&lt;/h3&gt;</span><br><span class="line">        &lt;div class=&quot;recent-posts&quot;&gt;</span><br><span class="line">          &lt;% site.posts.sort(&#x27;-date&#x27;).limit(5).each(function(post) &#123; %&gt;</span><br><span class="line">            &lt;div class=&quot;recent-post-item&quot;&gt;</span><br><span class="line">              &lt;a href=&quot;&lt;%= url_for(post.path) %&gt;&quot;&gt;&lt;%= post.title %&gt;&lt;/a&gt;</span><br><span class="line">              &lt;span class=&quot;recent-post-date&quot;&gt;&lt;%= post.date.format(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) %&gt;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          &lt;% &#125;) %&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-修改category-ejs"><a href="#2-修改category-ejs" class="headerlink" title="2. 修改category.ejs"></a>2. 修改category.ejs</h3><p>将<code>themes/sido-meet/layout/category.ejs</code>文件修改为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- partial(&#x27;partial/header&#x27;) %&gt;</span><br><span class="line">&lt;%- partial(&#x27;partial/archive&#x27;, &#123; </span><br><span class="line">  page_title: &#x27;Category: &#x27; + page.category, </span><br><span class="line">  page_description: &#x27;All posts in category &quot;&#x27; + page.category + &#x27;&quot;&#x27; </span><br><span class="line">&#125;) %&gt;</span><br><span class="line">&lt;%- partial(&#x27;partial/footer&#x27;) %&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-修改tag-ejs"><a href="#3-修改tag-ejs" class="headerlink" title="3. 修改tag.ejs"></a>3. 修改tag.ejs</h3><p>将<code>themes/sido-meet/layout/tag.ejs</code>文件修改为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- partial(&#x27;partial/header&#x27;) %&gt;</span><br><span class="line">&lt;%- partial(&#x27;partial/archive&#x27;, &#123; </span><br><span class="line">  page_title: &#x27;Tag: &#x27; + page.tag, </span><br><span class="line">  page_description: &#x27;All posts tagged with &quot;&#x27; + page.tag + &#x27;&quot;&#x27; </span><br><span class="line">&#125;) %&gt;</span><br><span class="line">&lt;%- partial(&#x27;partial/footer&#x27;) %&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-配置版本控制"><a href="#4-配置版本控制" class="headerlink" title="4. 配置版本控制"></a>4. 配置版本控制</h3><p>修改<code>.gitignore</code>文件，添加规则只追踪<code>themes/sido-meet</code>主题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Themes</span><br><span class="line"># Ignore all themes except sido-meet</span><br><span class="line">themes/*</span><br><span class="line">!themes/sido-meet/</span><br></pre></td></tr></table></figure>
+
+<h2 id="优化成果"><a href="#优化成果" class="headerlink" title="优化成果"></a>优化成果</h2><h3 id="1-代码简化"><a href="#1-代码简化" class="headerlink" title="1. 代码简化"></a>1. 代码简化</h3><ul>
+<li><strong>category.ejs</strong>：从64行减少到6行，减少了90.6%的代码</li>
+<li><strong>tag.ejs</strong>：从64行减少到6行，减少了90.6%的代码</li>
+<li><strong>总代码量</strong>：减少了134行代码，提高了代码可读性</li>
+</ul>
+<h3 id="2-可维护性提升"><a href="#2-可维护性提升" class="headerlink" title="2. 可维护性提升"></a>2. 可维护性提升</h3><ul>
+<li><strong>集中管理</strong>：所有列表页面的通用逻辑都集中在<code>archive.ejs</code>模板中</li>
+<li><strong>易于修改</strong>：后续修改只需更新<code>archive.ejs</code>文件，无需修改多个文件</li>
+<li><strong>一致性</strong>：确保了category和tag页面的显示效果完全一致</li>
+</ul>
+<h3 id="3-功能保持"><a href="#3-功能保持" class="headerlink" title="3. 功能保持"></a>3. 功能保持</h3><p>虽然代码简化了，但所有原有功能都得到了保留：</p>
+<ul>
+<li>页面标题和描述</li>
+<li>文章列表显示</li>
+<li>侧边栏分类</li>
+<li>最近文章</li>
+<li>文章排序功能</li>
+</ul>
+<h3 id="4-代码组织更合理"><a href="#4-代码组织更合理" class="headerlink" title="4. 代码组织更合理"></a>4. 代码组织更合理</h3><ul>
+<li><strong>遵循最佳实践</strong>：参考官方主题的实现方式</li>
+<li><strong>命名规范</strong>：使用<code>archive.ejs</code>作为通用模板名称，与官方主题保持一致</li>
+<li><strong>结构清晰</strong>：模板文件职责明确，代码组织更合理</li>
+</ul>
+<h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><p>在使用通用模板时，通过传递参数来实现动态内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- partial(&#x27;partial/archive&#x27;, &#123; </span><br><span class="line">  page_title: &#x27;Category: &#x27; + page.category, </span><br><span class="line">  page_description: &#x27;All posts in category &quot;&#x27; + page.category + &#x27;&quot;&#x27; </span><br><span class="line">&#125;) %&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="模板渲染"><a href="#模板渲染" class="headerlink" title="模板渲染"></a>模板渲染</h3><p>通用模板使用传递的参数来渲染页面内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 class=&quot;blog-title&quot;&gt;&lt;%= page_title %&gt;&lt;/h1&gt;</span><br><span class="line">&lt;p class=&quot;blog-description&quot;&gt;&lt;%= page_description %&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>通过修改<code>.gitignore</code>文件，确保只有<code>sido-meet</code>主题会被版本控制系统追踪，避免其他主题文件污染仓库。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过参考hexo-theme-landscape主题的实现方式，我成功优化了自己主题中的category和tag页面实现。这次优化不仅简化了代码结构，提高了可维护性，还保持了所有原有功能。</p>
+<p>这种通过创建通用模板来实现代码复用的方式，是一种很好的实践，值得在其他类似场景中推广使用。它不仅可以减少代码冗余，还可以提高代码的一致性和可维护性。</p>
+<p>通过这次优化，我对Hexo主题的代码组织方式有了更深入的理解，也为后续的主题维护和开发打下了更好的基础。</p>
+
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Related Posts -->
+  <section class="related-posts" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">相关文章</h2>
+      </div>
+      <div class="posts-grid">
+        
+        
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="0s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2025-12-11</span>
+                  
+                  
+                    <span class="post-category">博客开发</span>
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/">Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="100s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2026-01-27</span>
+                  
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/">Hexo博客评论系统方案对比</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="200s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2025-12-20</span>
+                  
+                  
+                    <span class="post-category">博客开发</span>
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2025/12/20/hexo-command-line-parameters-guide/">Hexo命令行参数详解：除了--tags和--categories还可以使用哪些？</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2025/12/20/hexo-command-line-parameters-guide/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Comments -->
+  
+  <section class="post-comments" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">评论</h2>
+      </div>
+      <div class="comments-container" data-aos="fade-up">
+        <script src="https://giscus.app/client.js"
+                data-repo="sido-meet/sido-meet.github.io"
+                data-repo-id="R_kgDOQePF5Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOQePF5c4C1irw"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="light"
+                data-lang="zh-CN"
+                data-loading="eager"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+    </div>
+  </section>
+  
+
+  <script>
+    // 阅读量统计
+    (function() {
+      var postPath = '2026/02/14/Hexo主题优化：简化category和tag页面实现/';
+      var storageKey = 'post_views_' + postPath;
+      var views = localStorage.getItem(storageKey) || 0;
+      views = parseInt(views) + 1;
+      localStorage.setItem(storageKey, views);
+      document.getElementById('post-views-count').textContent = views;
+    })();
+
+    // 阅读进度条
+    window.addEventListener('scroll', function() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("reading-progress").style.width = scrolled + "%";
+    });
+  </script>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <!-- Brand Section -->
+        <div class="footer-brand">
+          <h3 class="footer-logo">SIDO</h3>
+          <p class="footer-subtitle">Personal Website</p>
+          <p class="footer-description">
+            A personal space for sharing thoughts, knowledge, and experiences.
+          </p>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-link-list">
+            
+            <li class="footer-link-item">
+              <a href="/" class="footer-link">Home</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/blogs.html" class="footer-link">博客</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/thoughts.html" class="footer-link">随想</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/terms.html" class="footer-link">词条</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/links.html" class="footer-link">Links</a>
+            </li>
+            
+          </ul>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>contact@sido-meet.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Beijing, China</span>
+          </div>
+        </div>
+        
+        <!-- Social Media -->
+        <div class="footer-social">
+          <h4 class="footer-heading">Follow Me</h4>
+          <div class="footer-social-links">
+            <a href="#" class="footer-social-link" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Copyright Section -->
+      <div class="footer-copyright">
+        <p>&copy; 2026 SIDO. All rights reserved.</p>
+        <p class="footer-copyright-text">
+          Designed with ❤️ using Hexo
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

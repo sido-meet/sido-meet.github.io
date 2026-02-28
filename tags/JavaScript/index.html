@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>SIDO MEET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/menu.js"></script>
+  <script src="/js/scroll.js"></script>
+  <script src="/js/animation.js"></script>
+  <script src="/js/sort.js"></script>
+  <script src="/js/code-block.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header" id="main-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <h1 class="logo"><a href="/">SIDO</a></h1>
+          <p class="brand-subtitle">Personal Website</p>
+        </div>
+        <!-- Desktop Navigation -->
+        <nav class="nav desktop-nav">
+          <ul class="nav-list">
+            
+            <li class="nav-item ", data-nav-link="Home">
+              <a href="/" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Home</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="博客">
+              <a href="/blogs.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">博客</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="随想">
+              <a href="/thoughts.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">随想</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="词条">
+              <a href="/terms.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">词条</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="Links">
+              <a href="/links.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Links</span>
+              </a>
+            </li>
+            
+          </ul>
+        </nav>
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle mobile menu">
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav mobile-nav" id="mobile-nav">
+      <div class="container">
+        <ul class="nav-list">
+          
+          <li class="nav-item ", data-nav-link="Home">
+            <a href="/" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="博客">
+            <a href="/blogs.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">博客</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="随想">
+            <a href="/thoughts.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                  <path d="M9 18h6"></path>
+                  <path d="M10 22h4"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">随想</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="词条">
+            <a href="/terms.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">词条</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="Links">
+            <a href="/links.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Links</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="main">
+    <div class="container">
+
+<div class="blog-container">
+  <div class="blog-header">
+    <h1 class="blog-title">Tag: JavaScript</h1>
+    <p class="blog-description">All posts tagged with &#34;JavaScript&#34;</p>
+  </div>
+  
+  <div class="blog-content">
+    <div class="posts-section">
+      <div class="section-header">
+        <h2 class="section-title">Posts</h2>
+        <div class="sort-controls">
+          <button class="sort-btn" data-sort="desc" title="Toggle sort order">
+  <span class="sort-icon">
+    <span class="sort-icon-up">↑</span>
+    <span class="sort-icon-down active">↓</span>
+  </span>
+</button>
+        </div>
+      </div>
+      
+      <div class="posts-list">
+        
+          <article class="post-card" data-date="1765843200">
+            <div class="post-card-header">
+              <span class="post-date">2025-12-16 00:00:00</span>
+            </div>
+            <h3 class="post-card-title">
+              <a href="/2025/12/16/why-navigation-links-not-working/">为什么导航栏跳转没有反应</a>
+            </h3>
+            
+            <div class="post-card-footer">
+              <a href="/2025/12/16/why-navigation-links-not-working/" class="read-more">Read More →</a>
+            </div>
+          </article>
+        
+      </div>
+    </div>
+    
+    <div class="sidebar">
+      <div class="sidebar-widget">
+        <h3 class="widget-title">Categories</h3>
+        <div class="categories-list">
+          
+            <div class="category-item">
+              <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/">博客开发</a>
+              <span class="category-count">5</span>
+            </div>
+          
+            <div class="category-item">
+              <a href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a>
+              <span class="category-count">1</span>
+            </div>
+          
+            <div class="category-item">
+              <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">前端问题排查</a>
+              <span class="category-count">1</span>
+            </div>
+          
+            <div class="category-item">
+              <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">论文阅读笔记</a>
+              <span class="category-count">1</span>
+            </div>
+          
+            <div class="category-item">
+              <a href="/categories/%E6%97%A5%E8%AE%B0/">日记</a>
+              <span class="category-count">1</span>
+            </div>
+          
+            <div class="category-item">
+              <a href="/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/">技术实践</a>
+              <span class="category-count">1</span>
+            </div>
+          
+            <div class="category-item">
+              <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+              <span class="category-count">1</span>
+            </div>
+          
+            <div class="category-item">
+              <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2/">技术探索</a>
+              <span class="category-count">1</span>
+            </div>
+          
+        </div>
+      </div>
+      
+      <div class="sidebar-widget">
+        <h3 class="widget-title">Recent Posts</h3>
+        <div class="recent-posts">
+          
+            <div class="recent-post-item">
+              <a href="/2026/02/28/hello-world/">Hello World</a>
+              <span class="recent-post-date">2026-02-28 16:30:09</span>
+            </div>
+          
+            <div class="recent-post-item">
+              <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/">Hexo主题优化：简化category和tag页面实现</a>
+              <span class="recent-post-date">2026-02-14 21:39:54</span>
+            </div>
+          
+            <div class="recent-post-item">
+              <a href="/2026/02/12/hexo%E5%8D%9A%E5%AE%A2%E7%9A%84updated%E5%AD%97%E6%AE%B5/">hexo博客的updated字段</a>
+              <span class="recent-post-date">2026-02-12 21:59:42</span>
+            </div>
+          
+            <div class="recent-post-item">
+              <a href="/2026/02/08/%E5%8C%97%E4%BA%AC%E5%AE%9E%E4%B9%A0%E4%BD%93%E9%AA%8C/">北京实习体验</a>
+              <span class="recent-post-date">2026-02-08 23:20:56</span>
+            </div>
+          
+            <div class="recent-post-item">
+              <a href="/2026/01/29/%E6%8E%A2%E7%B4%A2Skill%EF%BC%9AClaude%E6%8F%90%E5%87%BA%E7%9A%84%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E6%96%B0%E6%A6%82%E5%BF%B5/">探索Skill：Claude提出的触发式调用新概念</a>
+              <span class="recent-post-date">2026-01-29 23:47:24</span>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <!-- Brand Section -->
+        <div class="footer-brand">
+          <h3 class="footer-logo">SIDO</h3>
+          <p class="footer-subtitle">Personal Website</p>
+          <p class="footer-description">
+            A personal space for sharing thoughts, knowledge, and experiences.
+          </p>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-link-list">
+            
+            <li class="footer-link-item">
+              <a href="/" class="footer-link">Home</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/blogs.html" class="footer-link">博客</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/thoughts.html" class="footer-link">随想</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/terms.html" class="footer-link">词条</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/links.html" class="footer-link">Links</a>
+            </li>
+            
+          </ul>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>contact@sido-meet.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Beijing, China</span>
+          </div>
+        </div>
+        
+        <!-- Social Media -->
+        <div class="footer-social">
+          <h4 class="footer-heading">Follow Me</h4>
+          <div class="footer-social-links">
+            <a href="#" class="footer-social-link" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Copyright Section -->
+      <div class="footer-copyright">
+        <p>&copy; 2026 SIDO. All rights reserved.</p>
+        <p class="footer-copyright-text">
+          Designed with ❤️ using Hexo
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

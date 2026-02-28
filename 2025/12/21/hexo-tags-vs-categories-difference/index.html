@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Hexo中--tags和--categories的区别详解</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/menu.js"></script>
+  <script src="/js/scroll.js"></script>
+  <script src="/js/animation.js"></script>
+  <script src="/js/sort.js"></script>
+  <script src="/js/code-block.js"></script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+  <header class="header" id="main-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <h1 class="logo"><a href="/">SIDO</a></h1>
+          <p class="brand-subtitle">Personal Website</p>
+        </div>
+        <!-- Desktop Navigation -->
+        <nav class="nav desktop-nav">
+          <ul class="nav-list">
+            
+            <li class="nav-item ", data-nav-link="Home">
+              <a href="/" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Home</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="博客">
+              <a href="/blogs.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">博客</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="随想">
+              <a href="/thoughts.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">随想</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="词条">
+              <a href="/terms.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">词条</span>
+              </a>
+            </li>
+            
+            <li class="nav-item ", data-nav-link="Links">
+              <a href="/links.html" class="nav-link">
+                
+                <span class="nav-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    
+                  </svg>
+                </span>
+                
+                <span class="nav-text">Links</span>
+              </a>
+            </li>
+            
+          </ul>
+        </nav>
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle mobile menu">
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+          <span class="menu-icon"></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation Menu -->
+    <nav class="nav mobile-nav" id="mobile-nav">
+      <div class="container">
+        <ul class="nav-list">
+          
+          <li class="nav-item ", data-nav-link="Home">
+            <a href="/" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="博客">
+            <a href="/blogs.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">博客</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="随想">
+            <a href="/thoughts.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                  <path d="M9 18h6"></path>
+                  <path d="M10 22h4"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">随想</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="词条">
+            <a href="/terms.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">词条</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ", data-nav-link="Links">
+            <a href="/links.html" class="nav-link">
+              
+              <span class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  
+                </svg>
+              </span>
+              
+              <span class="nav-text">Links</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="main">
+    <div class="container">
+
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <!-- Post Header -->
+  <section class="post-header" data-aos="fade-up">
+    <div class="container">
+      <div class="post-header-content" data-aos="fade-up">
+        
+        
+          <div class="post-category">
+            <a href="/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/">博客开发</a>
+          </div>
+        
+        <h1 class="post-title">Hexo中--tags和--categories的区别详解</h1>
+        <div class="post-meta">
+          <div class="post-meta-row">
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              2025-12-21
+            </span>
+            
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23,4 23,10 17,10"></polyline>
+                  <polyline points="1,20 1,14 7,14"></polyline>
+                  <path d="M3.51,9a9,9,0,0,1,14.85-3.36L23,10M1,14l4.64,4.36A9,9,0,0,0,20.49,15"></path>
+                </svg>
+                更新于 2026-02-28
+              </span>
+            
+          </div>
+          <div class="post-meta-row">
+            
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14,2H6A2,2,0,0,0,4,4V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V8Z"></path>
+                  <polyline points="14,2 14,8 20,8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10,9 9,9 8,9"></polyline>
+                </svg>
+                1214 字
+              </span>
+              <span class="post-meta-item">
+                <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12,6 12,12 16,14"></polyline>
+                </svg>
+                5 分钟阅读
+              </span>
+            
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2,12s3-7,10-7,10,7,10,7-3,7-10,7S2,12,2,12Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              阅读量: <span id="post-views-count">0</span>
+            </span>
+            
+          </div>
+        </div>
+        
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Hexo/" class="post-tag">Hexo</a>
+            
+              <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%8A%80%E5%B7%A7/" class="post-tag">博客技巧</a>
+            
+              <a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" class="post-tag">命令行</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Post Content -->
+  <section class="post-content-section" data-aos="fade-up">
+    <div class="container">
+      <article class="post">
+        <div class="post-content" data-aos="fade-up">
+          <p>在使用Hexo创建博客文章时，<code>--tags</code>和<code>--categories</code>是两个常用的命令行参数，用于为文章添加分类和标签。虽然它们看起来功能相似，但实际上有很大的区别和不同的使用场景。本文将详细介绍这两个参数的区别、使用方法和最佳实践。</p>
+<h2 id="一、基础概念区别"><a href="#一、基础概念区别" class="headerlink" title="一、基础概念区别"></a>一、基础概念区别</h2><h3 id="1-Categories（分类）"><a href="#1-Categories（分类）" class="headerlink" title="1. Categories（分类）"></a>1. Categories（分类）</h3><p>分类是一种<strong>层级化</strong>的内容组织方式，用于将文章划分为不同的主题领域。分类具有<strong>父子关系</strong>，可以创建多层级的分类结构。</p>
+<ul>
+<li>特点：层级关系、树状结构、每个文章至少属于一个分类</li>
+<li>作用：宏观组织内容，帮助读者了解网站的主要内容结构</li>
+</ul>
+<h3 id="2-Tags（标签）"><a href="#2-Tags（标签）" class="headerlink" title="2. Tags（标签）"></a>2. Tags（标签）</h3><p>标签是一种<strong>扁平化</strong>的内容组织方式，用于为文章添加特定的关键词或主题标记。标签之间没有层级关系，是相互独立的。</p>
+<ul>
+<li>特点：扁平化、无层级、可以有多个标签</li>
+<li>作用：微观标记内容，帮助读者找到特定主题的相关文章</li>
+</ul>
+<h2 id="二、命令行使用区别"><a href="#二、命令行使用区别" class="headerlink" title="二、命令行使用区别"></a>二、命令行使用区别</h2><h3 id="1-–categories参数"><a href="#1-–categories参数" class="headerlink" title="1. –categories参数"></a>1. –categories参数</h3><p>用于为文章添加分类，可以指定单个分类或多层级分类。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单个分类</span></span><br><span class="line">hexo new post <span class="string">&quot;Hexo入门教程&quot;</span> --categories=<span class="string">&quot;Hexo&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多层级分类（父分类/子分类）</span></span><br><span class="line">hexo new post <span class="string">&quot;Hexo主题开发&quot;</span> --categories=<span class="string">&quot;Hexo/主题开发&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个分类（不推荐，通常每个文章属于一个主要分类）</span></span><br><span class="line">hexo new post <span class="string">&quot;跨平台开发&quot;</span> --categories=<span class="string">&quot;前端开发,移动开发&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-–tags参数"><a href="#2-–tags参数" class="headerlink" title="2. –tags参数"></a>2. –tags参数</h3><p>用于为文章添加标签，可以添加多个标签，用逗号分隔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单个标签</span></span><br><span class="line">hexo new post <span class="string">&quot;JavaScript基础&quot;</span> --tags=<span class="string">&quot;JavaScript&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个标签</span></span><br><span class="line">hexo new post <span class="string">&quot;React组件开发&quot;</span> --tags=<span class="string">&quot;React,组件开发,前端框架&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 包含空格的标签（需要引号包裹）</span></span><br><span class="line">hexo new post <span class="string">&quot;生活随笔&quot;</span> --tags=<span class="string">&quot;生活,思考,个人成长&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、Front-matter中的表示区别"><a href="#三、Front-matter中的表示区别" class="headerlink" title="三、Front-matter中的表示区别"></a>三、Front-matter中的表示区别</h2><p>在生成的Markdown文件中，categories和tags在front-matter中的表示方式也不同：</p>
+<h3 id="1-Categories的表示"><a href="#1-Categories的表示" class="headerlink" title="1. Categories的表示"></a>1. Categories的表示</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Hexo主题开发</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2025-12-21</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">主题开发</span>  <span class="comment"># 多层级分类会显示为数组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Tags的表示"><a href="#2-Tags的表示" class="headerlink" title="2. Tags的表示"></a>2. Tags的表示</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">React组件开发</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2025-12-21</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">React</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">组件开发</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">前端框架</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">前端开发</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="四、网站显示区别"><a href="#四、网站显示区别" class="headerlink" title="四、网站显示区别"></a>四、网站显示区别</h2><h3 id="1-Categories在网站中的显示"><a href="#1-Categories在网站中的显示" class="headerlink" title="1. Categories在网站中的显示"></a>1. Categories在网站中的显示</h3><ul>
+<li>通常显示在文章页面的顶部或侧边栏</li>
+<li>可以展示完整的分类层级结构</li>
+<li>点击分类可以查看该分类下的所有文章</li>
+<li>适合用于网站的主导航或内容架构</li>
+</ul>
+<h3 id="2-Tags在网站中的显示"><a href="#2-Tags在网站中的显示" class="headerlink" title="2. Tags在网站中的显示"></a>2. Tags在网站中的显示</h3><ul>
+<li>通常显示在文章底部或侧边栏的标签云</li>
+<li>以扁平化方式展示，没有层级关系</li>
+<li>点击标签可以查看所有带有该标签的文章</li>
+<li>适合用于内容的交叉索引和发现</li>
+</ul>
+<h2 id="五、最佳实践"><a href="#五、最佳实践" class="headerlink" title="五、最佳实践"></a>五、最佳实践</h2><h3 id="1-Categories使用建议"><a href="#1-Categories使用建议" class="headerlink" title="1. Categories使用建议"></a>1. Categories使用建议</h3><ul>
+<li><strong>保持层级简洁</strong>：建议不超过3级分类</li>
+<li><strong>明确主题范围</strong>：每个分类应该有明确的主题范围</li>
+<li><strong>单一主要分类</strong>：每个文章最好只有一个主要分类</li>
+<li><strong>避免过度细分</strong>：不要创建过多的子分类</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 好的分类使用</span></span><br><span class="line">hexo new post <span class="string">&quot;Vue路由管理&quot;</span> --categories=<span class="string">&quot;前端开发/Vue/路由&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 避免的分类使用（层级过深）</span></span><br><span class="line">hexo new post <span class="string">&quot;Vue路由管理&quot;</span> --categories=<span class="string">&quot;前端开发/框架/Vue/核心功能/路由/管理&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Tags使用建议"><a href="#2-Tags使用建议" class="headerlink" title="2. Tags使用建议"></a>2. Tags使用建议</h3><ul>
+<li><strong>使用具体关键词</strong>：标签应该是具体的关键词，避免过于宽泛</li>
+<li><strong>控制标签数量</strong>：每个文章建议使用3-5个标签</li>
+<li><strong>保持标签一致性</strong>：使用统一的标签命名规范</li>
+<li><strong>避免重复标签</strong>：不要创建含义相同的不同标签</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 好的标签使用</span></span><br><span class="line">hexo new post <span class="string">&quot;JavaScript性能优化&quot;</span> --tags=<span class="string">&quot;JavaScript,性能优化,前端开发&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 避免的标签使用（标签过多且宽泛）</span></span><br><span class="line">hexo new post <span class="string">&quot;JavaScript性能优化&quot;</span> --tags=<span class="string">&quot;编程,技术,前端,JavaScript,JS,性能,优化,开发,代码,网站&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-两者结合使用"><a href="#3-两者结合使用" class="headerlink" title="3. 两者结合使用"></a>3. 两者结合使用</h3><p>分类和标签应该结合使用，形成互补的内容组织体系：</p>
+<ul>
+<li>使用<strong>分类</strong>构建网站的宏观内容结构</li>
+<li>使用<strong>标签</strong>标记文章的具体主题和关键词</li>
+<li>通过分类快速定位内容领域</li>
+<li>通过标签发现相关主题的文章</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 结合使用示例</span></span><br><span class="line">hexo new post <span class="string">&quot;Hexo命令行参数详解&quot;</span> --categories=<span class="string">&quot;博客开发/Hexo&quot;</span> --tags=<span class="string">&quot;Hexo,命令行,博客技巧&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="六、常见问题解答"><a href="#六、常见问题解答" class="headerlink" title="六、常见问题解答"></a>六、常见问题解答</h2><h3 id="Q-一个文章可以有多个分类吗？"><a href="#Q-一个文章可以有多个分类吗？" class="headerlink" title="Q: 一个文章可以有多个分类吗？"></a>Q: 一个文章可以有多个分类吗？</h3><p>A: 虽然Hexo支持为文章添加多个分类，但通常建议每个文章只有一个主要分类，这样可以保持内容结构的清晰性。</p>
+<h3 id="Q-标签可以有层级关系吗？"><a href="#Q-标签可以有层级关系吗？" class="headerlink" title="Q: 标签可以有层级关系吗？"></a>Q: 标签可以有层级关系吗？</h3><p>A: 不可以，标签是扁平化的内容组织方式，没有层级关系。如果需要层级结构，应该使用分类。</p>
+<h3 id="Q-如何修改文章的分类和标签？"><a href="#Q-如何修改文章的分类和标签？" class="headerlink" title="Q: 如何修改文章的分类和标签？"></a>Q: 如何修改文章的分类和标签？</h3><p>A: 可以直接编辑文章的front-matter部分，修改categories和tags字段，然后重新生成网站。</p>
+<h3 id="Q-如何查看网站的所有分类和标签？"><a href="#Q-如何查看网站的所有分类和标签？" class="headerlink" title="Q: 如何查看网站的所有分类和标签？"></a>Q: 如何查看网站的所有分类和标签？</h3><p>A: 大多数Hexo主题都会在侧边栏或专门的页面展示网站的所有分类和标签，你也可以通过修改主题模板来自定义显示方式。</p>
+<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><p><code>--tags</code>和<code>--categories</code>是Hexo中两个重要的命令行参数，它们在内容组织中扮演着不同的角色：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Categories（分类）</th>
+<th>Tags（标签）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>结构</td>
+<td>层级化（树状）</td>
+<td>扁平化（无层级）</td>
+</tr>
+<tr>
+<td>关系</td>
+<td>父子关系</td>
+<td>相互独立</td>
+</tr>
+<tr>
+<td>数量</td>
+<td>建议1-2个</td>
+<td>建议3-5个</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>宏观组织内容</td>
+<td>微观标记主题</td>
+</tr>
+<tr>
+<td>使用</td>
+<td>定义内容领域</td>
+<td>标记关键词</td>
+</tr>
+</tbody></table>
+<p>正确理解和使用这两个参数，可以帮助你更好地组织博客内容，提高读者的阅读体验和内容发现效率。希望本文能对你有所帮助！</p>
+
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Related Posts -->
+  <section class="related-posts" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">相关文章</h2>
+      </div>
+      <div class="posts-grid">
+        
+        
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="0s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2025-12-11</span>
+                  
+                  
+                    <span class="post-category">博客开发</span>
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/">Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="100s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2026-02-14</span>
+                  
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/">Hexo主题优化：简化category和tag页面实现</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+            <article class="post-card" data-aos="fade-up" data-aos-delay="200s">
+              <div class="post-card-content">
+                <div class="post-card-header">
+                  <span class="post-date">2026-01-27</span>
+                  
+                  
+                </div>
+                <h3 class="post-card-title">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/">Hexo博客评论系统方案对比</a>
+                </h3>
+                
+                <div class="post-card-footer">
+                  <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/" class="read-more">Read More →</a>
+                </div>
+              </div>
+            </article>
+          
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Comments -->
+  
+  <section class="post-comments" data-aos="fade-up">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">评论</h2>
+      </div>
+      <div class="comments-container" data-aos="fade-up">
+        <script src="https://giscus.app/client.js"
+                data-repo="sido-meet/sido-meet.github.io"
+                data-repo-id="R_kgDOQePF5Q"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOQePF5c4C1irw"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="light"
+                data-lang="zh-CN"
+                data-loading="eager"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
+    </div>
+  </section>
+  
+
+  <script>
+    // 阅读量统计
+    (function() {
+      var postPath = '2025/12/21/hexo-tags-vs-categories-difference/';
+      var storageKey = 'post_views_' + postPath;
+      var views = localStorage.getItem(storageKey) || 0;
+      views = parseInt(views) + 1;
+      localStorage.setItem(storageKey, views);
+      document.getElementById('post-views-count').textContent = views;
+    })();
+
+    // 阅读进度条
+    window.addEventListener('scroll', function() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("reading-progress").style.width = scrolled + "%";
+    });
+  </script>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <!-- Brand Section -->
+        <div class="footer-brand">
+          <h3 class="footer-logo">SIDO</h3>
+          <p class="footer-subtitle">Personal Website</p>
+          <p class="footer-description">
+            A personal space for sharing thoughts, knowledge, and experiences.
+          </p>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-link-list">
+            
+            <li class="footer-link-item">
+              <a href="/" class="footer-link">Home</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/blogs.html" class="footer-link">博客</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/thoughts.html" class="footer-link">随想</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/terms.html" class="footer-link">词条</a>
+            </li>
+            
+            <li class="footer-link-item">
+              <a href="/links.html" class="footer-link">Links</a>
+            </li>
+            
+          </ul>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>contact@sido-meet.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Beijing, China</span>
+          </div>
+        </div>
+        
+        <!-- Social Media -->
+        <div class="footer-social">
+          <h4 class="footer-heading">Follow Me</h4>
+          <div class="footer-social-links">
+            <a href="#" class="footer-social-link" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Copyright Section -->
+      <div class="footer-copyright">
+        <p>&copy; 2026 SIDO. All rights reserved.</p>
+        <p class="footer-copyright-text">
+          Designed with ❤️ using Hexo
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

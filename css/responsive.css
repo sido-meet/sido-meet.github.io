@@ -1,0 +1,209 @@
+@media (max-width: $breakpoint-sm -1px) {
+  :root {
+    --font-size-7xl: 3rem;
+    --font-size-6xl: 2.5rem;
+    --font-size-5xl: 2rem;
+    --font-size-4xl: 1.75rem;
+    --font-size-3xl: 1.5rem;
+    --font-size-2xl: 1.25rem;
+    --space-xl: 1.5rem;
+    --space-xxl: 2rem;
+    --space-xxxl: 2.5rem;
+    --space-xxxxl: 3rem;
+  }
+  .container {
+    padding: 0 $space-md;
+  }
+  .header {
+    padding: $space-md 0;
+  }
+  .header-content {
+    flex-direction: column;
+    gap: $space-md;
+    text-align: center;
+  }
+  .nav.desktop-nav {
+    display: none;
+  }
+  .nav.mobile-nav {
+    display: block;
+  }
+  .hero-section {
+    padding: $space-xxl 0;
+  }
+  .hero-content {
+    flex-direction: column;
+    gap: $space-xl;
+  }
+  .hero-text {
+    text-align: center;
+  }
+  .hero-title {
+    font-size: $font-size-3xl;
+  }
+  .hero-buttons {
+    justify-content: center;
+  }
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: $space-md;
+  }
+  .posts-grid {
+    grid-template-columns: 1fr;
+    gap: $space-md;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: $space-md;
+  }
+  .skill-card,
+  .feature-card,
+  .post-card {
+    padding: $space-lg;
+  }
+  .form-group {
+    margin-bottom: $space-md;
+  }
+  pre {
+    font-size: $font-size-sm;
+  }
+}
+@media (min-width: $breakpoint-sm) and (max-width: $breakpoint-md -1px) {
+  :root {
+    --font-size-7xl: 3.5rem;
+    --font-size-6xl: 3rem;
+    --font-size-5xl: 2.5rem;
+    --font-size-4xl: 2rem;
+    --font-size-3xl: 1.75rem;
+    --font-size-2xl: 1.5rem;
+    --space-xl: 1.75rem;
+    --space-xxl: 2.5rem;
+    --space-xxxl: 3rem;
+    --space-xxxxl: 3.5rem;
+  }
+  .container {
+    padding: 0 $space-lg;
+  }
+  .header-content {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+  .nav.desktop-nav {
+    display: none;
+  }
+  .nav.mobile-nav {
+    display: block;
+  }
+  .hero-content {
+    flex-direction: column;
+    gap: $space-xl;
+  }
+  .hero-text {
+    text-align: center;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-md;
+  }
+  .posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-md;
+  }
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-md;
+  }
+}
+@media (min-width: $breakpoint-md) and (max-width: $breakpoint-lg -1px) {
+  :root {
+    --font-size-7xl: 4rem;
+    --font-size-6xl: 3.5rem;
+    --font-size-5xl: 3rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-2xl: 1.5rem;
+    --space-xl: 2rem;
+    --space-xxl: 3rem;
+    --space-xxxl: 3.5rem;
+    --space-xxxxl: 4rem;
+  }
+  .nav.desktop-nav {
+    display: flex;
+  }
+  .nav.mobile-nav {
+    display: none;
+  }
+  .hero-content {
+    flex-direction: row;
+    align-items: center;
+  }
+  .hero-text {
+    text-align: left;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-lg;
+  }
+  .posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-lg;
+  }
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-lg;
+  }
+}
+@media (min-width: $breakpoint-lg) and (max-width: $breakpoint-xl -1px) {
+  .skills-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-lg;
+  }
+  .posts-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-lg;
+  }
+  .features-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-lg;
+  }
+}
+@media (min-width: $breakpoint-xl) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .hero-content {
+    gap: $space-xxxxl;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-xl;
+  }
+  .posts-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-xl;
+  }
+  .features-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-xl;
+  }
+}
+@media (min-width: $breakpoint-2xl) {
+  .container {
+    max-width: 1400px;
+  }
+  .hero-title {
+    font-size: $font-size-6xl;
+  }
+  .skills-grid {
+    gap: $space-xxl;
+  }
+  .posts-grid {
+    gap: $space-xxl;
+  }
+  .features-grid {
+    gap: $space-xxl;
+  }
+}
