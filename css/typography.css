@@ -1,0 +1,131 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-display;
+  font-weight: 700;
+  line-height: $line-height-tight;
+  margin-top: $space-xl;
+  margin-bottom: $space-lg;
+  color: $color-secondary;
+  letter-spacing: $letter-spacing-tight;
+}
+h1 {
+  font-size: $font-size-5xl;
+  font-weight: 800;
+  letter-spacing: $letter-spacing-tight;
+}
+h2 {
+  font-size: $font-size-4xl;
+  font-weight: 700;
+}
+h3 {
+  font-size: $font-size-3xl;
+  font-weight: 600;
+}
+h4 {
+  font-size: $font-size-2xl;
+  font-weight: 600;
+}
+h5 {
+  font-size: $font-size-xl;
+  font-weight: 600;
+}
+h6 {
+  font-size: $font-size-lg;
+  font-weight: 600;
+}
+p {
+  margin-bottom: $space-lg;
+  line-height: $line-height-relaxed;
+  color: $color-text;
+  font-size: $font-size-base;
+}
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: all $transition-normal;
+  position: relative;
+  font-weight: $font-weight-medium;
+}
+a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: $color-gradient-primary;
+  transition: width $transition-normal;
+}
+a:hover {
+  color: $color-secondary;
+}
+a:hover::after {
+  width: 100%;
+}
+ul,
+ol {
+  margin-bottom: $space-lg;
+  padding-left: $space-xl;
+}
+li {
+  margin-bottom: $space-sm;
+  line-height: $line-height-relaxed;
+  font-size: $font-size-base;
+}
+code {
+  background-color: $color-background-alt;
+  color: $color-accent;
+  padding: 0.2rem 0.4rem;
+  border-radius: $border-radius-sm;
+  font-family: $font-family-mono;
+  font-size: 0.9em;
+  font-weight: $font-weight-medium;
+  transition: all $transition-normal;
+}
+blockquote {
+  border-left: 4px solid $color-primary;
+  padding: $space-md $space-lg;
+  margin-bottom: $space-lg;
+  background: linear-gradient(135deg, $color-background-alt 0%, rgba(79,209,197,0.05) 100%);
+  color: $color-text-light;
+  font-style: italic;
+  border-radius: 0 $border-radius-sm $border-radius-sm 0;
+  font-family: $font-family-display;
+  font-size: $font-size-lg;
+}
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $color-border, transparent);
+  margin: $space-xxl 0;
+}
+::selection {
+  background-color: rgba(79,209,197,0.3);
+  color: $color-secondary;
+}
+.text-gradient {
+  background: $color-gradient-primary;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-display {
+  font-family: $font-family-display;
+  font-weight: 700;
+  letter-spacing: $letter-spacing-tight;
+}
+.text-mono {
+  font-family: $font-family-mono;
+}
+.text-uppercase {
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-wider;
+}
+.text-small-caps {
+  font-variant: small-caps;
+  letter-spacing: $letter-spacing-wide;
+}
