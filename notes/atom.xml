@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <author>
+    <name>SIDO</name>
+  </author>
+  <generator>Hexo</generator>
+  <id>https://sido-meet.online/notes/</id>
+  <link href="https://sido-meet.online/notes/" rel="alternate"/>
+  <link href="https://sido-meet.online/notes/atom.xml" rel="self" type="application/atom+xml"/>
+  <subtitle>阅读、学习、实验和项目过程记录。</subtitle>
+  <title>SIDO MEET · 过程笔记</title>
+  <updated>2026-07-28T12:45:24.000Z</updated>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="论文阅读笔记" scheme="https://sido-meet.online/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
+    <category term="Text-to-SQL" scheme="https://sido-meet.online/tags/Text-to-SQL/"/>
+    <category term="论文阅读" scheme="https://sido-meet.online/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"/>
+    <category term="Embedding" scheme="https://sido-meet.online/tags/Embedding/"/>
+    <category term="SGPT" scheme="https://sido-meet.online/tags/SGPT/"/>
+    <category term="BGE" scheme="https://sido-meet.online/tags/BGE/"/>
+    <category term="Qwen-Embedding" scheme="https://sido-meet.online/tags/Qwen-Embedding/"/>
+    <content>
+      <![CDATA[<p>这个是用来回顾复习第一篇科研点中使用到的嵌入模型，包括SGPT，BGE，Qwen-Embedding，学习着</p>
+<p><img src="https://raw.githubusercontent.com/sido-meet/pic_bed/main/Pasted%20image%2020260728231304.png" alt="Pasted image 20260728231304"></p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/07/28/%E5%B5%8C%E5%85%A5%E6%A8%A1%E5%9E%8B/</id>
+    <link href="https://sido-meet.online/2026/07/28/%E5%B5%8C%E5%85%A5%E6%A8%A1%E5%9E%8B/"/>
+    <published>2026-07-28T12:45:24.000Z</published>
+    <summary>回顾复习第一篇科研工作中使用到的嵌入模型：SGPT、BGE 与 Qwen-Embedding，理解它们的原理与适用场景。</summary>
+    <title>嵌入模型：SGPT、BGE 与 Qwen-Embedding 回顾</title>
+    <updated>2026-07-28T12:45:24.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="内化" scheme="https://sido-meet.online/categories/%E5%86%85%E5%8C%96/"/>
+    <category term="AI" scheme="https://sido-meet.online/tags/AI/"/>
+    <category term="读书" scheme="https://sido-meet.online/tags/%E8%AF%BB%E4%B9%A6/"/>
+    <category term="书单" scheme="https://sido-meet.online/tags/%E4%B9%A6%E5%8D%95/"/>
+    <category term="卡兹克" scheme="https://sido-meet.online/tags/%E5%8D%A1%E5%85%B9%E5%85%8B/"/>
+    <content>
+      <![CDATA[<p>看到卡兹克老师今天发的一份书单，主题很有意思——<strong>「没有一本是关于 AI 的」</strong>。</p>
+<p>作者的核心观点是：决定你能不能把 AI 用好的，从来都不是你对 AI 了解多少，而是那些可能跟 AI 毫无关系的底层能力。AI 本身在进步、工具会迭代、模型会换代，今天的技巧明天可能被淘汰；但人的很多底层能力和认知，是不会过期的。</p>
+<p>这 10 本书横跨 1950–2026 年，从控制论到传播学到复杂系统到哲学到战略思维，加在一起构成了一个”在 AI 时代活得好的底层方法论”。</p>
+<h2 id="10-本书速览"><a href="#10-本书速览" class="headerlink" title="10 本书速览"></a>10 本书速览</h2><table>
+<thead>
+<tr>
+<th>#</th>
+<th>书名</th>
+<th>作者</th>
+<th>核心一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>《失控》</td>
+<td>凯文·凯利 (1994)</td>
+<td>AI 是涌现出来的系统——放弃控制才能获得控制</td>
+</tr>
+<tr>
+<td>2</td>
+<td>《人有人的用处》</td>
+<td>诺伯特·维纳 (1950)</td>
+<td>AI 协作的核心是反馈回路,人和 AI 的差距就是反馈质量</td>
+</tr>
+<tr>
+<td>3</td>
+<td>《系统之美》</td>
+<td>德内拉·梅多斯</td>
+<td>警惕”舍本逐末”——AI 加速流量的同时在悄悄消耗你的存量</td>
+</tr>
+<tr>
+<td>4</td>
+<td>《事实》</td>
+<td>汉斯·罗斯林</td>
+<td>给 AI 的 prompt 背后是你的世界观,世界观歪答案就歪</td>
+</tr>
+<tr>
+<td>5</td>
+<td>《理解媒介》</td>
+<td>马歇尔·麦克卢汉 (1964)</td>
+<td>别用后视镜看 AI——问”什么以前不可能的事现在可能了”</td>
+</tr>
+<tr>
+<td>6</td>
+<td>《反脆弱》</td>
+<td>塔勒布</td>
+<td>杠铃策略:一头守住底牌,一头激进试新工具,中间最危险</td>
+</tr>
+<tr>
+<td>7</td>
+<td>《一生的旅程》</td>
+<td>罗伯特·艾格 (迪士尼前CEO)</td>
+<td>AI 时代每个人都是管理者——聚焦、不确定中决断、管创意型人才</td>
+</tr>
+<tr>
+<td>8</td>
+<td>《千面英雄》</td>
+<td>约瑟夫·坎贝尔</td>
+<td>把信息变成叙事、把产品变成意义,是 AI 时代最值钱的能力之一</td>
+</tr>
+<tr>
+<td>9</td>
+<td>《第一哲学沉思集》</td>
+<td>笛卡尔</td>
+<td>“我思故我在”——定期停下来怀疑一切,经过怀疑还能站住的才靠得住</td>
+</tr>
+<tr>
+<td>10</td>
+<td>《毛泽东选集》</td>
+<td>毛泽东</td>
+<td>战略思维教材——“没有调查就没有发言权”,问题就是事物的矛盾</td>
+</tr>
+</tbody></table>
+<h2 id="整张书单的暗线"><a href="#整张书单的暗线" class="headerlink" title="整张书单的暗线"></a>整张书单的暗线</h2><blockquote>
+<p>这些底层能力,不会因为模型升级而过期,不会因为工具迭代而失效。因为它们从来就不是关于 AI 的,它们是关于人的。</p>
+</blockquote>
+<h2 id="个人备忘-3-本先读的优先级"><a href="#个人备忘-3-本先读的优先级" class="headerlink" title="个人备忘:3 本先读的优先级"></a>个人备忘:3 本先读的优先级</h2><ul>
+<li><strong>想搞清怎么跟 AI 协作</strong> → #2 维纳（反馈回路）+ #7 艾格（管理方法论）</li>
+<li><strong>想搞清 AI 时代怎么思考</strong> → #5 麦克卢汉（后视镜思维）+ #3 梅多斯（系统&#x2F;存量）</li>
+<li><strong>想搞清底层认知框架</strong> → #9 笛卡尔（怀疑一切）+ #10 毛选（战略）</li>
+</ul>
+<hr>
+<blockquote>
+<p>来源: 卡兹克, 2026-06-18（QQ 内看到分享的抖音链接 YZKv1tDnAi6j79,原文首发于卡兹克公众号&#x2F;同名平台,搜索”卡兹克 AI 时代必读”可找到完整长文）。本篇为笔记整理,具体解读以原作者长文为准。</p>
+</blockquote>]]>
+    </content>
+    <id>https://sido-meet.online/2026/06/18/AI%E6%97%B6%E4%BB%A3%E5%BA%95%E5%B1%82%E4%B9%A6%E5%8D%95%E2%80%94%E2%80%94%E5%8D%A1%E5%85%B9%E5%85%8B%E6%8E%A8%E8%8D%90%E7%9A%8410%E6%9C%AC%E4%B9%A6/</id>
+    <link href="https://sido-meet.online/2026/06/18/AI%E6%97%B6%E4%BB%A3%E5%BA%95%E5%B1%82%E4%B9%A6%E5%8D%95%E2%80%94%E2%80%94%E5%8D%A1%E5%85%B9%E5%85%8B%E6%8E%A8%E8%8D%90%E7%9A%8410%E6%9C%AC%E4%B9%A6/"/>
+    <published>2026-06-18T11:01:08.000Z</published>
+    <summary>卡兹克 2026-06-18 推荐的一份&quot;没有一本是关于 AI 的&quot;AI 时代书单，主张用底层能力应对 AI 时代的不确定性。</summary>
+    <title>AI时代底层书单——卡兹克推荐的10本书</title>
+    <updated>2026-06-18T11:01:08.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="人工智能" scheme="https://sido-meet.online/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    <category term="Agent" scheme="https://sido-meet.online/tags/Agent/"/>
+    <category term="OpenClaw" scheme="https://sido-meet.online/tags/OpenClaw/"/>
+    <category term="Skill" scheme="https://sido-meet.online/tags/Skill/"/>
+    <content>
+      <![CDATA[<p>详情请查阅<a href="https://docs.openclaw.ai/zh-CN/skills%EF%BC%8C%E6%9C%AC%E6%96%87%E6%98%AF%E9%92%88%E5%AF%B9%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84skill%E5%9C%BA%E6%99%AF%E8%BF%9B%E8%A1%8C%E8%AE%B0%E5%BD%95">https://docs.openclaw.ai/zh-CN/skills，本文是针对使用到的skill场景进行记录</a></p>
+<h2 id="创建-skill"><a href="#创建-skill" class="headerlink" title="创建 skill"></a>创建 skill</h2><p>让agent创建skill，建议明确制定使用skill-creator skill，不然模型可能创建出来的skill不符合规范格式，导致openclaw无法识别。</p>
+<ul>
+<li>skill-creator skill 是元skill，无需自己安装。<br>可以使用类似指令创建skill：</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请你使用skill-creator skill创建一个skill，skill的用途是用于个人网站的友链管理。</span><br></pre></td></tr></table></figure>
+
+<h2 id="skill-位置与优先级"><a href="#skill-位置与优先级" class="headerlink" title="skill 位置与优先级"></a>skill 位置与优先级</h2><ul>
+<li><p>自定义位置：在<code>openclaw.json</code>中配置<code>skills.load.extraDirs</code>配置，指定skill的存储路径。</p>
+</li>
+<li><p>内置skills：内置在openclaw中，比如<code>skill-creator</code> skill。</p>
+</li>
+<li><p>托管式&#x2F;本地 skills: .openclaw&#x2F;skills 目录下的skill文件，该目录下的skills所有agent共享。</p>
+</li>
+<li><p>工作区skills：在每个agent自己的工作区中<code>&lt;workspace&gt;/skills</code>目录下的skill文件。</p>
+</li>
+<li><p>Note: 针对名称冲突，优先级是：工作区skill -&gt; 托管式&#x2F;本地 skills -&gt; 内置skill -&gt; 自定义位置。</p>
+</li>
+</ul>
+<h2 id="Q-A"><a href="#Q-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><ul>
+<li>为什么创建skill但是openclaw没有识别到？<ul>
+<li>很有可能是模型创建出来的skill不符合规范格式，导致openclaw无法识别。比如，缺少name字段。</li>
+</ul>
+</li>
+</ul>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="https://docs.openclaw.ai/zh-CN/skills">https://docs.openclaw.ai/zh-CN/skills</a></li>
+</ul>]]>
+    </content>
+    <id>https://sido-meet.online/2026/04/13/openclaw-skill-%E5%88%9B%E5%BB%BA%E4%B8%8E%E9%85%8D%E7%BD%AE/</id>
+    <link href="https://sido-meet.online/2026/04/13/openclaw-skill-%E5%88%9B%E5%BB%BA%E4%B8%8E%E9%85%8D%E7%BD%AE/"/>
+    <published>2026-04-13T07:09:17.000Z</published>
+    <summary>记录 OpenClaw Skill 的创建方式、目录优先级、配置位置与使用 skill-creator 的注意事项。</summary>
+    <title>openclaw skill 创建与配置</title>
+    <updated>2026-04-13T07:09:17.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="技术笔记" scheme="https://sido-meet.online/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+    <category term="LLM" scheme="https://sido-meet.online/tags/LLM/"/>
+    <category term="Post-Training" scheme="https://sido-meet.online/tags/Post-Training/"/>
+    <category term="RLHF" scheme="https://sido-meet.online/tags/RLHF/"/>
+    <category term="ms-swift" scheme="https://sido-meet.online/tags/ms-swift/"/>
+    <category term="verl" scheme="https://sido-meet.online/tags/verl/"/>
+    <category term="OpenRLHF" scheme="https://sido-meet.online/tags/OpenRLHF/"/>
+    <category term="MiniMind" scheme="https://sido-meet.online/tags/MiniMind/"/>
+    <content>
+      <![CDATA[<blockquote>
+<p>这四个框架覆盖了从入门到大规模生产的完整 RLHF &#x2F; Post-training 学习路径。</p>
+</blockquote>
+<h2 id="背景概览"><a href="#背景概览" class="headerlink" title="背景概览"></a>背景概览</h2><table>
+<thead>
+<tr>
+<th>框架</th>
+<th>来自</th>
+<th>核心定位</th>
+<th>特色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ms-swift</strong></td>
+<td>ModelScope 阿里</td>
+<td>全链路微调框架</td>
+<td>SFT + 偏好学习 + GRPO 族，Megatron 并行</td>
+</tr>
+<tr>
+<td><strong>verl</strong></td>
+<td>ByteDance 字节</td>
+<td>高性能 RL 训练库</td>
+<td>PPO&#x2F;GRPO，VLM 支持，FSDP&#x2F;Megatron 双后端</td>
+</tr>
+<tr>
+<td><strong>OpenRLHF</strong></td>
+<td>OpenRLHF 社区</td>
+<td>工业级 RLHF</td>
+<td>Ray + vLLM 分布式，70B+ 全量微调</td>
+</tr>
+<tr>
+<td><strong>MiniMind</strong></td>
+<td>龚一淳 (个人)</td>
+<td>入门教育 + 轻量级复现</td>
+<td>全流程从0实现，$3 &#x2F; 2小时，单卡可跑</td>
+</tr>
+</tbody></table>
+<h2 id="一、MiniMind（⭐入门首选）"><a href="#一、MiniMind（⭐入门首选）" class="headerlink" title="一、MiniMind（⭐入门首选）"></a>一、MiniMind（⭐入门首选）</h2><p><strong>推荐理由：</strong> 代码纯净，核心算法全部从0用 PyTorch 原生实现，不依赖第三方 RL 库封装，非常适合理解底层原理。</p>
+<ul>
+<li>🌟 最小 26M 参数，GPT-3 的 1&#x2F;7000</li>
+<li>💰 $3 成本 + 单卡 3090，2小时训完整流程</li>
+<li>📖 从0原生实现 PPO &#x2F; GRPO &#x2F; CISPO &#x2F; DPO</li>
+<li>🔧 Tool Calling + Adaptive Thinking + YaRN 长文本外推</li>
+<li>🖼️ 支持视觉多模态 MiniMind-V</li>
+</ul>
+<p><strong>学习路线：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Day 1: 环境搭建 + 跑通最简流程</span><br><span class="line">Day 2: 全流程实验 Pretrain → SFT → LoRA → DPO</span><br><span class="line">Day 3: RLHF 强化学习 PPO/GRPO/CISPO</span><br><span class="line">Day 4: 高级特性 YaRN / Tool Calling / Adaptive Thinking</span><br></pre></td></tr></table></figure>
+
+<p><strong>资源：</strong></p>
+<ul>
+<li>GitHub: <a href="https://github.com/jingyaogong/minimind">https://github.com/jingyaogong/minimind</a></li>
+<li>文档: <a href="https://minimind.readthedocs.io/">https://minimind.readthedocs.io/</a></li>
+</ul>
+<h2 id="二、ms-swift（工业级入门）"><a href="#二、ms-swift（工业级入门）" class="headerlink" title="二、ms-swift（工业级入门）"></a>二、ms-swift（工业级入门）</h2><p><strong>推荐理由：</strong> 全链路覆盖，文档最友好，国内生态最完善。</p>
+<ul>
+<li>支持算法：DPO, KTO, GRPO, DAPO, GSPO, SAPO, CISPO, RLOO, Reinforce++</li>
+<li>支持 vLLM &#x2F; SGLang &#x2F; LMDeploy 推理加速</li>
+<li>Megatron TP&#x2F;PP 并行 + Web-UI 训练界面</li>
+<li>多模态 VLMs 支持</li>
+</ul>
+<p><strong>学习路线：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Day 5-6: 环境搭建 + SFT + DPO/KTO 偏好学习</span><br><span class="line">Day 7: GRPO 强化学习实战</span><br><span class="line">Day 8: Megatron 并行 + 多模态支持</span><br></pre></td></tr></table></figure>
+
+<p><strong>资源：</strong></p>
+<ul>
+<li>GitHub: <a href="https://github.com/modelscope/ms-swift">https://github.com/modelscope/ms-swift</a></li>
+</ul>
+<h2 id="三、verl（算法深度）"><a href="#三、verl（算法深度）" class="headerlink" title="三、verl（算法深度）"></a>三、verl（算法深度）</h2><p><strong>推荐理由：</strong> 字节最佳实践，算法实现最专业，VLM 支持最好。</p>
+<ul>
+<li>DAPO 算法官方实现</li>
+<li>VLM recipe: Qwen2.5-vl, Kimi-VL</li>
+<li>Multi-turn Rollout with Tools</li>
+<li>支持 AMD &#x2F; Ascend 多硬件</li>
+</ul>
+<p><strong>学习路线：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Day 9: verl 核心架构 Actor/Critic/Reward/Ref</span><br><span class="line">Day 10: GRPO + 多 GPU 扩展</span><br><span class="line">Day 11: VLM + Agent 工具调用</span><br></pre></td></tr></table></figure>
+
+<p><strong>资源：</strong></p>
+<ul>
+<li>GitHub: <a href="https://github.com/volcengine/verl">https://github.com/volcengine/verl</a></li>
+<li>文档: <a href="https://verl.readthedocs.io/">https://verl.readthedocs.io/</a></li>
+</ul>
+<h2 id="四、OpenRLHF（大规模生产）"><a href="#四、OpenRLHF（大规模生产）" class="headerlink" title="四、OpenRLHF（大规模生产）"></a>四、OpenRLHF（大规模生产）</h2><p><strong>推荐理由：</strong> 生产级稳定性，支撑大规模训练，EMNLP 2025 Demo Paper。</p>
+<ul>
+<li>Ray 分布式调度 + vLLM Rollout Engine</li>
+<li>ZeRO 训练引擎</li>
+<li>70B+ 全量微调支持</li>
+<li>Hybrid Engine（推理训练分离）</li>
+</ul>
+<p><strong>学习路线：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Day 12: OpenRLHF 架构解析</span><br><span class="line">Day 13: 高级特性 Packing / Dynamic Filtering / 调参</span><br><span class="line">Day 14: 多节点集群部署</span><br></pre></td></tr></table></figure>
+
+<p><strong>资源：</strong></p>
+<ul>
+<li>GitHub: <a href="https://github.com/openrlhf/openrlhf">https://github.com/openrlhf/openrlhf</a></li>
+</ul>
+<h2 id="推荐学习路线（四框架顺序）"><a href="#推荐学习路线（四框架顺序）" class="headerlink" title="推荐学习路线（四框架顺序）"></a>推荐学习路线（四框架顺序）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MiniMind（零基础入门，理解原理）</span><br><span class="line">    ↓</span><br><span class="line">ms-swift（工业级框架，掌握全流程）</span><br><span class="line">    ↓</span><br><span class="line">verl（算法深度，字节最佳实践）</span><br><span class="line">    ↓</span><br><span class="line">OpenRLHF（大规模生产部署）</span><br></pre></td></tr></table></figure>
+
+<h2 id="实战项目建议"><a href="#实战项目建议" class="headerlink" title="实战项目建议"></a>实战项目建议</h2><p><strong>项目1（入门）：MiniMind 全流程</strong></p>
+<p>用 MiniMind 跑通 Pretrain → SFT → DPO → GRPO 全流程，观测 loss 曲线。</p>
+<p><strong>项目2（工程）：小模型 RLHF 对齐</strong></p>
+<p>用 ms-swift，对 7B 模型做 SFT → GRPO，对比 DAPO vs GRPO vs Reinforce++。</p>
+<p><strong>项目3（研究）：推理模型蒸馏复现</strong></p>
+<p>参考 MiniMind-Reason，复现 DeepSeek-R1 的 GRPO + Reward + Verification 流程。</p>
+<p><strong>项目4（生产）：多 GPU 分布式 RLHF</strong></p>
+<p>用 OpenRLHF Hybrid Engine，配置 70B 模型的多节点 RLHF 训练。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/04/13/llm-post-training-learning-guide/</id>
+    <link href="https://sido-meet.online/2026/04/13/llm-post-training-learning-guide/"/>
+    <published>2026-04-12T16:00:00.000Z</published>
+    <summary>对比 ms-swift、verl、OpenRLHF 与 MiniMind，规划从轻量复现到分布式 RLHF 的后训练学习路径。</summary>
+    <title>LLM Post-Training 学习指南：ms-swift / verl / OpenRLHF / MiniMind</title>
+    <updated>2026-04-12T16:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="人工智能" scheme="https://sido-meet.online/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    <category term="Agent" scheme="https://sido-meet.online/tags/Agent/"/>
+    <category term="OpenClaw" scheme="https://sido-meet.online/tags/OpenClaw/"/>
+    <category term="模型路由" scheme="https://sido-meet.online/tags/%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1/"/>
+    <content>
+      <![CDATA[<p>不同场景下，openclaw需要负责不同的任务，任务有需要较强的推理，也有不需要推理。所以对不同场景下的任务，openclaw需要分配不同的模型。比如设计了两个agent，一个sido，一个personal-web-manager，sido负责简单的问题，以及分配任务给personal-web-manager，只需要性能相对弱的模型。personnal-web-manager负责个人网站管理，需要代码撰写，博客管理等工作，需要较强的推理能力的模型。还有对记忆的嵌入模型的选择等。</p>
+<p>盘点目前已经拥有的可以使用的供应商：</p>
+<ul>
+<li>minimax：订阅了plus套餐，每5个小时1500次调用，每周15000次；</li>
+<li>modelscope：免费服务，单个免费模型调用次数小于500次，共2000次调用，每天刷新；</li>
+<li>opentouter：免费服务，调用次数共50次，每天刷新；</li>
+<li>阿里云百炼：300元学生免费额度。</li>
+</ul>
+<p>针对sido管家agent，选择<code>MiniMax-M2.7-highspeed</code>，fallbacks选择<code>MiniMax-M2.7</code>。针对personal-web-manager agent，选择<code>MiniMax-M2.7</code>，fallbacks选择<code>MiniMax-M2.7-highspeed</code>。</p>
+<p>针对memorySearch的配置，参考<a href="https://www.jianshu.com/p/74faa4ef979d%EF%BC%8C%E4%BD%BF%E7%94%A8%60nomic-embed-text%60%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E7%9A%84%E6%A8%A1%E5%9E%8B%E3%80%82">https://www.jianshu.com/p/74faa4ef979d，使用`nomic-embed-text`本地部署的模型。</a></p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/04/11/openclaw%E9%92%88%E5%AF%B9%E4%B8%8D%E5%90%8C%E5%9C%BA%E6%99%AF%E5%88%86%E9%85%8D%E6%A8%A1%E5%9E%8B/</id>
+    <link href="https://sido-meet.online/2026/04/11/openclaw%E9%92%88%E5%AF%B9%E4%B8%8D%E5%90%8C%E5%9C%BA%E6%99%AF%E5%88%86%E9%85%8D%E6%A8%A1%E5%9E%8B/"/>
+    <published>2026-04-11T05:52:00.000Z</published>
+    <summary>根据任务复杂度为 OpenClaw 中不同 Agent 配置主模型、回退模型与本地嵌入模型。</summary>
+    <title>openclaw针对不同场景分配模型</title>
+    <updated>2026-04-11T05:52:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="技术实践" scheme="https://sido-meet.online/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/"/>
+    <category term="Agent" scheme="https://sido-meet.online/tags/Agent/"/>
+    <category term="OpenClaw" scheme="https://sido-meet.online/tags/OpenClaw/"/>
+    <category term="工具权限" scheme="https://sido-meet.online/tags/%E5%B7%A5%E5%85%B7%E6%9D%83%E9%99%90/"/>
+    <content>
+      <![CDATA[<p>在使用openclaw时，出现工具使用权限问题，我将其设置为<code>full</code>模式，初步确保了工具的正常调用，后续将根据实际使用情况，精细化调整工具权限。</p>
+<p>具有四种工具模式，分别是：</p>
+<ul>
+<li>minimal: 仅查看会话状态</li>
+<li>messaging: 发消息，聊天，会话管理；不能读写文件，不能执行命令</li>
+<li>coding: 文件读写，执行命令&#x2F;代码，会话&#x2F;记忆，图像分析</li>
+<li>full: 无限制，所有工具可用</li>
+</ul>
+<p>可以通过以下命令进行设置:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw config <span class="built_in">set</span> tools.profile [minimal, messaging, coding, full]</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="https://github.com/openclaw/openclaw/blob/main/docs/tools/index.md">https://github.com/openclaw/openclaw/blob/main/docs/tools/index.md</a></li>
+</ul>]]>
+    </content>
+    <id>https://sido-meet.online/2026/04/03/openclaw-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</id>
+    <link href="https://sido-meet.online/2026/04/03/openclaw-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/"/>
+    <published>2026-04-03T03:33:23.000Z</published>
+    <summary>记录 OpenClaw minimal、messaging、coding、full 四种工具权限模式及配置方法。</summary>
+    <title>openclaw 使用记录</title>
+    <updated>2026-04-03T03:33:23.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="内化" scheme="https://sido-meet.online/categories/%E5%86%85%E5%8C%96/"/>
+    <category term="Agent" scheme="https://sido-meet.online/tags/Agent/"/>
+    <category term="面试" scheme="https://sido-meet.online/tags/%E9%9D%A2%E8%AF%95/"/>
+    <category term="职业成长" scheme="https://sido-meet.online/tags/%E8%81%8C%E4%B8%9A%E6%88%90%E9%95%BF/"/>
+    <content>
+      <![CDATA[<ul>
+<li>首先一点就是使用，如果对市面上的agent没有一个调研，没有亲身使用的化，那就无法对agent有一个清晰的感知。</li>
+<li>第二点就是作品，使用agent不能只停留在使用，要有可以看到的作品。</li>
+<li>第三点是幻想，对agent商业化，应用合理的认知与幻想，成为agent领域的推动者。</li>
+</ul>
+<p>参考资料：</p>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1diPxztEtn/?spm_id_from=333.1007.tianma.1-2-2.click&vd_source=30d673ac9e203150162bcfe075a14b5e">agent社招面试经验分享-uid: 152686439-bilibili</a></p>
+</blockquote>]]>
+    </content>
+    <id>https://sido-meet.online/2026/03/23/Agent%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E5%86%85%E5%8C%96%E6%80%BB%E7%BB%93/</id>
+    <link href="https://sido-meet.online/2026/03/23/Agent%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C%E5%86%85%E5%8C%96%E6%80%BB%E7%BB%93/"/>
+    <published>2026-03-23T13:22:41.000Z</published>
+    <summary>从亲自使用、可展示作品与行业想象三个方面，总结 Agent 岗位准备中的关键经验。</summary>
+    <title>Agent面试经验内化总结</title>
+    <updated>2026-03-23T13:22:41.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="人工智能" scheme="https://sido-meet.online/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    <category term="Agent" scheme="https://sido-meet.online/tags/Agent/"/>
+    <category term="Text-to-SQL" scheme="https://sido-meet.online/tags/Text-to-SQL/"/>
+    <category term="LangGraph" scheme="https://sido-meet.online/tags/LangGraph/"/>
+    <content>
+      <![CDATA[<p>sudo-SQL 是一个基于 langgraph 框架的 Text2SQL 推理与评测智能体。设计的初衷是为了提供一个高效、准确的 Text2SQL 解决方案，同时也为了评测不同 Text2SQL 模型的性能。<br>文件结构设计如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">sudo-SQL/</span><br><span class="line">├── src/</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── inference_agent.py          # 主推理 Agent (StateGraph + Send API)</span><br><span class="line">│   ├── evaluation_agent.py         # 评估 Agent (未来扩展)</span><br><span class="line">│   │</span><br><span class="line">│   ├── utils/                      # 主 Agent 的 utils</span><br><span class="line">│   │   ├── __init__.py</span><br><span class="line">│   │   │</span><br><span class="line">│   │   ├── inference_agent_utils/  # inference_agent 的工具</span><br><span class="line">│   │   │   ├── __init__.py</span><br><span class="line">│   │   │   ├── state.py            # InferenceAgentState, ItemState</span><br><span class="line">│   │   │   ├── nodes.py            # load_data, prepare_items, distribute, process_batch, aggregate</span><br><span class="line">│   │   │   └── tools.py            # 协调工具</span><br><span class="line">│   │   │</span><br><span class="line">│   │   └── evaluation_agent_utils/ # evaluation_agent 的工具</span><br><span class="line">│   │       ├── __init__.py</span><br><span class="line">│   │       ├── state.py            # EvaluationAgentState</span><br><span class="line">│   │       ├── nodes.py            # evaluate, compare 等节点</span><br><span class="line">│   │       └── tools.py            # 评估工具</span><br><span class="line">│   │</span><br><span class="line">│   ├── sub_agents/                 # Sub-Agent 层 (独立可复用)</span><br><span class="line">│   │   ├── __init__.py</span><br><span class="line">│   │   │</span><br><span class="line">│   │   ├── loader_agent/           # 数据加载 Sub-Agent</span><br><span class="line">│   │   │   ├── __init__.py</span><br><span class="line">│   │   │   ├── agent.py            # StateGraph 定义</span><br><span class="line">│   │   │   └── utils/</span><br><span class="line">│   │   │       ├── __init__.py</span><br><span class="line">│   │   │       ├── state.py        # LoaderState</span><br><span class="line">│   │   │       ├── nodes.py        # load_dataset, unify_format, load_schema</span><br><span class="line">│   │   │       ├── tools.py        # DatasetLoader</span><br><span class="line">│   │   │       └── tools_schema.py # SchemaLoader</span><br><span class="line">│   │   │</span><br><span class="line">│   │   ├── prompt_agent/           # Prompt 构建 Sub-Agent</span><br><span class="line">│   │   │   ├── __init__.py</span><br><span class="line">│   │   │   ├── agent.py            # StateGraph 定义</span><br><span class="line">│   │   │   └── utils/</span><br><span class="line">│   │   │       ├── __init__.py</span><br><span class="line">│   │   │       ├── state.py        # PromptState</span><br><span class="line">│   │   │       ├── nodes.py        # build_prompt</span><br><span class="line">│   │   │       └── tools.py        # PromptBuilder</span><br><span class="line">│   │   │</span><br><span class="line">│   │   ├── inference_agent/        # 模型推理 Sub-Agent</span><br><span class="line">│   │   │   ├── __init__.py</span><br><span class="line">│   │   │   ├── agent.py            # StateGraph 定义</span><br><span class="line">│   │   │   └── utils/</span><br><span class="line">│   │   │       ├── __init__.py</span><br><span class="line">│   │   │       ├── state.py        # InferenceState</span><br><span class="line">│   │   │       ├── nodes.py        # call_model, extract_sql</span><br><span class="line">│   │   │       ├── tools.py        # ModelInference</span><br><span class="line">│   │   │       └── base.py         # BaseInference</span><br><span class="line">│   │   │</span><br><span class="line">│   │   └── saver_agent/            # 结果保存 Sub-Agent</span><br><span class="line">│   │       ├── __init__.py</span><br><span class="line">│   │       ├── agent.py            # StateGraph 定义</span><br><span class="line">│   │       └── utils/</span><br><span class="line">│   │           ├── __init__.py</span><br><span class="line">│   │           ├── state.py        # SaverState</span><br><span class="line">│   │           ├── nodes.py        # save_result</span><br><span class="line">│   │           ├── tools.py        # ResultSaver</span><br><span class="line">│   │           └── base.py         # BaseSaver</span><br><span class="line">│   │</span><br><span class="line">│   └── core/                       # 基础设施层</span><br><span class="line">│       ├── __init__.py</span><br><span class="line">│       ├── config.py               # 配置加载</span><br><span class="line">│       └── exceptions.py           # 自定义异常</span><br><span class="line">│</span><br><span class="line">├── prompts/                        # 模板资源 (项目根级别，全局共享)</span><br><span class="line">│   └── templates/</span><br><span class="line">│       └── text2sql_basic.jinja2</span><br><span class="line">│</span><br><span class="line">├── configs/                        # 配置文件 (项目根级别，全局共享)</span><br><span class="line">│   └── config.yaml</span><br><span class="line">│</span><br><span class="line">├── tests/                          # 测试目录 (与 src 结构对应)</span><br><span class="line">│   ├── conftest.py</span><br><span class="line">│   ├── test_inference_agent.py</span><br><span class="line">│   ├── test_evaluation_agent.py</span><br><span class="line">│   │</span><br><span class="line">│   ├── utils/</span><br><span class="line">│   │   └── test_inference_agent_utils/</span><br><span class="line">│   │       ├── test_state.py</span><br><span class="line">│   │       └── test_nodes.py</span><br><span class="line">│   │</span><br><span class="line">│   └── sub_agents/</span><br><span class="line">│       ├── test_loader_agent/</span><br><span class="line">│       │   ├── test_tools.py</span><br><span class="line">│       │   └── test_nodes.py</span><br><span class="line">│       ├── test_prompt_agent/</span><br><span class="line">│       │   ├── test_tools.py</span><br><span class="line">│       │   └── test_nodes.py</span><br><span class="line">│       ├── test_inference_agent/</span><br><span class="line">│       │   ├── test_tools.py</span><br><span class="line">│       │   └── test_nodes.py</span><br><span class="line">│       └── test_saver_agent/</span><br><span class="line">│           ├── test_tools.py</span><br><span class="line">│           └── test_nodes.py</span><br><span class="line">│</span><br><span class="line">├── scripts/                        # 脚本目录</span><br><span class="line">│   └── run_inference.py            # 推理入口脚本</span><br><span class="line">│</span><br><span class="line">├── outputs/                        # 推理结果输出目录（运行时生成）</span><br><span class="line">│</span><br><span class="line">├── pyproject.toml                  # 项目配置</span><br><span class="line">└── README.md                       # 项目说明文档</span><br></pre></td></tr></table></figure>
+
+<p>遵循langgraph的状态管理规范，实现Text2SQL推理与评测智能体，包括数据加载、Prompt构建、模型推理、结果保存等功能，目前评测功能尚未实现。通过将不同功能模块当作独立的sub-agent节点，实现了高度的可扩展性和可维护性。同时基于节点间的分发功能（Send），实现了不同模块之间的解耦和并行处理，提高了系统的效率和响应速度。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/03/09/sudo-SQL-%E5%9F%BA%E4%BA%8Elanggraph%E7%9A%84Text2SQL%E6%8E%A8%E7%90%86%E4%B8%8E%E8%AF%84%E6%B5%8B%E6%99%BA%E8%83%BD%E4%BD%93/</id>
+    <link href="https://sido-meet.online/2026/03/09/sudo-SQL-%E5%9F%BA%E4%BA%8Elanggraph%E7%9A%84Text2SQL%E6%8E%A8%E7%90%86%E4%B8%8E%E8%AF%84%E6%B5%8B%E6%99%BA%E8%83%BD%E4%BD%93/"/>
+    <published>2026-03-09T11:57:11.000Z</published>
+    <summary>介绍 sudo-SQL 的 LangGraph 分层架构、Text-to-SQL 推理流程、并发分发与评测扩展设计。</summary>
+    <title>sudo-SQL: 基于langgraph的Text2SQL推理与评测智能体</title>
+    <updated>2026-03-09T11:57:11.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="博客开发" scheme="https://sido-meet.online/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/"/>
+    <category term="Hexo" scheme="https://sido-meet.online/tags/Hexo/"/>
+    <category term="内容管理" scheme="https://sido-meet.online/tags/%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/"/>
+    <category term="更新时间" scheme="https://sido-meet.online/tags/%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4/"/>
+    <content>
+      <![CDATA[<p>想要给hexo博客添加一个历史更新功能，但是目前并没有找到合适的插件，符合以下需求：</p>
+<ul>
+<li>显示文章的更新历史</li>
+<li>点击历史可以查看历史文章</li>
+</ul>
+<p>退而求其次，hexo中支持<code>updated</code>字段，但是默认情况下，hexo不会显示<code>updated</code>字段。需要通过修改主题加手动指定该字段的时间，可以达到显示最近更新的时间的功能。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: hexo博客的updated字段</span><br><span class="line">category: 博客开发</span><br><span class="line">date: 2026-02-12 21:59:42</span><br><span class="line">updated: 2026-02-13 22:00:00</span><br><span class="line"><span class="section">tags:</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>]]>
+    </content>
+    <id>https://sido-meet.online/2026/02/12/hexo%E5%8D%9A%E5%AE%A2%E7%9A%84updated%E5%AD%97%E6%AE%B5/</id>
+    <link href="https://sido-meet.online/2026/02/12/hexo%E5%8D%9A%E5%AE%A2%E7%9A%84updated%E5%AD%97%E6%AE%B5/"/>
+    <published>2026-02-12T13:59:42.000Z</published>
+    <summary>说明 Hexo updated 字段的默认行为，以及如何在主题中展示文章的最近更新时间。</summary>
+    <title>hexo博客的updated字段</title>
+    <updated>2026-02-13T14:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="论文阅读笔记" scheme="https://sido-meet.online/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
+    <category term="LLM" scheme="https://sido-meet.online/tags/LLM/"/>
+    <category term="Text-to-SQL" scheme="https://sido-meet.online/tags/Text-to-SQL/"/>
+    <category term="论文阅读" scheme="https://sido-meet.online/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"/>
+    <content>
+      <![CDATA[<blockquote>
+<p><strong>论文标题</strong>：DTS-SQL: Decomposed Text-to-SQL with Small Large Language Models<br><strong>论文作者</strong>：Mohammadreza Pourreza, Davood Rafiei<br><strong>论文链接</strong>：<a href="https://aclanthology.org/2024.findings-emnlp.481/">https://aclanthology.org/2024.findings-emnlp.481/</a><br><strong>论文代码</strong>：<a href="https://github.com/MohammadrezaPourreza/DTS-SQL">https://github.com/MohammadrezaPourreza/DTS-SQL</a></p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在Text2SQL任务中，较小的开源模型与闭源的商业模型性能有较大差异。为了缓解该问题，作者提出将Text2SQL任务分解为两个子任务，分别为<code>schema linking</code>和<code>SQL generation</code>。相比于一阶段微调有3%-7%的EX提升。</p>
+<h2 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h2><ul>
+<li>开源小模型在性能上比不过闭源商业模型</li>
+<li>一步生成SQL语句对于小模型来说是困难的，这个从实验中可以看到，相比一步生成，小模型可能会选错表，导致生成错误的SQL语句。因此，分为两阶段，先提升模型的<code>schema linking</code>能力，再提升<code>SQL generation</code>能力。</li>
+</ul>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>主要是Schema linking fine-tuning和SQL generation fine-tuning。</p>
+<p>从 Spider 1.0 和 BIRD 2023 的数据集中构造，通过 gold SQL 提取 table。论文中是说提取了表和列，但是代码中直用了表。</p>
+<ul>
+<li>针对schema linking任务，输入是问题，数据库schema，输出是将用来生成SQL的表</li>
+<li>针对SQL generation任务，输入是问题，将用来生成SQL的表的schema，输出是SQL语句</li>
+</ul>
+<p>二者可以同时训练，分别增强模型的schema linking能力和SQL generation的能力。</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><ul>
+<li>相较于一步生成SQL，两阶段可以提升模型性能<br><img src="https://raw.githubusercontent.com/sido-meet/pic_bed/main/self-webimage.png" alt="image"></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>针对小模型，上下文有限，能力较弱，分解任务是有效的</li>
+<li>但是该论文仅局限于表粒度，可以探索更多的列粒度及值粒度</li>
+<li>能力提升归咎于SQL generation还是schmea linking，存在疑问</li>
+</ul>]]>
+    </content>
+    <id>https://sido-meet.online/2025/12/17/%E3%80%90%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E3%80%91DTS-SQL-Decomposed-Text-to-SQL-with-Small-Large-Language-Models/</id>
+    <link href="https://sido-meet.online/2025/12/17/%E3%80%90%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E3%80%91DTS-SQL-Decomposed-Text-to-SQL-with-Small-Large-Language-Models/"/>
+    <published>2025-12-17T14:00:40.000Z</published>
+    <summary>阅读 DTS-SQL：将 Text-to-SQL 分解为 schema linking 与 SQL generation，以提升小模型执行准确率。</summary>
+    <title>【论文阅读笔记】DTS-SQL: Decomposed Text-to-SQL with Small Large Language Models</title>
+    <updated>2025-12-17T14:00:40.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:note"/>
+    <category term="日记" scheme="https://sido-meet.online/categories/%E6%97%A5%E8%AE%B0/"/>
+    <category term="思考" scheme="https://sido-meet.online/tags/%E6%80%9D%E8%80%83/"/>
+    <category term="随笔" scheme="https://sido-meet.online/tags/%E9%9A%8F%E7%AC%94/"/>
+    <category term="生活" scheme="https://sido-meet.online/tags/%E7%94%9F%E6%B4%BB/"/>
+    <content>
+      <![CDATA[<h2 id="学啥写啥？"><a href="#学啥写啥？" class="headerlink" title="学啥写啥？"></a>学啥写啥？</h2><p>今天学了啥呢，怎么控制<code>hexo</code>生成一个新的文章，首先要通过<code>new</code>的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &lt;layout&gt; <span class="string">&quot;文章名&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这个命令会调用scaffolds下面的模板创建，创建<strong>post</strong>的layout为<code>post</code>，通过layout下的post.md控制，<br>可以在post.md中设置文章的标题、标签、分类等信息。例如：</p>
+<blockquote>
+<hr>
+<p>title: 不知道写啥？<br>date: 1765381929000<br>tags:</p>
+</blockquote>
+<hr>
+<p>这个就在生成文章时自动填充。同时也可以通过命令控制，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">&quot;文章名&quot;</span> --tags=<span class="string">&quot;思考,随笔,生活&quot;</span></span><br></pre></td></tr></table></figure>
+<p>可以控制的参数有<code>--author</code>、<code>--categories</code>、<code>--date</code>、<code>--tags</code>等。具体可以查阅<a href="https://hexo.io/zh-cn/docs/front-matter">hexo文档</a>。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2025/12/10/%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E5%95%A5%EF%BC%9F/</id>
+    <link href="https://sido-meet.online/2025/12/10/%E4%B8%8D%E7%9F%A5%E9%81%93%E5%86%99%E5%95%A5%EF%BC%9F/"/>
+    <published>2025-12-10T15:52:09.000Z</published>
+    <summary>从“学啥写啥”出发，记录 Hexo scaffold 与 new 命令如何生成带标题、标签和分类的文章。</summary>
+    <title>不知道写啥？</title>
+    <updated>2025-12-10T15:52:09.000Z</updated>
+  </entry>
+</feed>

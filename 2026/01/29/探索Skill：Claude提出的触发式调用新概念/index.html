@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <script>(function(){try{var key='sido-color-theme';var saved=localStorage.getItem(key);var theme=saved==='light'||saved==='dark'?saved:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}catch(e){document.documentElement.dataset.theme='light';}})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>探索Skill：Claude提出的触发式调用新概念 · SIDO MEET</title>
+  <meta name="description" content="介绍 AI Skill 的触发式调用、场景识别与能力封装方式，并讨论它与传统工具调用的差异。">
+  <meta name="keywords" content="AI Agent, LLM, RLHF, Text-to-SQL, 软件工程, 技术博客">
+  <meta name="author" content="SIDO">
+  
+  <meta name="theme-color" content="#16261f">
+  <link rel="canonical" href="https://sido-meet.online/2026/01/29/%E6%8E%A2%E7%B4%A2Skill%EF%BC%9AClaude%E6%8F%90%E5%87%BA%E7%9A%84%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E6%96%B0%E6%A6%82%E5%BF%B5/">
+  <link rel="alternate" type="application/atom+xml" title="SIDO MEET · 人工写作" href="https://sido-meet.online/atom.xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/sido-meet">
+
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SIDO MEET">
+  <meta property="og:title" content="探索Skill：Claude提出的触发式调用新概念 · SIDO MEET">
+  <meta property="og:description" content="介绍 AI Skill 的触发式调用、场景识别与能力封装方式，并讨论它与传统工具调用的差异。">
+  <meta property="og:url" content="https://sido-meet.online/2026/01/29/%E6%8E%A2%E7%B4%A2Skill%EF%BC%9AClaude%E6%8F%90%E5%87%BA%E7%9A%84%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E6%96%B0%E6%A6%82%E5%BF%B5/">
+  <meta property="og:image" content="https://sido-meet.online/images/og/default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="探索Skill：Claude提出的触发式调用新概念">
+  <meta property="article:published_time" content="2026-01-29T15:47:24.000Z">
+  <meta property="article:modified_time" content="2026-01-29T15:47:24.000Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="探索Skill：Claude提出的触发式调用新概念 · SIDO MEET">
+  <meta name="twitter:description" content="介绍 AI Skill 的触发式调用、场景识别与能力封装方式，并讨论它与传统工具调用的差异。">
+  <meta name="twitter:image" content="https://sido-meet.online/images/og/default.png">
+
+  <script>document.documentElement.classList.add('js');</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"探索Skill：Claude提出的触发式调用新概念","description":"介绍 AI Skill 的触发式调用、场景识别与能力封装方式，并讨论它与传统工具调用的差异。","url":"https://sido-meet.online/2026/01/29/%E6%8E%A2%E7%B4%A2Skill%EF%BC%9AClaude%E6%8F%90%E5%87%BA%E7%9A%84%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E6%96%B0%E6%A6%82%E5%BF%B5/","image":"https://sido-meet.online/images/og/default.png","datePublished":"2026-01-29T15:47:24.000Z","dateModified":"2026-01-29T15:47:24.000Z","author":{"@type":"Person","name":"SIDO","url":"https://sido-meet.online/about/"},"publisher":{"@type":"Person","name":"SIDO"}}</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/content.css">
+  <link rel="stylesheet" href="/css/post.css">
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/refresh.css">
+  <script defer src="/js/theme.js"></script>
+  <script defer src="/js/privacy-analytics.js"></script>
+  <script defer src="/js/menu.js"></script>
+  <script defer src="/js/animation.js"></script>
+  
+    <script defer src="/js/article-tools.js"></script>
+    <script defer src="/js/image-lightbox.js"></script>
+    <script defer src="/js/code-block.js"></script>
+  
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="layout-post" data-analytics-mode="local-only" data-analytics-storage-key="sido-private-views-v1">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <div class="site-wrapper">
+    
+<header class="header" id="main-header">
+  <div class="container header-content">
+    <a class="site-brand" href="/" aria-label="SIDO MEET 首页">
+      <span class="site-brand-mark" aria-hidden="true">S</span>
+      <span class="site-brand-text">SIDO<span>.MEET</span></span>
+    </a>
+
+    <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="打开导航菜单">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-navigation" id="site-navigation" aria-label="主导航">
+      <ul class="nav-list">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          <li class="nav-item active">
+            <a class="nav-link" href="/blogs/" aria-current="page">写作</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/notes/">笔记</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/ai/">AI 专栏</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/bookmarks/">收藏</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/projects/">项目</a>
+          </li>
+        
+        
+          <li class="nav-item nav-more">
+            <details>
+              <summary class="nav-link">
+                更多
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </summary>
+              <div class="nav-more-menu">
+                
+                  <a href="/thoughts/">随想</a>
+                
+                  <a href="/terms/">词条</a>
+                
+                  <a href="/schedule/">日程</a>
+                
+                  <a href="/links/">友链</a>
+                
+                  <a href="/popular/">热门</a>
+                
+                  <a href="/skill/">Skill</a>
+                
+                  <a href="/about/">关于</a>
+                
+              </div>
+            </details>
+          </li>
+        
+      </ul>
+      <div class="header-actions">
+        <a class="header-icon" href="/search/" aria-label="搜索全站内容">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="m20 20-4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </a>
+        <button class="header-icon theme-toggle" id="theme-toggle" type="button" aria-label="切换显示模式" title="切换显示模式">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </button>
+        
+        <a class="header-icon" href="https://github.com/sido-meet" target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 查看 SIDO">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M12 .7a11.6 11.6 0 0 0-3.7 22.6c.6.1.8-.2.8-.5v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 2 2.9 1.4 3.6 1.1.1-.8.4-1.4.8-1.7-2.7-.3-5.6-1.4-5.6-6a4.7 4.7 0 0 1 1.3-3.3 4.4 4.4 0 0 1 .1-3.2s1-.3 3.5 1.3a12 12 0 0 1 6.3-.1c2.4-1.6 3.5-1.3 3.5-1.3a4.4 4.4 0 0 1 .1 3.2 4.7 4.7 0 0 1 1.3 3.3c0 4.6-2.8 5.7-5.6 6 .5.4.9 1.2.9 2.4v3.1c0 .3.2.6.8.5A11.6 11.6 0 0 0 12 .7Z"/></svg>
+        </a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+
+    <main class="main" id="main-content">
+      
+
+<!-- Reading Progress Bar -->
+<div class="reading-progress" id="reading-progress"></div>
+
+<!-- Post Header -->
+<section class="post-header" data-reveal>
+  <div class="container">
+    <div class="post-header-content" data-reveal>
+      <span class="post-content-kind content-type-badge content-type-article">人工写作</span>
+      
+        <div class="post-category">
+          <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+        </div>
+      
+      <h1 class="post-title">探索Skill：Claude提出的触发式调用新概念</h1>
+      <div class="post-meta">
+        <div class="post-meta-row">
+          <span class="post-meta-item">
+            <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            2026-01-29
+          </span>
+          
+        </div>
+        <div class="post-meta-row">
+          
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14,2H6A2,2,0,0,0,4,4V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V8Z"></path>
+                <polyline points="14,2 14,8 20,8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10,9 9,9 8,9"></polyline>
+              </svg>
+              1758 字
+            </span>
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12,6 12,12 16,14"></polyline>
+              </svg>
+              6 分钟阅读
+            </span>
+            <span class="post-meta-item local-view-item" data-local-view-count hidden>
+              本机阅读 <strong>0</strong> 次
+            </span>
+          
+          
+        </div>
+      </div>
+      
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AI/" class="post-tag">AI</a>
+          
+            <a href="/tags/Claude/" class="post-tag">Claude</a>
+          
+            <a href="/tags/%E6%8A%80%E8%83%BD%E7%B3%BB%E7%BB%9F/" class="post-tag">技能系统</a>
+          
+            <a href="/tags/%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8/" class="post-tag">触发式调用</a>
+          
+        </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Post Content -->
+<section class="post-content-section" data-reveal>
+  <div class="container">
+    <div class="post-reading-layout has-toc">
+      
+        <aside class="post-toc" aria-label="文章目录">
+          <details open>
+            <summary>文章目录 <span>18</span></summary>
+            <nav class="post-toc-nav" aria-label="本文章节">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A2%E7%B4%A2Skill%EF%BC%9AClaude%E6%8F%90%E5%87%BA%E7%9A%84%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E6%96%B0%E6%A6%82%E5%BF%B5"><span class="toc-text">探索Skill：Claude提出的触发式调用新概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFSkill%EF%BC%9F"><span class="toc-text">什么是Skill？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E6%9C%BA%E5%88%B6"><span class="toc-text">触发式调用机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9C%BA%E6%99%AF%E8%AF%86%E5%88%AB"><span class="toc-text">1. 场景识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-text">2. 触发条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">3. 调用流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">触发式调用的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E4%BE%8B%E5%AD%90"><span class="toc-text">具体例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%901%EF%BC%9A%E6%95%B0%E5%AD%A6%E8%AE%A1%E7%AE%97Skill"><span class="toc-text">例子1：数学计算Skill</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%902%EF%BC%9A%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90Skill"><span class="toc-text">例子2：代码生成Skill</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%903%EF%BC%9A%E7%BF%BB%E8%AF%91Skill"><span class="toc-text">例子3：翻译Skill</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%904%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90Skill"><span class="toc-text">例子4：数据分析Skill</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">实际应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%99%BA%E8%83%BD%E5%8A%A9%E6%89%8B"><span class="toc-text">1. 智能助手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%93%E4%B8%9A%E9%A2%86%E5%9F%9F%E5%8A%A9%E6%89%8B"><span class="toc-text">2. 专业领域助手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-text">3. 开发工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E5%8F%91%E5%B1%95"><span class="toc-text">未来发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+            </nav>
+          </details>
+        </aside>
+      
+
+      <article class="post">
+        
+
+        
+
+        
+          <section class="post-series" aria-labelledby="post-series-title">
+            <div class="post-series-heading">
+              <div>
+                <p>Series / 系列</p>
+                <h2 id="post-series-title">Agent 系统与 OpenClaw 实践</h2>
+              </div>
+              <span>2 / 5</span>
+            </div>
+            <ol>
+              
+                <li class="">
+                  <span>01</span>
+                  
+                    <a href="/2026/03/20/%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%B8%8E%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E5%8C%BA%E5%88%AB/">工作流与智能体的区别</a>
+                  
+                </li>
+              
+                <li class="is-current">
+                  <span>02</span>
+                  
+                    <strong aria-current="page">探索Skill：Claude提出的触发式调用新概念</strong>
+                  
+                </li>
+              
+                <li class="">
+                  <span>03</span>
+                  
+                    <a href="/2026/04/03/openclaw-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">openclaw 使用记录</a>
+                  
+                </li>
+              
+                <li class="">
+                  <span>04</span>
+                  
+                    <a href="/2026/04/11/openclaw%E9%92%88%E5%AF%B9%E4%B8%8D%E5%90%8C%E5%9C%BA%E6%99%AF%E5%88%86%E9%85%8D%E6%A8%A1%E5%9E%8B/">openclaw针对不同场景分配模型</a>
+                  
+                </li>
+              
+                <li class="">
+                  <span>05</span>
+                  
+                    <a href="/2026/04/13/openclaw-skill-%E5%88%9B%E5%BB%BA%E4%B8%8E%E9%85%8D%E7%BD%AE/">openclaw skill 创建与配置</a>
+                  
+                </li>
+              
+            </ol>
+          </section>
+        
+
+        <div class="post-content" data-reveal>
+          <h2 id="探索Skill：Claude提出的触发式调用新概念"><a href="#探索Skill：Claude提出的触发式调用新概念" class="headerlink" title="探索Skill：Claude提出的触发式调用新概念"></a>探索Skill：Claude提出的触发式调用新概念</h2><h2 id="什么是Skill？"><a href="#什么是Skill？" class="headerlink" title="什么是Skill？"></a>什么是Skill？</h2><p>Skill是Claude提出的一种全新的AI能力扩展概念，它允许AI系统通过特定的触发机制来调用预设的功能模块，从而实现更复杂、更专业化的任务处理。简单来说，Skill就像是AI的”工具箱”，里面装着各种专门的工具，当遇到需要这些工具的场景时，AI可以自动或半自动地调用它们。</p>
+<h2 id="触发式调用机制"><a href="#触发式调用机制" class="headerlink" title="触发式调用机制"></a>触发式调用机制</h2><p>触发式调用是Skill系统的核心特性，它使得AI能够在特定条件下自动识别并调用相应的Skill，而不需要用户明确的指令。这种机制的实现主要基于以下几个方面：</p>
+<h3 id="1-场景识别"><a href="#1-场景识别" class="headerlink" title="1. 场景识别"></a>1. 场景识别</h3><p>AI系统通过分析用户的输入内容、对话上下文以及任务需求，识别出当前场景是否需要特定的Skill。例如，当用户提到”创建一个表格”时，AI可以识别出这是一个需要表格处理Skill的场景。</p>
+<h3 id="2-触发条件"><a href="#2-触发条件" class="headerlink" title="2. 触发条件"></a>2. 触发条件</h3><p>每个Skill都有其特定的触发条件，这些条件可以是：</p>
+<ul>
+<li><strong>关键词触发</strong>：当用户输入中包含特定关键词时触发</li>
+<li><strong>意图触发</strong>：当AI识别出用户的特定意图时触发</li>
+<li><strong>上下文触发</strong>：基于对话历史和上下文信息触发</li>
+<li><strong>组合触发</strong>：多种条件组合满足时触发</li>
+</ul>
+<h3 id="3-调用流程"><a href="#3-调用流程" class="headerlink" title="3. 调用流程"></a>3. 调用流程</h3><p>当触发条件满足时，AI系统会：</p>
+<ol>
+<li>识别需要的Skill类型</li>
+<li>检查Skill的可用性</li>
+<li>准备调用参数</li>
+<li>执行Skill调用</li>
+<li>处理Skill返回的结果</li>
+<li>将结果以自然语言的形式呈现给用户</li>
+</ol>
+<h2 id="触发式调用的优势"><a href="#触发式调用的优势" class="headerlink" title="触发式调用的优势"></a>触发式调用的优势</h2><ol>
+<li><strong>自动化程度高</strong>：用户不需要明确指定要使用哪个Skill，AI会根据场景自动判断</li>
+<li><strong>使用门槛低</strong>：用户可以用自然语言描述需求，而不需要学习特定的命令格式</li>
+<li><strong>响应速度快</strong>：触发机制使得AI能够快速识别并调用相应的Skill</li>
+<li><strong>扩展性强</strong>：可以通过添加新的Skill来扩展AI的能力范围</li>
+<li><strong>集成度高</strong>：Skill可以与AI的自然语言处理能力无缝集成</li>
+</ol>
+<h2 id="具体例子"><a href="#具体例子" class="headerlink" title="具体例子"></a>具体例子</h2><h3 id="例子1：数学计算Skill"><a href="#例子1：数学计算Skill" class="headerlink" title="例子1：数学计算Skill"></a>例子1：数学计算Skill</h3><p><strong>场景</strong>：用户询问”12345乘以67890等于多少？”</p>
+<p><strong>触发过程</strong>：</p>
+<ol>
+<li>AI识别到用户输入包含数学计算内容</li>
+<li>触发数学计算Skill</li>
+<li>将”12345”和”67890”作为参数传递给Skill</li>
+<li>Skill执行计算并返回结果</li>
+<li>AI将结果以自然语言形式呈现给用户</li>
+</ol>
+<p><strong>结果</strong>：”12345乘以67890等于838102050。”</p>
+<h3 id="例子2：代码生成Skill"><a href="#例子2：代码生成Skill" class="headerlink" title="例子2：代码生成Skill"></a>例子2：代码生成Skill</h3><p><strong>场景</strong>：用户说”帮我写一个Python函数，计算斐波那契数列的第n项”</p>
+<p><strong>触发过程</strong>：</p>
+<ol>
+<li>AI识别到用户需要代码生成</li>
+<li>触发代码生成Skill</li>
+<li>传递语言类型(Python)和功能需求(斐波那契数列计算)作为参数</li>
+<li>Skill生成代码并返回</li>
+<li>AI将代码格式化后呈现给用户</li>
+</ol>
+<p><strong>结果</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">elif</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>) + fibonacci(n-<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例使用</span></span><br><span class="line"><span class="built_in">print</span>(fibonacci(<span class="number">10</span>))  <span class="comment"># 输出: 55</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="例子3：翻译Skill"><a href="#例子3：翻译Skill" class="headerlink" title="例子3：翻译Skill"></a>例子3：翻译Skill</h3><p><strong>场景</strong>：用户输入”Translate ‘Hello world’ to Chinese”</p>
+<p><strong>触发过程</strong>：</p>
+<ol>
+<li>AI识别到”Translate”关键词和翻译需求</li>
+<li>触发翻译Skill</li>
+<li>传递源文本(“Hello world”)和目标语言(Chinese)作为参数</li>
+<li>Skill执行翻译并返回结果</li>
+<li>AI将翻译结果呈现给用户</li>
+</ol>
+<p><strong>结果</strong>：”‘Hello world’翻译成中文是’你好，世界’。”</p>
+<h3 id="例子4：数据分析Skill"><a href="#例子4：数据分析Skill" class="headerlink" title="例子4：数据分析Skill"></a>例子4：数据分析Skill</h3><p><strong>场景</strong>：用户上传了一份销售数据CSV文件，并说”分析这份数据的销售趋势”</p>
+<p><strong>触发过程</strong>：</p>
+<ol>
+<li>AI识别到文件上传和数据分析需求</li>
+<li>触发数据分析Skill</li>
+<li>传递文件内容和分析需求(销售趋势)作为参数</li>
+<li>Skill执行分析并生成报告</li>
+<li>AI将分析结果和可视化图表呈现给用户</li>
+</ol>
+<p><strong>结果</strong>：<br>“根据您提供的销售数据，我分析了过去6个月的销售趋势：</p>
+<ol>
+<li>整体销售额呈现上升趋势，月均增长率为12.5%</li>
+<li>产品A是销售主力，占总销售额的45%</li>
+<li>每周五是销售高峰，平均销售额比其他工作日高20%</li>
+<li>地区B的销售额增长最快，环比增长18%</li>
+</ol>
+<p>以下是销售趋势图表：<br>[销售趋势图表]<br>“</p>
+<h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><h3 id="1-智能助手"><a href="#1-智能助手" class="headerlink" title="1. 智能助手"></a>1. 智能助手</h3><p>在智能助手中，Skill可以帮助用户处理各种日常任务，如：</p>
+<ul>
+<li>日程管理和提醒</li>
+<li>天气查询和预报</li>
+<li>新闻资讯聚合</li>
+<li>购物比价和推荐</li>
+</ul>
+<h3 id="2-专业领域助手"><a href="#2-专业领域助手" class="headerlink" title="2. 专业领域助手"></a>2. 专业领域助手</h3><p>在专业领域，Skill可以提供更专业的支持：</p>
+<ul>
+<li>法律咨询和文档审查</li>
+<li>医疗健康咨询和建议</li>
+<li>金融分析和投资建议</li>
+<li>教育辅导和学习资源推荐</li>
+</ul>
+<h3 id="3-开发工具"><a href="#3-开发工具" class="headerlink" title="3. 开发工具"></a>3. 开发工具</h3><p>对于开发者，Skill可以作为智能开发助手：</p>
+<ul>
+<li>代码自动生成和补全</li>
+<li>代码审查和bug检测</li>
+<li>技术文档生成</li>
+<li>依赖管理和版本控制</li>
+</ul>
+<h2 id="未来发展"><a href="#未来发展" class="headerlink" title="未来发展"></a>未来发展</h2><p>随着AI技术的不断发展，Skill系统也将迎来更多的创新和改进：</p>
+<ol>
+<li><p><strong>更智能的触发机制</strong>：基于深度学习的场景识别能力将不断提升，使得Skill的触发更加准确和智能</p>
+</li>
+<li><p><strong>更多样的Skill类型</strong>：将会有更多专业领域的Skill被开发出来，覆盖更多的应用场景</p>
+</li>
+<li><p><strong>更强大的Skill组合</strong>：未来的Skill系统将支持多个Skill的协同工作，通过Skill的组合来解决更复杂的问题</p>
+</li>
+<li><p><strong>用户自定义Skill</strong>：普通用户也将能够创建和分享自己的Skill，形成Skill生态系统</p>
+</li>
+<li><p><strong>跨平台集成</strong>：Skill将能够在不同的AI平台和应用之间无缝集成，提供统一的用户体验</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Skill作为Claude提出的一种全新概念，通过触发式调用机制，为AI系统提供了更强大、更灵活的能力扩展方式。它使得AI能够根据场景自动识别并调用相应的功能模块，从而为用户提供更智能、更便捷的服务。</p>
+<p>触发式调用的核心优势在于其自动化程度高、使用门槛低、响应速度快等特点，这使得Skill系统在各种应用场景中都有着广阔的发展前景。随着技术的不断进步，我们可以期待Skill系统在未来会带来更多的惊喜和创新。</p>
+
+        </div>
+        
+
+        <section class="post-share" aria-labelledby="post-share-title" data-share-title="探索Skill：Claude提出的触发式调用新概念" data-share-url="https://sido-meet.online/2026/01/29/%E6%8E%A2%E7%B4%A2Skill%EF%BC%9AClaude%E6%8F%90%E5%87%BA%E7%9A%84%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E6%96%B0%E6%A6%82%E5%BF%B5/">
+          <div>
+            <p>Share / 分享</p>
+            <h2 id="post-share-title">把这篇文章分享给需要的人</h2>
+          </div>
+          <div class="post-share-actions">
+            <button class="post-action-button" type="button" data-share-action="native" hidden>系统分享</button>
+            <button class="post-action-button post-action-button-primary" type="button" data-share-action="copy">复制链接</button>
+          </div>
+          <p class="post-share-status" role="status" aria-live="polite"></p>
+        </section>
+
+        
+          <nav class="post-pagination" aria-label="相邻文章">
+            
+              <a class="post-pagination-link post-pagination-newer" href="/2026/03/20/%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%B8%8E%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E5%8C%BA%E5%88%AB/">
+                <span>← 上一篇 · 系列</span>
+                <strong>工作流与智能体的区别</strong>
+              </a>
+            
+            
+              <a class="post-pagination-link post-pagination-older" href="/2026/04/03/openclaw-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">
+                <span>下一篇 · 系列 →</span>
+                <strong>openclaw 使用记录</strong>
+              </a>
+            
+          </nav>
+        
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Related Posts -->
+<section class="related-posts" data-reveal>
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <h2 class="section-title">相关文章</h2>
+    </div>
+    <div class="posts-grid">
+      
+      
+        <div class="no-related-posts" data-reveal>
+          <p>暂无相关文章</p>
+        </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Comments -->
+
+<section class="post-comments" data-reveal>
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <h2 class="section-title">评论</h2>
+    </div>
+    <div class="comments-container" data-reveal>
+      <script src="https://giscus.app/client.js"
+              data-repo="sido-meet/sido-meet.github.io"
+              data-repo-id="R_kgDOQePF5Q"
+              data-category="Announcements"
+              data-category-id="DIC_kwDOQePF5c4C1irw"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-theme="preferred_color_scheme"
+              data-lang="zh-CN"
+              data-loading="lazy"
+              crossorigin="anonymous"
+              async>
+      </script>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+    
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand-block">
+      <a class="footer-logo" href="/">SIDO<span>.MEET</span></a>
+      <p>我关注 AI Agent、LLM 后训练与 Text-to-SQL，也持续记录软件工程实践。这里既是作品集，也是一个不断生长的公开知识库。</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="页脚导航">
+      <p class="footer-heading">探索</p>
+      <ul>
+        
+          <li><a href="/blogs/">写作</a></li>
+        
+          <li><a href="/notes/">笔记</a></li>
+        
+          <li><a href="/ai/">AI 专栏</a></li>
+        
+          <li><a href="/bookmarks/">收藏</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/thoughts/">随想</a></li>
+        
+          <li><a href="/terms/">词条</a></li>
+        
+          <li><a href="/schedule/">日程</a></li>
+        
+          <li><a href="/links/">友链</a></li>
+        
+          <li><a href="/popular/">热门</a></li>
+        
+          <li><a href="/skill/">Skill</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/privacy/">隐私</a></li>
+        
+      </ul>
+    </nav>
+
+    <div class="footer-connect">
+      <p class="footer-heading">保持连接</p>
+      <p>中国 · 北京</p>
+      <div class="footer-actions">
+        <a href="/search/">全站搜索</a>
+        <a href="https://github.com/sido-meet" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        
+          <a href="/atom.xml">写作 RSS</a>
+          <a href="/notes/atom.xml">笔记 RSS</a>
+          <a href="/ai/atom.xml">AI RSS</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 SIDO · 内容持续生长，观点持续更新。</p>
+    <a href="#main-content">返回顶部 ↑</a>
+  </div>
+</footer>
+
+  </div>
+</body>
+</html>

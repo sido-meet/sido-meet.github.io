@@ -1,0 +1,491 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <script>(function(){try{var key='sido-color-theme';var saved=localStorage.getItem(key);var theme=saved==='light'||saved==='dark'?saved:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=theme;document.documentElement.style.colorScheme=theme;}catch(e){document.documentElement.dataset.theme='light';}})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vibe coding: 人机协作下的新型编程模式 · SIDO MEET</title>
+  <meta name="description" content="复盘完全依赖 AI 编程带来的黑盒、知识老化与维护问题，并提出人工设计、AI 加速实现的协作方式。">
+  <meta name="keywords" content="AI Agent, LLM, RLHF, Text-to-SQL, 软件工程, 技术博客">
+  <meta name="author" content="SIDO">
+  
+  <meta name="theme-color" content="#16261f">
+  <link rel="canonical" href="https://sido-meet.online/2026/03/24/vibe-coding-%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C%E4%B8%8B%E7%9A%84%E6%96%B0%E5%9E%8B%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F/">
+  <link rel="alternate" type="application/atom+xml" title="SIDO MEET · 人工写作" href="https://sido-meet.online/atom.xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/sido-meet">
+
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SIDO MEET">
+  <meta property="og:title" content="vibe coding: 人机协作下的新型编程模式 · SIDO MEET">
+  <meta property="og:description" content="复盘完全依赖 AI 编程带来的黑盒、知识老化与维护问题，并提出人工设计、AI 加速实现的协作方式。">
+  <meta property="og:url" content="https://sido-meet.online/2026/03/24/vibe-coding-%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C%E4%B8%8B%E7%9A%84%E6%96%B0%E5%9E%8B%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F/">
+  <meta property="og:image" content="https://sido-meet.online/images/og/default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="vibe coding: 人机协作下的新型编程模式">
+  <meta property="article:published_time" content="2026-03-24T11:41:31.000Z">
+  <meta property="article:modified_time" content="2026-03-24T11:41:31.000Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="vibe coding: 人机协作下的新型编程模式 · SIDO MEET">
+  <meta name="twitter:description" content="复盘完全依赖 AI 编程带来的黑盒、知识老化与维护问题，并提出人工设计、AI 加速实现的协作方式。">
+  <meta name="twitter:image" content="https://sido-meet.online/images/og/default.png">
+
+  <script>document.documentElement.classList.add('js');</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"vibe coding: 人机协作下的新型编程模式","description":"复盘完全依赖 AI 编程带来的黑盒、知识老化与维护问题，并提出人工设计、AI 加速实现的协作方式。","url":"https://sido-meet.online/2026/03/24/vibe-coding-%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C%E4%B8%8B%E7%9A%84%E6%96%B0%E5%9E%8B%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F/","image":"https://sido-meet.online/images/og/default.png","datePublished":"2026-03-24T11:41:31.000Z","dateModified":"2026-03-24T11:41:31.000Z","author":{"@type":"Person","name":"SIDO","url":"https://sido-meet.online/about/"},"publisher":{"@type":"Person","name":"SIDO"}}</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/content.css">
+  <link rel="stylesheet" href="/css/post.css">
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/refresh.css">
+  <script defer src="/js/theme.js"></script>
+  <script defer src="/js/privacy-analytics.js"></script>
+  <script defer src="/js/menu.js"></script>
+  <script defer src="/js/animation.js"></script>
+  
+    <script defer src="/js/article-tools.js"></script>
+    <script defer src="/js/image-lightbox.js"></script>
+    <script defer src="/js/code-block.js"></script>
+  
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="layout-post" data-analytics-mode="local-only" data-analytics-storage-key="sido-private-views-v1">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <div class="site-wrapper">
+    
+<header class="header" id="main-header">
+  <div class="container header-content">
+    <a class="site-brand" href="/" aria-label="SIDO MEET 首页">
+      <span class="site-brand-mark" aria-hidden="true">S</span>
+      <span class="site-brand-text">SIDO<span>.MEET</span></span>
+    </a>
+
+    <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="打开导航菜单">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-navigation" id="site-navigation" aria-label="主导航">
+      <ul class="nav-list">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          <li class="nav-item active">
+            <a class="nav-link" href="/blogs/" aria-current="page">写作</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/notes/">笔记</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/ai/">AI 专栏</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/bookmarks/">收藏</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/projects/">项目</a>
+          </li>
+        
+        
+          <li class="nav-item nav-more">
+            <details>
+              <summary class="nav-link">
+                更多
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </summary>
+              <div class="nav-more-menu">
+                
+                  <a href="/thoughts/">随想</a>
+                
+                  <a href="/terms/">词条</a>
+                
+                  <a href="/schedule/">日程</a>
+                
+                  <a href="/links/">友链</a>
+                
+                  <a href="/popular/">热门</a>
+                
+                  <a href="/skill/">Skill</a>
+                
+                  <a href="/about/">关于</a>
+                
+              </div>
+            </details>
+          </li>
+        
+      </ul>
+      <div class="header-actions">
+        <a class="header-icon" href="/search/" aria-label="搜索全站内容">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="m20 20-4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </a>
+        <button class="header-icon theme-toggle" id="theme-toggle" type="button" aria-label="切换显示模式" title="切换显示模式">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </button>
+        
+        <a class="header-icon" href="https://github.com/sido-meet" target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 查看 SIDO">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M12 .7a11.6 11.6 0 0 0-3.7 22.6c.6.1.8-.2.8-.5v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 2 2.9 1.4 3.6 1.1.1-.8.4-1.4.8-1.7-2.7-.3-5.6-1.4-5.6-6a4.7 4.7 0 0 1 1.3-3.3 4.4 4.4 0 0 1 .1-3.2s1-.3 3.5 1.3a12 12 0 0 1 6.3-.1c2.4-1.6 3.5-1.3 3.5-1.3a4.4 4.4 0 0 1 .1 3.2 4.7 4.7 0 0 1 1.3 3.3c0 4.6-2.8 5.7-5.6 6 .5.4.9 1.2.9 2.4v3.1c0 .3.2.6.8.5A11.6 11.6 0 0 0 12 .7Z"/></svg>
+        </a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+
+    <main class="main" id="main-content">
+      
+
+<!-- Reading Progress Bar -->
+<div class="reading-progress" id="reading-progress"></div>
+
+<!-- Post Header -->
+<section class="post-header" data-reveal>
+  <div class="container">
+    <div class="post-header-content" data-reveal>
+      <span class="post-content-kind content-type-badge content-type-article">人工写作</span>
+      
+        <div class="post-category">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/">技术实践</a>
+        </div>
+      
+      <h1 class="post-title">vibe coding: 人机协作下的新型编程模式</h1>
+      <div class="post-meta">
+        <div class="post-meta-row">
+          <span class="post-meta-item">
+            <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            2026-03-24
+          </span>
+          
+        </div>
+        <div class="post-meta-row">
+          
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14,2H6A2,2,0,0,0,4,4V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V8Z"></path>
+                <polyline points="14,2 14,8 20,8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10,9 9,9 8,9"></polyline>
+              </svg>
+              516 字
+            </span>
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12,6 12,12 16,14"></polyline>
+              </svg>
+              2 分钟阅读
+            </span>
+            <span class="post-meta-item local-view-item" data-local-view-count hidden>
+              本机阅读 <strong>0</strong> 次
+            </span>
+          
+          
+        </div>
+      </div>
+      
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vibe-Coding/" class="post-tag">Vibe Coding</a>
+          
+            <a href="/tags/%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C/" class="post-tag">人机协作</a>
+          
+            <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" class="post-tag">工程实践</a>
+          
+        </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Post Content -->
+<section class="post-content-section" data-reveal>
+  <div class="container">
+    <div class="post-reading-layout">
+      
+
+      <article class="post">
+        
+
+        
+
+        
+          <section class="post-series" aria-labelledby="post-series-title">
+            <div class="post-series-heading">
+              <div>
+                <p>Series / 系列</p>
+                <h2 id="post-series-title">Vibe Coding 与人机协作</h2>
+              </div>
+              <span>2 / 2</span>
+            </div>
+            <ol>
+              
+                <li class="">
+                  <span>01</span>
+                  
+                    <a href="/2026/01/02/%E4%BA%BA%E7%9A%84%E5%9C%A8vibe-coding%E4%B8%8D%E5%8F%AF%E5%8F%96%E4%BB%A3%E7%9A%84%E5%9C%B0%E4%BD%8D/">人的在vibe coding不可取代的地位</a>
+                  
+                </li>
+              
+                <li class="is-current">
+                  <span>02</span>
+                  
+                    <strong aria-current="page">vibe coding: 人机协作下的新型编程模式</strong>
+                  
+                </li>
+              
+            </ol>
+          </section>
+        
+
+        <div class="post-content" data-reveal>
+          <p>最近想利用vibe coding对科研想法进行验证，多范式代码下的SQL修正，企图验证大模型对不同语言的知识储备是否可以启发帮助SQL的修正。</p>
+<hr>
+<p>完全依赖vide coding：<br>代码可以运行，但是运行效率很低，且过程完全黑盒化。结果不尽人意。<br>试图重构，发下以下问题：</p>
+<ul>
+<li>知识老旧： 大模型无法遵循日益迅速发展的框架的开发习惯，表现在我试图在rule中让大模遵循使用langgraph开发，并使用context7查看最新文档进行开发。没有遵循的原因可能是大模型训练语料中未能及时将最新的数据纳入；更重要的可能是我并未对任务足够的细粒度拆分，导致大模型注意力分散。</li>
+<li>项目过于复杂，开发出屎山代码，难以维护：进行debug熟悉项目，发现代码结构混乱，且由于让大模型重构多次，历史遗留代码，重构不充分的问题暴露无遗，项目难以继续开发。</li>
+</ul>
+<hr>
+<p>人机交互模式：<br>人工设计+ai功能代码撰写：抛弃完全依赖模型设计与开发的模式，改为以人为主，大模型功能实现的模式。<br>为什么这么做呢？<br>我发现如果大模型写好计划并按照任务执行，计划赶不上变化，同时我无法了解代码为什么这样设计，是否经充分的验证。所以完全由ai撰写的模式适用于demo的展示，针对复杂项目，更依赖的是以人为主体，ai加快代码撰写的人机交互模式。</p>
+<p>code agent发展至今，全局记忆，统筹调度的能力还有待提高，期望有一天，记忆可以内化，资源可以充分调度，也非常乐意完全当一名产品经理。</p>
+
+        </div>
+        
+
+        <section class="post-share" aria-labelledby="post-share-title" data-share-title="vibe coding: 人机协作下的新型编程模式" data-share-url="https://sido-meet.online/2026/03/24/vibe-coding-%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C%E4%B8%8B%E7%9A%84%E6%96%B0%E5%9E%8B%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F/">
+          <div>
+            <p>Share / 分享</p>
+            <h2 id="post-share-title">把这篇文章分享给需要的人</h2>
+          </div>
+          <div class="post-share-actions">
+            <button class="post-action-button" type="button" data-share-action="native" hidden>系统分享</button>
+            <button class="post-action-button post-action-button-primary" type="button" data-share-action="copy">复制链接</button>
+          </div>
+          <p class="post-share-status" role="status" aria-live="polite"></p>
+        </section>
+
+        
+          <nav class="post-pagination" aria-label="相邻文章">
+            
+              <a class="post-pagination-link post-pagination-newer" href="/2026/01/02/%E4%BA%BA%E7%9A%84%E5%9C%A8vibe-coding%E4%B8%8D%E5%8F%AF%E5%8F%96%E4%BB%A3%E7%9A%84%E5%9C%B0%E4%BD%8D/">
+                <span>← 上一篇 · 系列</span>
+                <strong>人的在vibe coding不可取代的地位</strong>
+              </a>
+            
+            
+          </nav>
+        
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Related Posts -->
+<section class="related-posts" data-reveal>
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <h2 class="section-title">相关文章</h2>
+    </div>
+    <div class="posts-grid">
+      
+      
+        
+          <article class="post-card" data-reveal>
+            <div class="post-card-content">
+              <div class="post-card-header">
+                <span class="post-date">2026-08-08</span>
+                
+                
+                  <span class="post-category">技术实践</span>
+                
+              </div>
+              <h3 class="post-card-title">
+                <a href="/2026/08/08/skill%E2%80%94%E2%80%94Agent%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%8C%87%E5%8D%97/">Skill——Agent的工作指南</a>
+              </h3>
+              
+              
+                <p class="post-card-excerpt">解释 Skill 是什么、为什么需要、什么时候该创建、SKILL.md 怎么写以及如何让 Agent 真正触发它。</p>
+              
+              <div class="post-card-footer">
+                <a href="/2026/08/08/skill%E2%80%94%E2%80%94Agent%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%8C%87%E5%8D%97/" class="read-more">阅读更多 →</a>
+              </div>
+            </div>
+          </article>
+        
+          <article class="post-card" data-reveal>
+            <div class="post-card-content">
+              <div class="post-card-header">
+                <span class="post-date">2026-08-05</span>
+                
+                
+                  <span class="post-category">技术实践</span>
+                
+              </div>
+              <h3 class="post-card-title">
+                <a href="/2026/08/05/worktree%E4%BD%BF%E7%94%A8/">Worktree 使用</a>
+              </h3>
+              
+              
+                <p class="post-card-excerpt">在同一仓库下用 Git Worktree 给 Claude Code 分配独立分支，让多个 AI 并行修改互不冲突、最后再合并。</p>
+              
+              <div class="post-card-footer">
+                <a href="/2026/08/05/worktree%E4%BD%BF%E7%94%A8/" class="read-more">阅读更多 →</a>
+              </div>
+            </div>
+          </article>
+        
+          <article class="post-card" data-reveal>
+            <div class="post-card-content">
+              <div class="post-card-header">
+                <span class="post-date">2026-01-02</span>
+                
+                
+                  <span class="post-category">内化</span>
+                
+              </div>
+              <h3 class="post-card-title">
+                <a href="/2026/01/02/%E4%BA%BA%E7%9A%84%E5%9C%A8vibe-coding%E4%B8%8D%E5%8F%AF%E5%8F%96%E4%BB%A3%E7%9A%84%E5%9C%B0%E4%BD%8D/">人的在vibe coding不可取代的地位</a>
+              </h3>
+              
+              
+                <p class="post-card-excerpt">从部署踩坑出发，讨论人在 Vibe Coding 中承担监督、破除循环、主动学习和系统理解的不可替代作用。</p>
+              
+              <div class="post-card-footer">
+                <a href="/2026/01/02/%E4%BA%BA%E7%9A%84%E5%9C%A8vibe-coding%E4%B8%8D%E5%8F%AF%E5%8F%96%E4%BB%A3%E7%9A%84%E5%9C%B0%E4%BD%8D/" class="read-more">阅读更多 →</a>
+              </div>
+            </div>
+          </article>
+        
+      
+    </div>
+  </div>
+</section>
+
+<!-- Comments -->
+
+<section class="post-comments" data-reveal>
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <h2 class="section-title">评论</h2>
+    </div>
+    <div class="comments-container" data-reveal>
+      <script src="https://giscus.app/client.js"
+              data-repo="sido-meet/sido-meet.github.io"
+              data-repo-id="R_kgDOQePF5Q"
+              data-category="Announcements"
+              data-category-id="DIC_kwDOQePF5c4C1irw"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-theme="preferred_color_scheme"
+              data-lang="zh-CN"
+              data-loading="lazy"
+              crossorigin="anonymous"
+              async>
+      </script>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+    
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand-block">
+      <a class="footer-logo" href="/">SIDO<span>.MEET</span></a>
+      <p>我关注 AI Agent、LLM 后训练与 Text-to-SQL，也持续记录软件工程实践。这里既是作品集，也是一个不断生长的公开知识库。</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="页脚导航">
+      <p class="footer-heading">探索</p>
+      <ul>
+        
+          <li><a href="/blogs/">写作</a></li>
+        
+          <li><a href="/notes/">笔记</a></li>
+        
+          <li><a href="/ai/">AI 专栏</a></li>
+        
+          <li><a href="/bookmarks/">收藏</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/thoughts/">随想</a></li>
+        
+          <li><a href="/terms/">词条</a></li>
+        
+          <li><a href="/schedule/">日程</a></li>
+        
+          <li><a href="/links/">友链</a></li>
+        
+          <li><a href="/popular/">热门</a></li>
+        
+          <li><a href="/skill/">Skill</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/privacy/">隐私</a></li>
+        
+      </ul>
+    </nav>
+
+    <div class="footer-connect">
+      <p class="footer-heading">保持连接</p>
+      <p>中国 · 北京</p>
+      <div class="footer-actions">
+        <a href="/search/">全站搜索</a>
+        <a href="https://github.com/sido-meet" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        
+          <a href="/atom.xml">写作 RSS</a>
+          <a href="/notes/atom.xml">笔记 RSS</a>
+          <a href="/ai/atom.xml">AI RSS</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 SIDO · 内容持续生长，观点持续更新。</p>
+    <a href="#main-content">返回顶部 ↑</a>
+  </div>
+</footer>
+
+  </div>
+</body>
+</html>
