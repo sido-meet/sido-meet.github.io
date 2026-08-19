@@ -1,0 +1,1418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <author>
+    <name>SIDO</name>
+  </author>
+  <generator>Hexo</generator>
+  <id>https://sido-meet.online/blogs/</id>
+  <link href="https://sido-meet.online/blogs/" rel="alternate"/>
+  <link href="https://sido-meet.online/atom.xml" rel="self" type="application/atom+xml"/>
+  <subtitle>由 SIDO 主导并整理完成的文章。</subtitle>
+  <title>SIDO MEET · 人工写作</title>
+  <updated>2026-08-18T16:00:00.000Z</updated>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="技术实践" scheme="https://sido-meet.online/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/"/>
+    <category term="Agent" scheme="https://sido-meet.online/tags/Agent/"/>
+    <category term="Skill" scheme="https://sido-meet.online/tags/Skill/"/>
+    <category term="Claude Code" scheme="https://sido-meet.online/tags/Claude-Code/"/>
+    <category term="AI 工具" scheme="https://sido-meet.online/tags/AI-%E5%B7%A5%E5%85%B7/"/>
+    <category term="工作指南" scheme="https://sido-meet.online/tags/%E5%B7%A5%E4%BD%9C%E6%8C%87%E5%8D%97/"/>
+    <content>
+      <![CDATA[<p>skill 的创建包含起草，测试，评估，改进的迭代训练，生产出高质量，可复用，能被Agent正确<strong>Agent</strong>正确触发的技能。</p>
+<h2 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h2><h3 id="三层加载机制"><a href="#三层加载机制" class="headerlink" title="三层加载机制"></a>三层加载机制</h3><ul>
+<li>Level 1: 元数据（name+description）→ 永远在上下文中 (~100 词)</li>
+<li>Level 2: SKILL.md 正文 → 触发时加载 (&lt;500 行最佳)</li>
+<li>Level 3: scripts/references/assets → 按需加载（无限制）</li>
+</ul>
+<h3 id="触发机制"><a href="#触发机制" class="headerlink" title="触发机制"></a>触发机制</h3><p>Decription是触发机制，不能简单理解为简介</p>
+<ol>
+<li>Agent不会查询所有skill，只会根据可用的skill列表中的name和description来决定是否使用</li>
+<li>description必须“pushy”</li>
+<li>❌ “How to build dashboards.”- ✅ “How to build dashboards. Make sure to use this skill whenever the user mentions dashboards, data visualization, internal metrics…”</li>
+</ol>
+<h3 id="迭代循环"><a href="#迭代循环" class="headerlink" title="迭代循环"></a>迭代循环</h3><blockquote>
+<p>起草 SKILL.md → 写 2-3 个测试 prompt → 并行跑（有skill vs 无skill）→ 用户评估 → 改 → 再跑</p>
+</blockquote>
+<h3 id="改进规则"><a href="#改进规则" class="headerlink" title="改进规则"></a>改进规则</h3><blockquote>
+<p>泛化：不要过拟合到几个测试用例，要能处理百万级 prompt<br>精简：删除没用的部分，看 transcript 而非只看结果<br>解释：用 theory of mind，不要用全大写 MUST；LLM 聪明，能理解意图<br>复用：如果3 个测试用例都各自写了 <code>create_docx.py</code>，就该打包成 script</p>
+</blockquote>
+<h3 id="写作风格"><a href="#写作风格" class="headerlink" title="写作风格"></a>写作风格</h3><ul>
+<li>✅ <code>ALWAYS use this exact template:</code>（祈使句 + 给模板）</li>
+<li>❌ 全大写 MUST + 一堆禁令和 if-else（会让模型僵化）</li>
+</ul>
+<h4 id="测试用例的设计"><a href="#测试用例的设计" class="headerlink" title="测试用例的设计"></a>测试用例的设计</h4><ul>
+<li>2-3 个<strong>真实用户会说的</strong>prompt（不是抽象的”格式化数据”）</li>
+<li>客观可验证 →适合断言（文件转换、数据抽取）</li>
+<li>主观输出（写作风格、设计）→ 用定性评估，<strong>不要硬塞断言</strong></li>
+</ul>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><h3 id="评估执行的5步流程"><a href="#评估执行的5步流程" class="headerlink" title="评估执行的5步流程"></a>评估执行的5步流程</h3><ul>
+<li>Step 1: 同时启动 with-skill 和 baseline 两个 subagent（重要：必须同 turn 启动）</li>
+<li>Step 2: 跑的过程中起草 assertions</li>
+<li>Step 3: 捕获 timing data（total_tokens, duration_ms）— 仅一次机会</li>
+<li>Step 4: 评分 → aggregate_benchmark → 启动 eval-viewer</li>
+<li>Step 5: 读 feedback.json → 改进 → 下一轮 iteration</li>
+</ul>
+<h3 id="Workspace-组织结构"><a href="#Workspace-组织结构" class="headerlink" title="Workspace 组织结构"></a>Workspace 组织结构</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">my-skill-workspace/</span><br><span class="line">├── iteration-<span class="number">1</span>/</span><br><span class="line">│   ├── <span class="built_in">eval</span>-<span class="number">0</span>/with_skill/outputs/</span><br><span class="line">│   ├── <span class="built_in">eval</span>-<span class="number">0</span>/without_skill/outputs/</span><br><span class="line">│   ├── eval_metadata.json</span><br><span class="line">│   └── benchmark.json</span><br><span class="line">└── iteration-<span class="number">2</span>/...</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="Description优化流程"><a href="#Description优化流程" class="headerlink" title="Description优化流程"></a>Description优化流程</h3><ol>
+<li>生成 20 个 trigger query（10 should-trigger + 10 should-not-trigger）</li>
+<li>HTML 模板给用户审核</li>
+<li>run_loop.py 后台跑（60% train / 40% test，最多 5 轮）</li>
+<li>用 best_description（按 test score 选，防过拟合）</li>
+</ol>
+<h2 id="了解"><a href="#了解" class="headerlink" title="了解"></a>了解</h2><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>内容</th>
+<th>怎么用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>命令</td>
+<td><code>python -m scripts.aggregate_benchmark</code></td>
+<td>跑评估时查</td>
+</tr>
+<tr>
+<td>命令</td>
+<td><code>python -m scripts.package_skill</code></td>
+<td>打包时查</td>
+</tr>
+<tr>
+<td>命令</td>
+<td><code>python -m scripts.run_loop</code></td>
+<td>优化 description 时查</td>
+</tr>
+<tr>
+<td>路径</td>
+<td><code>agents/grader.md</code> <code>agents/comparator.md</code> <code>agents/analyzer.md</code></td>
+<td>spawn 对应 subagent 时读</td>
+</tr>
+<tr>
+<td>路径</td>
+<td><code>references/schemas.md</code></td>
+<td>写 evals.json / benchmark.json 时参考</td>
+</tr>
+<tr>
+<td>路径</td>
+<td><code>assets/eval_review.html</code></td>
+<td>description 优化时用</td>
+</tr>
+<tr>
+<td>路径</td>
+<td><code>eval-viewer/generate_review.py</code></td>
+<td>启动 review viewer 用</td>
+</tr>
+<tr>
+<td>字段名</td>
+<td><code>grading.json</code> 必须用 <code>text/passed/evidence</code>（viewer 依赖）</td>
+<td>出错时查</td>
+</tr>
+<tr>
+<td>标志</td>
+<td><code>--static &lt;output_path&gt;</code></td>
+<td>无显示环境时查</td>
+</tr>
+<tr>
+<td>文件</td>
+<td>LICENSE.txt</td>
+<td>不用管</td>
+</tr>
+</tbody></table>]]>
+    </content>
+    <id>https://sido-meet.online/2026/08/19/skill-creator-skill/</id>
+    <link href="https://sido-meet.online/2026/08/19/skill-creator-skill/"/>
+    <published>2026-08-18T16:00:00.000Z</published>
+    <summary>把 Skill 创建拆成起草、测试、评估、改进的迭代循环：触发机制、三层加载、五步评估流程与 description 优化清单。</summary>
+    <title>Skill Creator Skill</title>
+    <updated>2026-08-18T16:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="思考" scheme="https://sido-meet.online/categories/%E6%80%9D%E8%80%83/"/>
+    <category term="数学建模" scheme="https://sido-meet.online/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/"/>
+    <category term="复盘" scheme="https://sido-meet.online/tags/%E5%A4%8D%E7%9B%98/"/>
+    <category term="数据分析" scheme="https://sido-meet.online/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    <category term="玻璃文物" scheme="https://sido-meet.online/tags/%E7%8E%BB%E7%92%83%E6%96%87%E7%89%A9/"/>
+    <category term="多元线性回归" scheme="https://sido-meet.online/tags/%E5%A4%9A%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/"/>
+    <content>
+      <![CDATA[<p>难得空出时间来回顾建模的日子。很痛苦，四天三晚吧，熬穿了多少个夜。最终收获不错，斩获国一。</p>
+<p>现在已经是四年后了，AI已经全面爆发，或许有了AI的不需要熬那么多夜。</p>
+<p>回顾一下这个命题：<br>这是2022年全国大学生数学建模竞赛的C题。要求回答下面的四个问题：</p>
+<ol>
+<li><p>对这些玻璃文物的表面风化与其玻璃类型、纹饰和颜色的关系进行分析；结合玻璃的类型，分析文物样品表面有无风化化学成分含量的统计规律，并根据风化点检测数据，预测其风化前的化学成分含量。</p>
+</li>
+<li><p>依据附件数据分析高钾玻璃、铅钡玻璃的分类规律；对于每个类别选择合适的化学成分对其进行亚类划分，给出具体的划分方法及划分结果，并对分类结果的合理性和敏感性进行分析。</p>
+</li>
+<li><p>对附件表单 3 中未知类别玻璃文物的化学成分进行分析，鉴别其所属类型，并对分类结果的敏感性进行分析。</p>
+</li>
+<li><p>针对不同类别的玻璃文物样品，分析其化学成分之间的关联关系，并比较不同类别之间的化学成分关联关系的差异性。</p>
+</li>
+</ol>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p>数据题目的经典操作了，预处理要做统计分析（纹饰分布，分化分布之类的），剔除异常值，填补缺失值。</p>
+<p>我们还做了数据归一化，这是发现了不同文物化合物的含量不是100%，有一定的偏离，所以归一化便于统一度量进行后续的处理。</p>
+<h2 id="针对问题一"><a href="#针对问题一" class="headerlink" title="针对问题一"></a>针对问题一</h2><p>重点是建立数学模型去预测风化前的化学成分含量。</p>
+<p>我当时的做法是通过定义风化损失，构建多元线性回归模型进行预测。</p>
+<blockquote>
+<p>我看的话这个风化损失得衡量不同文物的风化程度，然后根据不同的风化程度才更好的反推回风化前的化学成分含量。怎么定义这个风化程度就需要一些门道了。</p>
+</blockquote>
+<p>$$L = |y - x|$$</p>
+<p>L是风化损失，y是风化前的数据，x是风化后的数据。其中y是位置的，这就无法建立多元线性回归了。</p>
+<p>也是佩服我自己的脑洞，现在有正常数据，有风化数据，我想出的方法是利用正常分布的数据的分布来作为y。</p>
+<p>具体是这样做的，对正常数据进行统计，利用四分位进行划分：</p>
+<ul>
+<li>上界</li>
+<li>上四分位$Q_1$</li>
+<li>中位数$Q_2$</li>
+<li>下四分位$Q_3$</li>
+<li>下界</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/sido-meet/pic_bed/main/Pasted%20image%2020260817202302.png" alt="Pasted image 20260817202302" loading="lazy"></p>
+<p>位于两个四分位之间的就没有损失。</p>
+<blockquote>
+<p>这合理吗，从瓷器的角度来看，确实同类瓷器之间的化学元素应该不会相差太大，所以这样做也算合理，那我为啥不直接利用中位数呢，让所有偏离的数据往中位数靠近。用中位数应该还考虑未风化的样本，这类样本不该有损失，也可以让X拟合这类样本。但是对于风化样本，是不是就只会往两个四分位线拟合，造成两个中心的形态。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/sido-meet/pic_bed/main/Pasted%20image%2020260817203129.png" alt="Pasted image 20260817203129" loading="lazy"><br>数据集确实不多，铅钡的损失是0.192，高钾的损失是0.676。感觉效果不错，主要脑洞大，强行用了多元线性回归去预测。</p>
+<h2 id="针对问题二"><a href="#针对问题二" class="headerlink" title="针对问题二"></a>针对问题二</h2><p>考点是亚类划分和敏感度分析。</p>
+<p><img src="https://raw.githubusercontent.com/sido-meet/pic_bed/main/Pasted%20image%2020260817203744.png" alt="Pasted image 20260817203744" loading="lazy"></p>
+<blockquote>
+<p>有点太高了，数据太少严重过拟合了。这是对铅钡和高钾分类，那应该和容易分。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/sido-meet/pic_bed/main/Pasted%20image%2020260817204046.png" alt="Pasted image 20260817204046" loading="lazy"><br>现学现卖的图，现在看起来也很不错，这是地理相关领域的一个图类型。可以很好的看到铅钡和高钾具有明显的分界。</p>
+<p>这个分类现在看来是堆砌了过多的工作了，从普通决策树到梯度提升决策树，再到梯度优化后的决策树，集成学习。Over Qualified！！！</p>
+<hr>
+<p>(以上在 2026.08.17 撰写，花的时间太多，下次再写)</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/08/17/%E5%BB%BA%E6%A8%A1%E2%80%94%E2%80%94%E5%8F%A4%E4%BB%A3%E7%8E%BB%E7%92%83%E5%88%B6%E5%93%81%E7%9A%84%E6%88%90%E5%88%86%E5%88%86%E6%9E%90%E4%B8%8E%E9%89%B4%E5%88%AB/</id>
+    <link href="https://sido-meet.online/2026/08/17/%E5%BB%BA%E6%A8%A1%E2%80%94%E2%80%94%E5%8F%A4%E4%BB%A3%E7%8E%BB%E7%92%83%E5%88%B6%E5%93%81%E7%9A%84%E6%88%90%E5%88%86%E5%88%86%E6%9E%90%E4%B8%8E%E9%89%B4%E5%88%AB/"/>
+    <published>2026-08-16T16:00:00.000Z</published>
+    <summary>2022 年全国大学生数学建模竞赛 C 题回顾，从风化损失建模、亚类划分到 AI 时代再读当年那段四天三晚的解题思路。</summary>
+    <title>建模——古代玻璃制品的成分分析与鉴别</title>
+    <updated>2026-08-16T16:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="技术实践" scheme="https://sido-meet.online/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/"/>
+    <category term="Agent" scheme="https://sido-meet.online/tags/Agent/"/>
+    <category term="Skill" scheme="https://sido-meet.online/tags/Skill/"/>
+    <category term="Claude Code" scheme="https://sido-meet.online/tags/Claude-Code/"/>
+    <category term="AI 工具" scheme="https://sido-meet.online/tags/AI-%E5%B7%A5%E5%85%B7/"/>
+    <category term="工作指南" scheme="https://sido-meet.online/tags/%E5%B7%A5%E4%BD%9C%E6%8C%87%E5%8D%97/"/>
+    <content>
+      <![CDATA[<h2 id="Skill是什么？"><a href="#Skill是什么？" class="headerlink" title="Skill是什么？"></a>Skill是什么？</h2><p>Skill 指的是指导大模型完成某项特定任务的指导文档。</p>
+<ul>
+<li>没有 skill：大模型会凭借自己的经验做做事情，这很可能做不好，胡乱探索，不符心意。</li>
+<li>有 skill：大模型可以根据一套指导规则做事，可以在一定程度的可控下运行，完成任务。</li>
+</ul>
+<h2 id="Skill适合什么场景？"><a href="#Skill适合什么场景？" class="headerlink" title="Skill适合什么场景？"></a>Skill适合什么场景？</h2><p>可复用的场景，这可以是一切场景，只要你经常需要他做重复的任务，可以是说话语气的回复技巧，也可以重复的模板化论文撰写。</p>
+<p>可复用意味着需要判断是不是当前这个任务未来会被重复使用，如果不是请不要创建 skill，skill会带来三种代价：</p>
+<ol>
+<li>创建 skill</li>
+<li>管理 skill</li>
+<li>上下文消耗</li>
+</ol>
+<h2 id="怎么创建skill？"><a href="#怎么创建skill？" class="headerlink" title="怎么创建skill？"></a>怎么创建skill？</h2><p>Skill文件排布：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scripts\</span><br><span class="line">references\</span><br><span class="line">assets\</span><br><span class="line">skill.md</span><br></pre></td></tr></tbody></table></figure>
+
+<p>使用层级：</p>
+<ul>
+<li>Level 1：元数据（name + description），永远在上下文中（~100 词）</li>
+<li>Level 2：SKILL.md 正文，触发时加载（&lt; 500 词最佳）</li>
+<li>Level 3：scripts/references/assets，按需加载（无限制）</li>
+</ul>
+<p>SKILL.md 层级：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: xxx</span><br><span class="line">description: xxx</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">xxx（SKILL正文，定义做什么，怎么做等）</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="怎么使用skill？"><a href="#怎么使用skill？" class="headerlink" title="怎么使用skill？"></a>怎么使用skill？</h2><p>对话触发，Agent根据当前对话和 skill 元数据，自行判断是否需要使用 skill。</p>
+<p>所以 Description 是触发机制，并非简介。</p>
+<ul>
+<li>Agent <strong>不会自动查</strong>所有 skill，它只看 <code>available_skills</code> 列表中的 description 来决定是否调用</li>
+<li>Agent 有 <strong>undertrigger 倾向</strong>（该用时不用）→ 所以 description 必须”pushy”，同时对话中可以明确指出让 Agent 用什么 skill。</li>
+<li>❌ “How to build dashboards.”- ✅ “How to build dashboards. Make sure to use this skill whenever the user mentions dashboards, data visualization, internal metrics…”</li>
+</ul>]]>
+    </content>
+    <id>https://sido-meet.online/2026/08/08/skill%E2%80%94%E2%80%94Agent%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%8C%87%E5%8D%97/</id>
+    <link href="https://sido-meet.online/2026/08/08/skill%E2%80%94%E2%80%94Agent%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%8C%87%E5%8D%97/"/>
+    <published>2026-08-07T16:00:00.000Z</published>
+    <summary>解释 Skill 是什么、为什么需要、什么时候该创建、SKILL.md 怎么写以及如何让 Agent 真正触发它。</summary>
+    <title>Skill——Agent的工作指南</title>
+    <updated>2026-08-07T16:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="技术实践" scheme="https://sido-meet.online/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/"/>
+    <category term="Claude Code" scheme="https://sido-meet.online/tags/Claude-Code/"/>
+    <category term="Git" scheme="https://sido-meet.online/tags/Git/"/>
+    <category term="Worktree" scheme="https://sido-meet.online/tags/Worktree/"/>
+    <category term="AI Coding" scheme="https://sido-meet.online/tags/AI-Coding/"/>
+    <category term="并行开发" scheme="https://sido-meet.online/tags/%E5%B9%B6%E8%A1%8C%E5%BC%80%E5%8F%91/"/>
+    <content>
+      <![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>功能：在git开发中让ai coding可以并行开发，而不冲突</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">resume/</span><br><span class="line">├── .git</span><br><span class="line">├── CV.tex</span><br><span class="line">├── README.md</span><br><span class="line">└── ...</span><br></pre></td></tr></tbody></table></figure>
+<ol>
+<li>想要修改项目部分</li>
+<li>想要修改科研部分</li>
+</ol>
+<p>在同一分支下工作会会发生下面的情况</p>
+<ul>
+<li>文件覆盖</li>
+<li>git 状态混乱</li>
+<li>一个 agent 看到另一个 agent 未完成的代码</li>
+<li>merge 非常痛苦<blockquote>
+<p>Note: 这个问题的前提是在同一个工作目录，如果在不同的工作目录下面拉取代码进行分支开发是不会由上面的问题</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>创建：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">resume/</span><br><span class="line">│</span><br><span class="line">├── CV.tex</span><br><span class="line">│</span><br><span class="line">├── .git</span><br><span class="line">│</span><br><span class="line">├── ../poject/</span><br><span class="line">│       └── 项目</span><br><span class="line">│</span><br><span class="line">└── ../science/</span><br><span class="line">        └── 科研</span><br></pre></td></tr></tbody></table></figure>
+<p>实际：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">           同一个 Git 仓库历史</span><br><span class="line">                  |</span><br><span class="line">     -----------------------------</span><br><span class="line">     |            |             |</span><br><span class="line">  main         project       science</span><br><span class="line">     |            |             |</span><br><span class="line">Claude 你     Claude A      Claude B</span><br></pre></td></tr></tbody></table></figure>
+<p>每个 Claude：</p>
+<ul>
+<li>有自己的文件</li>
+<li>有自己的 branch</li>
+<li>有自己的 git 状态</li>
+</ul>
+<p>但是：</p>
+<ul>
+<li>共用 Git 对象</li>
+<li>不需要重新 clone</li>
+<li>commit 后可以正常 merge</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>Claude Code 已经内置了：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude --worktree 名字</span><br></pre></td></tr></tbody></table></figure>
+
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude --worktree project</span><br></pre></td></tr></tbody></table></figure>
+
+<p>它会自动创建：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.claude/worktrees/project/</span><br></pre></td></tr></tbody></table></figure>
+
+<p>并建立对应 branch：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">worktree-project</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然后直接进入这个环境。</p>
+<p>比如：</p>
+<p>终端 1：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude --worktree project</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Claude：</p>
+<blockquote>
+<p>修改项目部分简历</p>
+</blockquote>
+<p>终端 2：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude --worktree science</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Claude：</p>
+<blockquote>
+<p>修改科研部分简历</p>
+</blockquote>
+<p>两个 agent 可以并行跑。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>不同分支相当于开了新的工作目录，所以环境得重新配置</li>
+<li>针对需要使用有.gitignore忽略的文件，需要配置.worktreeinclude文件在项目根目录下（这样不同的worktree就可以使用到被git忽略的但是需要用到文件）</li>
+</ol>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.env</span><br><span class="line">.env.local</span><br><span class="line">config/secrets.json</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://code.claude.com/docs/en/worktrees">https://code.claude.com/docs/en/worktrees</a></li>
+</ul>]]>
+    </content>
+    <id>https://sido-meet.online/2026/08/05/worktree%E4%BD%BF%E7%94%A8/</id>
+    <link href="https://sido-meet.online/2026/08/05/worktree%E4%BD%BF%E7%94%A8/"/>
+    <published>2026-08-05T14:30:00.000Z</published>
+    <summary>在同一仓库下用 Git Worktree 给 Claude Code 分配独立分支，让多个 AI 并行修改互不冲突、最后再合并。</summary>
+    <title>Worktree 使用</title>
+    <updated>2026-08-05T14:30:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="技术实践" scheme="https://sido-meet.online/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/"/>
+    <category term="Vibe Coding" scheme="https://sido-meet.online/tags/Vibe-Coding/"/>
+    <category term="人机协作" scheme="https://sido-meet.online/tags/%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C/"/>
+    <category term="工程实践" scheme="https://sido-meet.online/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/"/>
+    <content>
+      <![CDATA[<p>最近想利用vibe coding对科研想法进行验证，多范式代码下的SQL修正，企图验证大模型对不同语言的知识储备是否可以启发帮助SQL的修正。</p>
+<hr>
+<p>完全依赖vide coding：<br>代码可以运行，但是运行效率很低，且过程完全黑盒化。结果不尽人意。<br>试图重构，发下以下问题：</p>
+<ul>
+<li>知识老旧： 大模型无法遵循日益迅速发展的框架的开发习惯，表现在我试图在rule中让大模遵循使用langgraph开发，并使用context7查看最新文档进行开发。没有遵循的原因可能是大模型训练语料中未能及时将最新的数据纳入；更重要的可能是我并未对任务足够的细粒度拆分，导致大模型注意力分散。</li>
+<li>项目过于复杂，开发出屎山代码，难以维护：进行debug熟悉项目，发现代码结构混乱，且由于让大模型重构多次，历史遗留代码，重构不充分的问题暴露无遗，项目难以继续开发。</li>
+</ul>
+<hr>
+<p>人机交互模式：<br>人工设计+ai功能代码撰写：抛弃完全依赖模型设计与开发的模式，改为以人为主，大模型功能实现的模式。<br>为什么这么做呢？<br>我发现如果大模型写好计划并按照任务执行，计划赶不上变化，同时我无法了解代码为什么这样设计，是否经充分的验证。所以完全由ai撰写的模式适用于demo的展示，针对复杂项目，更依赖的是以人为主体，ai加快代码撰写的人机交互模式。</p>
+<p>code agent发展至今，全局记忆，统筹调度的能力还有待提高，期望有一天，记忆可以内化，资源可以充分调度，也非常乐意完全当一名产品经理。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/03/24/vibe-coding-%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C%E4%B8%8B%E7%9A%84%E6%96%B0%E5%9E%8B%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F/</id>
+    <link href="https://sido-meet.online/2026/03/24/vibe-coding-%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C%E4%B8%8B%E7%9A%84%E6%96%B0%E5%9E%8B%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%BC%8F/"/>
+    <published>2026-03-24T11:41:31.000Z</published>
+    <summary>复盘完全依赖 AI 编程带来的黑盒、知识老化与维护问题，并提出人工设计、AI 加速实现的协作方式。</summary>
+    <title>vibe coding: 人机协作下的新型编程模式</title>
+    <updated>2026-03-24T11:41:31.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="技术" scheme="https://sido-meet.online/categories/%E6%8A%80%E6%9C%AF/"/>
+    <category term="Agent" scheme="https://sido-meet.online/tags/Agent/"/>
+    <category term="Workflow" scheme="https://sido-meet.online/tags/Workflow/"/>
+    <content>
+      <![CDATA[<p>本文主要是为了记录笔者对工作流与智能体的区别的理解。</p>
+<ul>
+<li>工作流 (workflow)：根据预定义的代码逻辑，按照顺序执行，适用于严格定义的任务场景。</li>
+<li>智能体 (agent)：根据环境和任务，自主决策和执行，适用于不可预测的任务场景。</li>
+</ul>
+<p>下图是工作流与智能体的举例，来源于【<a href="https://docs.langchain.com/oss/python/langgraph/workflows-agents">workflows-agents</a>】。</p>
+<p><img src="https://mintcdn.com/langchain-5e9cc07a/-_xGPoyjhyiDWTPJ/oss/images/agent_workflow.png?w=840&amp;fit=max&amp;auto=format&amp;n=-_xGPoyjhyiDWTPJ&amp;q=85&amp;s=ae1fa9087b33b9ff8bc3446ccaa23e3d" alt="工作流与智能体的区别" loading="lazy"></p>
+<blockquote>
+<p>这个图其实有个疑问，为什么LLM参与决策的workflow，而不是智能体？</p>
+</blockquote>
+<p>比如Evaluator-Opimizer，其中Generator与Evaluator都是LLM，Generator负责生成候选解，Evaluator负责评估，通过则给出结果，反之则反馈给Generator重新生成。其中，Generator就具备自主决策的性质。</p>
+<p>本质上在于执行流程的是否可以预测性，Evaluator-Optimizer是一个严格的流程，而智能体可以判断执行步骤，选择是否使用工具以及使用什么工具，流程是不可预测的。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/03/20/%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%B8%8E%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E5%8C%BA%E5%88%AB/</id>
+    <link href="https://sido-meet.online/2026/03/20/%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%B8%8E%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <published>2026-03-20T11:46:47.000Z</published>
+    <summary>从流程可预测性、决策权与工具使用方式出发，理解工作流和智能体的边界。</summary>
+    <title>工作流与智能体的区别</title>
+    <updated>2026-03-20T11:46:47.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="设想" scheme="https://sido-meet.online/categories/%E8%AE%BE%E6%83%B3/"/>
+    <category term="农业" scheme="https://sido-meet.online/tags/%E5%86%9C%E4%B8%9A/"/>
+    <category term="商业模式" scheme="https://sido-meet.online/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/"/>
+    <category term="乡村发展" scheme="https://sido-meet.online/tags/%E4%B9%A1%E6%9D%91%E5%8F%91%E5%B1%95/"/>
+    <content>
+      <![CDATA[<p>随着人口老龄化的加剧，农村留守老人增加，青壮劳动力外出务工，农村空心化愈发严重。由此，耕地无人种的问题愈发严重。一亩地耕种一年除去种子，化肥，人工等成本，收入微薄。现政策激励，帮助免费播种，耕地等扶持，减少土地的荒废。但是靠政策补贴并非活水，难以持久。现设想一种基金化的农田管理模式设想：</p>
+<ul>
+<li>农村耕地无需收费总包给农田职业管理人</li>
+<li>农田职业管理人负责规划农田种植，打通农田规划，种植，管理，采摘，销售等链路</li>
+<li>收益分成<ul>
+<li>去除种植过程中的开销</li>
+<li>剩下收益农田管理人以百分比划为工资</li>
+<li>剩下收益划分部分为来年的农田预期费用</li>
+<li>剩下收益以农田质量，面积，灌溉难易，交通等因素分配给农田所有人</li>
+</ul>
+</li>
+</ul>
+<p>在该种模式下，催生出农田职业管理人的职业，同时农田的经营，也提高当地的务农人员的收入。但是不可避免，农田职业管理人面临经营亏损的问题，收益分成的纠纷等系列问题，该设想需进一步优化完善。我相信更专业的农田管理，在未来可以提升农田收益，减少农田荒废，促进农业经济的发展。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/03/07/%E5%9F%BA%E9%87%91%E5%8C%96%E7%9A%84%E5%86%9C%E7%94%B0%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E8%AE%BE%E6%83%B3/</id>
+    <link href="https://sido-meet.online/2026/03/07/%E5%9F%BA%E9%87%91%E5%8C%96%E7%9A%84%E5%86%9C%E7%94%B0%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E8%AE%BE%E6%83%B3/"/>
+    <published>2026-03-07T01:15:47.000Z</published>
+    <summary>面向农村劳动力流失与耕地闲置问题，设想由职业管理人统筹种植、销售和收益分配的农田模式。</summary>
+    <title>基金化的农田管理模式设想</title>
+    <updated>2026-03-07T01:15:47.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="博客开发" scheme="https://sido-meet.online/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/"/>
+    <category term="Hexo" scheme="https://sido-meet.online/tags/Hexo/"/>
+    <category term="主题优化" scheme="https://sido-meet.online/tags/%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96/"/>
+    <category term="代码简化" scheme="https://sido-meet.online/tags/%E4%BB%A3%E7%A0%81%E7%AE%80%E5%8C%96/"/>
+    <content>
+      <![CDATA[<h2 id="Hexo主题优化：简化category和tag页面实现"><a href="#Hexo主题优化：简化category和tag页面实现" class="headerlink" title="Hexo主题优化：简化category和tag页面实现"></a>Hexo主题优化：简化category和tag页面实现</h2><h2 id="优化背景"><a href="#优化背景" class="headerlink" title="优化背景"></a>优化背景</h2><p>最近在维护个人Hexo博客时，发现主题中的<code>category.ejs</code>和<code>tag.ejs</code>文件实现较为复杂，代码冗余度较高。这两个文件包含了大量重复代码，只是在页面标题和描述上有所不同。</p>
+<p>同时，我注意到官方的hexo-theme-landscape主题在实现这两个页面时非常简洁，每个文件只有一行代码。这引起了我的兴趣，决定参考其实现方式来优化自己的主题。</p>
+<h2 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h2><ol>
+<li><strong>简化代码结构</strong>：减少代码冗余，提高代码可读性</li>
+<li><strong>提高可维护性</strong>：将通用逻辑集中到一个模板中，后续修改只需更新一个文件</li>
+<li><strong>保持原有功能</strong>：确保优化后所有原有功能都能正常工作</li>
+<li><strong>遵循最佳实践</strong>：参考官方主题的实现方式，采用更合理的代码组织方式</li>
+</ol>
+<h2 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h2><p>参考hexo-theme-landscape主题的实现方式，我采用了以下方案：</p>
+<ol>
+<li><strong>创建通用模板</strong>：在<code>themes/sido-meet/layout/partial/</code>目录下创建<code>archive.ejs</code>模板文件，包含所有列表页面的通用结构</li>
+<li><strong>修改category.ejs</strong>：使用<code>&lt;%- partial('partial/archive', { ... }) %&gt;</code>引用通用模板，并传递相应参数</li>
+<li><strong>修改tag.ejs</strong>：与category.ejs类似，使用通用模板并传递相应参数</li>
+<li><strong>清理冗余文件</strong>：删除不必要的文件，保持代码结构整洁</li>
+</ol>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><h3 id="1-创建通用模板"><a href="#1-创建通用模板" class="headerlink" title="1. 创建通用模板"></a>1. 创建通用模板</h3><p>在<code>themes/sido-meet/layout/partial/</code>目录下创建<code>archive.ejs</code>模板文件，包含以下内容：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class="blog-container"&gt;</span><br><span class="line">  &lt;div class="blog-header"&gt;</span><br><span class="line">    &lt;h1 class="blog-title"&gt;&lt;%= page_title %&gt;&lt;/h1&gt;</span><br><span class="line">    &lt;p class="blog-description"&gt;&lt;%= page_description %&gt;&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;div class="blog-content"&gt;</span><br><span class="line">    &lt;div class="posts-section"&gt;</span><br><span class="line">      &lt;div class="section-header"&gt;</span><br><span class="line">        &lt;h2 class="section-title"&gt;Posts&lt;/h2&gt;</span><br><span class="line">        &lt;div class="sort-controls"&gt;</span><br><span class="line">          &lt;%- partial('partial/sort-button') %&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;div class="posts-list"&gt;</span><br><span class="line">        &lt;% page.posts.each(function(post) { %&gt;</span><br><span class="line">          &lt;article class="post-card" data-date="&lt;%= post.date.unix() %&gt;"&gt;</span><br><span class="line">            &lt;div class="post-card-header"&gt;</span><br><span class="line">              &lt;span class="post-date"&gt;&lt;%= post.date.format('YYYY-MM-DD HH:mm:ss') %&gt;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;h3 class="post-card-title"&gt;</span><br><span class="line">              &lt;a href="&lt;%= url_for(post.path) %&gt;"&gt;&lt;%= post.title %&gt;&lt;/a&gt;</span><br><span class="line">            &lt;/h3&gt;</span><br><span class="line">            &lt;% if (post.excerpt) { %&gt;</span><br><span class="line">              &lt;p class="post-card-excerpt"&gt;&lt;%= post.excerpt.replace(/&lt;[^&gt;]*&gt;/g, '').substring(0, 150) + '...' %&gt;&lt;/p&gt;</span><br><span class="line">            &lt;% } %&gt;</span><br><span class="line">            &lt;div class="post-card-footer"&gt;</span><br><span class="line">              &lt;a href="&lt;%= url_for(post.path) %&gt;" class="read-more"&gt;Read More →&lt;/a&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          &lt;/article&gt;</span><br><span class="line">        &lt;% }) %&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;div class="sidebar"&gt;</span><br><span class="line">      &lt;div class="sidebar-widget"&gt;</span><br><span class="line">        &lt;h3 class="widget-title"&gt;Categories&lt;/h3&gt;</span><br><span class="line">        &lt;div class="categories-list"&gt;</span><br><span class="line">          &lt;% site.categories.each(function(category) { %&gt;</span><br><span class="line">            &lt;div class="category-item"&gt;</span><br><span class="line">              &lt;a href="&lt;%= url_for(category.path) %&gt;"&gt;&lt;%= category.name %&gt;&lt;/a&gt;</span><br><span class="line">              &lt;span class="category-count"&gt;&lt;%= category.posts.length %&gt;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          &lt;% }) %&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      </span><br><span class="line">      &lt;div class="sidebar-widget"&gt;</span><br><span class="line">        &lt;h3 class="widget-title"&gt;Recent Posts&lt;/h3&gt;</span><br><span class="line">        &lt;div class="recent-posts"&gt;</span><br><span class="line">          &lt;% site.posts.sort('-date').limit(5).each(function(post) { %&gt;</span><br><span class="line">            &lt;div class="recent-post-item"&gt;</span><br><span class="line">              &lt;a href="&lt;%= url_for(post.path) %&gt;"&gt;&lt;%= post.title %&gt;&lt;/a&gt;</span><br><span class="line">              &lt;span class="recent-post-date"&gt;&lt;%= post.date.format('YYYY-MM-DD HH:mm:ss') %&gt;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          &lt;% }) %&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-修改category-ejs"><a href="#2-修改category-ejs" class="headerlink" title="2. 修改category.ejs"></a>2. 修改category.ejs</h3><p>将<code>themes/sido-meet/layout/category.ejs</code>文件修改为：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- partial('partial/header') %&gt;</span><br><span class="line">&lt;%- partial('partial/archive', { </span><br><span class="line">  page_title: 'Category: ' + page.category, </span><br><span class="line">  page_description: 'All posts in category "' + page.category + '"' </span><br><span class="line">}) %&gt;</span><br><span class="line">&lt;%- partial('partial/footer') %&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-修改tag-ejs"><a href="#3-修改tag-ejs" class="headerlink" title="3. 修改tag.ejs"></a>3. 修改tag.ejs</h3><p>将<code>themes/sido-meet/layout/tag.ejs</code>文件修改为：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- partial('partial/header') %&gt;</span><br><span class="line">&lt;%- partial('partial/archive', { </span><br><span class="line">  page_title: 'Tag: ' + page.tag, </span><br><span class="line">  page_description: 'All posts tagged with "' + page.tag + '"' </span><br><span class="line">}) %&gt;</span><br><span class="line">&lt;%- partial('partial/footer') %&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="4-配置版本控制"><a href="#4-配置版本控制" class="headerlink" title="4. 配置版本控制"></a>4. 配置版本控制</h3><p>修改<code>.gitignore</code>文件，添加规则只追踪<code>themes/sido-meet</code>主题：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Themes</span><br><span class="line"># Ignore all themes except sido-meet</span><br><span class="line">themes/*</span><br><span class="line">!themes/sido-meet/</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="优化成果"><a href="#优化成果" class="headerlink" title="优化成果"></a>优化成果</h2><h3 id="1-代码简化"><a href="#1-代码简化" class="headerlink" title="1. 代码简化"></a>1. 代码简化</h3><ul>
+<li><strong>category.ejs</strong>：从64行减少到6行，减少了90.6%的代码</li>
+<li><strong>tag.ejs</strong>：从64行减少到6行，减少了90.6%的代码</li>
+<li><strong>总代码量</strong>：减少了134行代码，提高了代码可读性</li>
+</ul>
+<h3 id="2-可维护性提升"><a href="#2-可维护性提升" class="headerlink" title="2. 可维护性提升"></a>2. 可维护性提升</h3><ul>
+<li><strong>集中管理</strong>：所有列表页面的通用逻辑都集中在<code>archive.ejs</code>模板中</li>
+<li><strong>易于修改</strong>：后续修改只需更新<code>archive.ejs</code>文件，无需修改多个文件</li>
+<li><strong>一致性</strong>：确保了category和tag页面的显示效果完全一致</li>
+</ul>
+<h3 id="3-功能保持"><a href="#3-功能保持" class="headerlink" title="3. 功能保持"></a>3. 功能保持</h3><p>虽然代码简化了，但所有原有功能都得到了保留：</p>
+<ul>
+<li>页面标题和描述</li>
+<li>文章列表显示</li>
+<li>侧边栏分类</li>
+<li>最近文章</li>
+<li>文章排序功能</li>
+</ul>
+<h3 id="4-代码组织更合理"><a href="#4-代码组织更合理" class="headerlink" title="4. 代码组织更合理"></a>4. 代码组织更合理</h3><ul>
+<li><strong>遵循最佳实践</strong>：参考官方主题的实现方式</li>
+<li><strong>命名规范</strong>：使用<code>archive.ejs</code>作为通用模板名称，与官方主题保持一致</li>
+<li><strong>结构清晰</strong>：模板文件职责明确，代码组织更合理</li>
+</ul>
+<h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><p>在使用通用模板时，通过传递参数来实现动态内容：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- partial('partial/archive', { </span><br><span class="line">  page_title: 'Category: ' + page.category, </span><br><span class="line">  page_description: 'All posts in category "' + page.category + '"' </span><br><span class="line">}) %&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="模板渲染"><a href="#模板渲染" class="headerlink" title="模板渲染"></a>模板渲染</h3><p>通用模板使用传递的参数来渲染页面内容：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 class="blog-title"&gt;&lt;%= page_title %&gt;&lt;/h1&gt;</span><br><span class="line">&lt;p class="blog-description"&gt;&lt;%= page_description %&gt;&lt;/p&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>通过修改<code>.gitignore</code>文件，确保只有<code>sido-meet</code>主题会被版本控制系统追踪，避免其他主题文件污染仓库。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过参考hexo-theme-landscape主题的实现方式，我成功优化了自己主题中的category和tag页面实现。这次优化不仅简化了代码结构，提高了可维护性，还保持了所有原有功能。</p>
+<p>这种通过创建通用模板来实现代码复用的方式，是一种很好的实践，值得在其他类似场景中推广使用。它不仅可以减少代码冗余，还可以提高代码的一致性和可维护性。</p>
+<p>通过这次优化，我对Hexo主题的代码组织方式有了更深入的理解，也为后续的主题维护和开发打下了更好的基础。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/</id>
+    <link href="https://sido-meet.online/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/"/>
+    <published>2026-02-14T13:39:54.000Z</published>
+    <summary>通过抽取共享归档模板，减少 Hexo category 与 tag 页面中的重复代码并提升主题可维护性。</summary>
+    <title>Hexo主题优化：简化category和tag页面实现</title>
+    <updated>2026-02-14T13:39:54.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="日记" scheme="https://sido-meet.online/categories/%E6%97%A5%E8%AE%B0/"/>
+    <category term="生活" scheme="https://sido-meet.online/tags/%E7%94%9F%E6%B4%BB/"/>
+    <category term="北京" scheme="https://sido-meet.online/tags/%E5%8C%97%E4%BA%AC/"/>
+    <category term="实习" scheme="https://sido-meet.online/tags/%E5%AE%9E%E4%B9%A0/"/>
+    <content>
+      <![CDATA[<p>2025年9月24日，星期三，我正式开始了我在北京的实习。</p>
+<p>2025年9月20日中午到的北京，正值周六，hy师兄来地铁站接我，带我去小区边上的商场吃了一碗牛肉面。</p>
+<p>2026年1月30日离职，实习总时间为4个月左右，本来想实习到2026年3月20号左右，但是，不太想过完年继续会北京折腾，还是回学校准备毕业条件。</p>
+<p>北京实习最让人想吐槽的房价，一个三室一厨一卫的房子（客厅隔断）的房间，我租的是客厅隔断，居然要2300一个月，再额外家230的服务费。这已经要了我工资的2/5左右。北京吃饭也贵，正常三餐吃饭，一天要花费50元左右，所以四个月实习下来也没攒到啥钱。</p>
+<p>第一次租房，所以对中介的话术没有明确的理解。我是跟中介说的我不确定租多久，五六个月。然后她跟我讲免责解约，随时走就行，让我签了一年的合同。然后我12月20日就说我年前要走了，她这是说不行了，必须租到年后才能免责解约。哎，她说过年不好租，争不过她，我也有点感觉是我理亏，没明确说清楚租的时间，就算了。我2026年2月4号离开北京，房租还是得租到2026年2月24号，也就是初八，她们正式工作的第一天。相当于赔了20天房租1600多块。希望到时候能顺利把押金，剩余的预付一年的管理费，剩下的房租（押一付三也对实习非常不友好）还给我。</p>
+<p>工资低但是又想想存点钱，所以在北京的生活体验不是很好。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/02/08/%E5%8C%97%E4%BA%AC%E5%AE%9E%E4%B9%A0%E4%BD%93%E9%AA%8C/</id>
+    <link href="https://sido-meet.online/2026/02/08/%E5%8C%97%E4%BA%AC%E5%AE%9E%E4%B9%A0%E4%BD%93%E9%AA%8C/"/>
+    <published>2026-02-08T15:20:56.000Z</published>
+    <summary>回顾四个月北京实习中的租房、通勤、生活成本与离职安排，记录第一次异地实习的经验教训。</summary>
+    <title>北京实习体验</title>
+    <updated>2026-02-08T15:20:56.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="人工智能" scheme="https://sido-meet.online/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    <category term="技术探索" scheme="https://sido-meet.online/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2/"/>
+    <category term="AI" scheme="https://sido-meet.online/tags/AI/"/>
+    <category term="Claude" scheme="https://sido-meet.online/tags/Claude/"/>
+    <category term="技能系统" scheme="https://sido-meet.online/tags/%E6%8A%80%E8%83%BD%E7%B3%BB%E7%BB%9F/"/>
+    <category term="触发式调用" scheme="https://sido-meet.online/tags/%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8/"/>
+    <content>
+      <![CDATA[<h2 id="探索Skill：Claude提出的触发式调用新概念"><a href="#探索Skill：Claude提出的触发式调用新概念" class="headerlink" title="探索Skill：Claude提出的触发式调用新概念"></a>探索Skill：Claude提出的触发式调用新概念</h2><h2 id="什么是Skill？"><a href="#什么是Skill？" class="headerlink" title="什么是Skill？"></a>什么是Skill？</h2><p>Skill是Claude提出的一种全新的AI能力扩展概念，它允许AI系统通过特定的触发机制来调用预设的功能模块，从而实现更复杂、更专业化的任务处理。简单来说，Skill就像是AI的”工具箱”，里面装着各种专门的工具，当遇到需要这些工具的场景时，AI可以自动或半自动地调用它们。</p>
+<h2 id="触发式调用机制"><a href="#触发式调用机制" class="headerlink" title="触发式调用机制"></a>触发式调用机制</h2><p>触发式调用是Skill系统的核心特性，它使得AI能够在特定条件下自动识别并调用相应的Skill，而不需要用户明确的指令。这种机制的实现主要基于以下几个方面：</p>
+<h3 id="1-场景识别"><a href="#1-场景识别" class="headerlink" title="1. 场景识别"></a>1. 场景识别</h3><p>AI系统通过分析用户的输入内容、对话上下文以及任务需求，识别出当前场景是否需要特定的Skill。例如，当用户提到”创建一个表格”时，AI可以识别出这是一个需要表格处理Skill的场景。</p>
+<h3 id="2-触发条件"><a href="#2-触发条件" class="headerlink" title="2. 触发条件"></a>2. 触发条件</h3><p>每个Skill都有其特定的触发条件，这些条件可以是：</p>
+<ul>
+<li><strong>关键词触发</strong>：当用户输入中包含特定关键词时触发</li>
+<li><strong>意图触发</strong>：当AI识别出用户的特定意图时触发</li>
+<li><strong>上下文触发</strong>：基于对话历史和上下文信息触发</li>
+<li><strong>组合触发</strong>：多种条件组合满足时触发</li>
+</ul>
+<h3 id="3-调用流程"><a href="#3-调用流程" class="headerlink" title="3. 调用流程"></a>3. 调用流程</h3><p>当触发条件满足时，AI系统会：</p>
+<ol>
+<li>识别需要的Skill类型</li>
+<li>检查Skill的可用性</li>
+<li>准备调用参数</li>
+<li>执行Skill调用</li>
+<li>处理Skill返回的结果</li>
+<li>将结果以自然语言的形式呈现给用户</li>
+</ol>
+<h2 id="触发式调用的优势"><a href="#触发式调用的优势" class="headerlink" title="触发式调用的优势"></a>触发式调用的优势</h2><ol>
+<li><strong>自动化程度高</strong>：用户不需要明确指定要使用哪个Skill，AI会根据场景自动判断</li>
+<li><strong>使用门槛低</strong>：用户可以用自然语言描述需求，而不需要学习特定的命令格式</li>
+<li><strong>响应速度快</strong>：触发机制使得AI能够快速识别并调用相应的Skill</li>
+<li><strong>扩展性强</strong>：可以通过添加新的Skill来扩展AI的能力范围</li>
+<li><strong>集成度高</strong>：Skill可以与AI的自然语言处理能力无缝集成</li>
+</ol>
+<h2 id="具体例子"><a href="#具体例子" class="headerlink" title="具体例子"></a>具体例子</h2><h3 id="例子1：数学计算Skill"><a href="#例子1：数学计算Skill" class="headerlink" title="例子1：数学计算Skill"></a>例子1：数学计算Skill</h3><p><strong>场景</strong>：用户询问”12345乘以67890等于多少？”</p>
+<p><strong>触发过程</strong>：</p>
+<ol>
+<li>AI识别到用户输入包含数学计算内容</li>
+<li>触发数学计算Skill</li>
+<li>将”12345”和”67890”作为参数传递给Skill</li>
+<li>Skill执行计算并返回结果</li>
+<li>AI将结果以自然语言形式呈现给用户</li>
+</ol>
+<p><strong>结果</strong>：”12345乘以67890等于838102050。”</p>
+<h3 id="例子2：代码生成Skill"><a href="#例子2：代码生成Skill" class="headerlink" title="例子2：代码生成Skill"></a>例子2：代码生成Skill</h3><p><strong>场景</strong>：用户说”帮我写一个Python函数，计算斐波那契数列的第n项”</p>
+<p><strong>触发过程</strong>：</p>
+<ol>
+<li>AI识别到用户需要代码生成</li>
+<li>触发代码生成Skill</li>
+<li>传递语言类型(Python)和功能需求(斐波那契数列计算)作为参数</li>
+<li>Skill生成代码并返回</li>
+<li>AI将代码格式化后呈现给用户</li>
+</ol>
+<p><strong>结果</strong>：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">elif</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>) + fibonacci(n-<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例使用</span></span><br><span class="line"><span class="built_in">print</span>(fibonacci(<span class="number">10</span>))  <span class="comment"># 输出: 55</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="例子3：翻译Skill"><a href="#例子3：翻译Skill" class="headerlink" title="例子3：翻译Skill"></a>例子3：翻译Skill</h3><p><strong>场景</strong>：用户输入”Translate ‘Hello world’ to Chinese”</p>
+<p><strong>触发过程</strong>：</p>
+<ol>
+<li>AI识别到”Translate”关键词和翻译需求</li>
+<li>触发翻译Skill</li>
+<li>传递源文本(“Hello world”)和目标语言(Chinese)作为参数</li>
+<li>Skill执行翻译并返回结果</li>
+<li>AI将翻译结果呈现给用户</li>
+</ol>
+<p><strong>结果</strong>：”‘Hello world’翻译成中文是’你好，世界’。”</p>
+<h3 id="例子4：数据分析Skill"><a href="#例子4：数据分析Skill" class="headerlink" title="例子4：数据分析Skill"></a>例子4：数据分析Skill</h3><p><strong>场景</strong>：用户上传了一份销售数据CSV文件，并说”分析这份数据的销售趋势”</p>
+<p><strong>触发过程</strong>：</p>
+<ol>
+<li>AI识别到文件上传和数据分析需求</li>
+<li>触发数据分析Skill</li>
+<li>传递文件内容和分析需求(销售趋势)作为参数</li>
+<li>Skill执行分析并生成报告</li>
+<li>AI将分析结果和可视化图表呈现给用户</li>
+</ol>
+<p><strong>结果</strong>：<br>“根据您提供的销售数据，我分析了过去6个月的销售趋势：</p>
+<ol>
+<li>整体销售额呈现上升趋势，月均增长率为12.5%</li>
+<li>产品A是销售主力，占总销售额的45%</li>
+<li>每周五是销售高峰，平均销售额比其他工作日高20%</li>
+<li>地区B的销售额增长最快，环比增长18%</li>
+</ol>
+<p>以下是销售趋势图表：<br>[销售趋势图表]<br>“</p>
+<h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><h3 id="1-智能助手"><a href="#1-智能助手" class="headerlink" title="1. 智能助手"></a>1. 智能助手</h3><p>在智能助手中，Skill可以帮助用户处理各种日常任务，如：</p>
+<ul>
+<li>日程管理和提醒</li>
+<li>天气查询和预报</li>
+<li>新闻资讯聚合</li>
+<li>购物比价和推荐</li>
+</ul>
+<h3 id="2-专业领域助手"><a href="#2-专业领域助手" class="headerlink" title="2. 专业领域助手"></a>2. 专业领域助手</h3><p>在专业领域，Skill可以提供更专业的支持：</p>
+<ul>
+<li>法律咨询和文档审查</li>
+<li>医疗健康咨询和建议</li>
+<li>金融分析和投资建议</li>
+<li>教育辅导和学习资源推荐</li>
+</ul>
+<h3 id="3-开发工具"><a href="#3-开发工具" class="headerlink" title="3. 开发工具"></a>3. 开发工具</h3><p>对于开发者，Skill可以作为智能开发助手：</p>
+<ul>
+<li>代码自动生成和补全</li>
+<li>代码审查和bug检测</li>
+<li>技术文档生成</li>
+<li>依赖管理和版本控制</li>
+</ul>
+<h2 id="未来发展"><a href="#未来发展" class="headerlink" title="未来发展"></a>未来发展</h2><p>随着AI技术的不断发展，Skill系统也将迎来更多的创新和改进：</p>
+<ol>
+<li><p><strong>更智能的触发机制</strong>：基于深度学习的场景识别能力将不断提升，使得Skill的触发更加准确和智能</p>
+</li>
+<li><p><strong>更多样的Skill类型</strong>：将会有更多专业领域的Skill被开发出来，覆盖更多的应用场景</p>
+</li>
+<li><p><strong>更强大的Skill组合</strong>：未来的Skill系统将支持多个Skill的协同工作，通过Skill的组合来解决更复杂的问题</p>
+</li>
+<li><p><strong>用户自定义Skill</strong>：普通用户也将能够创建和分享自己的Skill，形成Skill生态系统</p>
+</li>
+<li><p><strong>跨平台集成</strong>：Skill将能够在不同的AI平台和应用之间无缝集成，提供统一的用户体验</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Skill作为Claude提出的一种全新概念，通过触发式调用机制，为AI系统提供了更强大、更灵活的能力扩展方式。它使得AI能够根据场景自动识别并调用相应的功能模块，从而为用户提供更智能、更便捷的服务。</p>
+<p>触发式调用的核心优势在于其自动化程度高、使用门槛低、响应速度快等特点，这使得Skill系统在各种应用场景中都有着广阔的发展前景。随着技术的不断进步，我们可以期待Skill系统在未来会带来更多的惊喜和创新。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/01/29/%E6%8E%A2%E7%B4%A2Skill%EF%BC%9AClaude%E6%8F%90%E5%87%BA%E7%9A%84%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E6%96%B0%E6%A6%82%E5%BF%B5/</id>
+    <link href="https://sido-meet.online/2026/01/29/%E6%8E%A2%E7%B4%A2Skill%EF%BC%9AClaude%E6%8F%90%E5%87%BA%E7%9A%84%E8%A7%A6%E5%8F%91%E5%BC%8F%E8%B0%83%E7%94%A8%E6%96%B0%E6%A6%82%E5%BF%B5/"/>
+    <published>2026-01-29T15:47:24.000Z</published>
+    <summary>介绍 AI Skill 的触发式调用、场景识别与能力封装方式，并讨论它与传统工具调用的差异。</summary>
+    <title>探索Skill：Claude提出的触发式调用新概念</title>
+    <updated>2026-01-29T15:47:24.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="博客开发" scheme="https://sido-meet.online/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/"/>
+    <category term="Hexo" scheme="https://sido-meet.online/tags/Hexo/"/>
+    <category term="评论系统" scheme="https://sido-meet.online/tags/%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/"/>
+    <category term="博客优化" scheme="https://sido-meet.online/tags/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96/"/>
+    <content>
+      <![CDATA[<h2 id="Hexo博客评论系统方案对比"><a href="#Hexo博客评论系统方案对比" class="headerlink" title="Hexo博客评论系统方案对比"></a>Hexo博客评论系统方案对比</h2><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在搭建个人博客时，评论系统是一个重要的组成部分，它允许读者与博主互动，增加博客的活跃度和社区感。对于使用Hexo框架的博主来说，选择一个合适的评论系统尤为重要。本文将对比当前主流的Hexo评论系统方案，分析它们的优缺点和适用场景，帮助你做出最佳选择。</p>
+<h2 id="主流评论系统介绍"><a href="#主流评论系统介绍" class="headerlink" title="主流评论系统介绍"></a>主流评论系统介绍</h2><h3 id="1-Disqus"><a href="#1-Disqus" class="headerlink" title="1. Disqus"></a>1. Disqus</h3><p>Disqus是最早也是最知名的第三方评论系统之一，拥有丰富的功能和庞大的用户基础。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>功能丰富，支持评论嵌套、投票、分享等</li>
+<li>提供完整的后台管理系统</li>
+<li>支持社交账号登录</li>
+<li>全球使用广泛，生态成熟</li>
+</ul>
+<p><strong>优缺点：</strong></p>
+<ul>
+<li><strong>优点</strong>：功能全面，管理方便</li>
+<li><strong>缺点</strong>：国内访问速度慢，加载时间长，可能影响页面性能；数据存储在第三方，隐私性较差</li>
+</ul>
+<h3 id="2-Utterances"><a href="#2-Utterances" class="headerlink" title="2. Utterances"></a>2. Utterances</h3><p>Utterances是一款基于GitHub Issues的轻量级评论系统，非常适合技术博客。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>轻量级，加载速度快</li>
+<li>基于GitHub Issues，评论内容存储在GitHub仓库中</li>
+<li>支持Markdown语法</li>
+<li>配置简单，只需一个GitHub仓库</li>
+</ul>
+<p><strong>优缺点：</strong></p>
+<ul>
+<li><strong>优点</strong>：轻量快速，无需额外服务器；数据存储在自己的GitHub仓库，可控性高</li>
+<li><strong>缺点</strong>：需要GitHub账号才能评论；功能相对简单，不支持匿名评论</li>
+</ul>
+<h3 id="3-Giscus"><a href="#3-Giscus" class="headerlink" title="3. Giscus"></a>3. Giscus</h3><p>Giscus是基于GitHub Discussions的评论系统，是Utterances的升级版。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>基于GitHub Discussions，功能比Utterances更丰富</li>
+<li>支持Markdown语法</li>
+<li>支持主题定制</li>
+<li>轻量级，加载速度快</li>
+</ul>
+<p><strong>优缺点：</strong></p>
+<ul>
+<li><strong>优点</strong>：功能比Utterances更全面，支持更多交互方式；数据存储在GitHub，可控性高</li>
+<li><strong>缺点</strong>：同样需要GitHub账号；配置相对复杂一些</li>
+</ul>
+<h3 id="4-Waline"><a href="#4-Waline" class="headerlink" title="4. Waline"></a>4. Waline</h3><p>Waline是一款快速、简洁且高效的无后端评论系统，基于LeanCloud。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>支持匿名评论</li>
+<li>功能丰富，支持表情、图片、Markdown等</li>
+<li>提供后台管理界面</li>
+<li>支持多种部署方式</li>
+</ul>
+<p><strong>优缺点：</strong></p>
+<ul>
+<li><strong>优点</strong>：功能全面，支持匿名评论，国内访问速度快</li>
+<li><strong>缺点</strong>：需要注册LeanCloud账号并配置；免费版有配额限制</li>
+</ul>
+<h3 id="5-Twikoo"><a href="#5-Twikoo" class="headerlink" title="5. Twikoo"></a>5. Twikoo</h3><p>Twikoo是一款基于云函数的评论系统，支持多种云服务提供商。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>支持多种云函数服务（腾讯云、阿里云、Vercel等）</li>
+<li>功能丰富，支持表情、图片、Markdown等</li>
+<li>提供后台管理界面</li>
+<li>国内访问速度快</li>
+</ul>
+<p><strong>优缺点：</strong></p>
+<ul>
+<li><strong>优点</strong>：部署灵活，国内访问速度快，功能全面</li>
+<li><strong>缺点</strong>：需要配置云函数，部署相对复杂；部分云服务可能产生费用</li>
+</ul>
+<h3 id="6-Gitalk"><a href="#6-Gitalk" class="headerlink" title="6. Gitalk"></a>6. Gitalk</h3><p>Gitalk是另一款基于GitHub Issues的评论系统，功能相对完整。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>基于GitHub Issues</li>
+<li>支持Markdown语法</li>
+<li>提供简洁的界面</li>
+<li>支持点赞功能</li>
+</ul>
+<p><strong>优缺点：</strong></p>
+<ul>
+<li><strong>优点</strong>：数据存储在GitHub，可控性高；界面简洁美观</li>
+<li><strong>缺点</strong>：需要GitHub账号；首次使用需要初始化 Issues；配置相对复杂</li>
+</ul>
+<h3 id="7-Vssue"><a href="#7-Vssue" class="headerlink" title="7. Vssue"></a>7. Vssue</h3><p>Vssue是基于Vue.js和Issue系统的评论系统，支持多种代码托管平台。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>支持GitHub、GitLab、Bitbucket等多个平台</li>
+<li>基于Vue.js开发，界面现代化</li>
+<li>支持Markdown语法</li>
+<li>可定制性强</li>
+</ul>
+<p><strong>优缺点：</strong></p>
+<ul>
+<li><strong>优点</strong>：支持多个代码托管平台，界面现代化，可定制性强</li>
+<li><strong>缺点</strong>：配置相对复杂；需要对应平台的账号</li>
+</ul>
+<h2 id="对比分析"><a href="#对比分析" class="headerlink" title="对比分析"></a>对比分析</h2><table>
+<thead>
+<tr>
+<th>评论系统</th>
+<th>部署难度</th>
+<th>速度与性能</th>
+<th>功能丰富度</th>
+<th>数据隐私</th>
+<th>国内访问</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Disqus</td>
+<td>低</td>
+<td>慢</td>
+<td>高</td>
+<td>低</td>
+<td>差</td>
+<td>国际博客，需要丰富功能</td>
+</tr>
+<tr>
+<td>Utterances</td>
+<td>低</td>
+<td>快</td>
+<td>中</td>
+<td>高</td>
+<td>好</td>
+<td>技术博客，注重速度</td>
+</tr>
+<tr>
+<td>Giscus</td>
+<td>中</td>
+<td>快</td>
+<td>中高</td>
+<td>高</td>
+<td>好</td>
+<td>技术博客，需要更多功能</td>
+</tr>
+<tr>
+<td>Waline</td>
+<td>中</td>
+<td>快</td>
+<td>高</td>
+<td>中</td>
+<td>好</td>
+<td>国内博客，支持匿名评论</td>
+</tr>
+<tr>
+<td>Twikoo</td>
+<td>中高</td>
+<td>快</td>
+<td>高</td>
+<td>中</td>
+<td>好</td>
+<td>国内博客，需要灵活部署</td>
+</tr>
+<tr>
+<td>Gitalk</td>
+<td>中</td>
+<td>中</td>
+<td>中</td>
+<td>高</td>
+<td>好</td>
+<td>技术博客，简洁风格</td>
+</tr>
+<tr>
+<td>Vssue</td>
+<td>中</td>
+<td>中</td>
+<td>中高</td>
+<td>高</td>
+<td>好</td>
+<td>多平台用户，需要定制</td>
+</tr>
+</tbody></table>
+<h2 id="选择建议"><a href="#选择建议" class="headerlink" title="选择建议"></a>选择建议</h2><ol>
+<li><p><strong>如果是技术博客，主要面向开发者</strong>：推荐使用 Utterances 或 Giscus，它们轻量快速，与 GitHub 集成良好，适合技术内容的讨论。</p>
+</li>
+<li><p><strong>如果需要支持匿名评论，面向普通读者</strong>：推荐使用 Waline 或 Twikoo，它们支持匿名评论，功能丰富，国内访问速度快。</p>
+</li>
+<li><p><strong>如果博客主要面向国际读者</strong>：可以考虑 Disqus，虽然国内访问慢，但在国际上使用广泛，功能全面。</p>
+</li>
+<li><p><strong>如果注重数据隐私和控制权</strong>：推荐使用基于 GitHub Issues/Discussions 的系统（Utterances、Giscus、Gitalk），数据存储在自己的仓库中，可控性高。</p>
+</li>
+<li><p><strong>如果是新手，希望快速搭建</strong>：推荐使用 Utterances，配置最简单，只需一个 GitHub 仓库。</p>
+</li>
+</ol>
+<h2 id="配置示例"><a href="#配置示例" class="headerlink" title="配置示例"></a>配置示例</h2><h3 id="Utterances-配置示例"><a href="#Utterances-配置示例" class="headerlink" title="Utterances 配置示例"></a>Utterances 配置示例</h3><p>在 Hexo 主题配置文件中添加：</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">你的GitHub用户名/仓库名</span></span><br><span class="line">  <span class="attr">issue_term:</span> <span class="string">pathname</span></span><br><span class="line">  <span class="attr">label:</span> <span class="string">comment</span></span><br><span class="line">  <span class="attr">theme:</span> <span class="string">github-light</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Waline-配置示例"><a href="#Waline-配置示例" class="headerlink" title="Waline 配置示例"></a>Waline 配置示例</h3><ol>
+<li>首先在 LeanCloud 注册账号并创建应用</li>
+<li>在 Hexo 主题配置文件中添加：</li>
+</ol>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">waline:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">serverURLs:</span> <span class="string">https://你的LeanCloud应用域名</span></span><br><span class="line">  <span class="attr">placeholder:</span> <span class="string">说点什么吧...</span></span><br><span class="line">  <span class="attr">emoji:</span> [<span class="string">'https://cdn.jsdelivr.net/npm/@waline/emojis@1.0.1/weibo'</span>]</span><br><span class="line">  <span class="attr">requiredMeta:</span> [<span class="string">'nick'</span>, <span class="string">'mail'</span>]</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>选择合适的评论系统需要考虑多个因素，包括博客定位、目标 audience、技术能力和个人偏好。没有绝对最好的评论系统，只有最适合自己的。</p>
+<p>对于大多数技术博主来说，Utterances 和 Giscus 是不错的选择，它们轻量快速，与 GitHub 生态集成良好。对于需要支持匿名评论的博主，Waline 和 Twikoo 提供了更多的灵活性。</p>
+<p>最终，评论系统只是博客的一个组成部分，最重要的还是内容本身。选择一个适合自己的评论系统，让读者能够更方便地与你交流，这才是评论系统的真正价值所在。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://utteranc.es/">Utterances 官方文档</a></li>
+<li><a href="https://giscus.app/">Giscus 官方文档</a></li>
+<li><a href="https://waline.js.org/">Waline 官方文档</a></li>
+<li><a href="https://twikoo.js.org/">Twikoo 官方文档</a></li>
+<li><a href="https://gitalk.github.io/">Gitalk 官方文档</a></li>
+<li><a href="https://vssue.js.org/">Vssue 官方文档</a></li>
+<li><a href="https://disqus.com/">Disqus 官方文档</a></li>
+</ul>]]>
+    </content>
+    <id>https://sido-meet.online/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/</id>
+    <link href="https://sido-meet.online/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/"/>
+    <published>2026-01-27T15:06:02.000Z</published>
+    <summary>对比 Disqus、Gitalk、Giscus 等 Hexo 评论方案的访问体验、维护成本、隐私与适用场景。</summary>
+    <title>Hexo博客评论系统方案对比</title>
+    <updated>2026-01-27T15:06:02.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="技术实践" scheme="https://sido-meet.online/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E8%B7%B5/"/>
+    <category term="Hexo" scheme="https://sido-meet.online/tags/Hexo/"/>
+    <category term="GitHub Actions" scheme="https://sido-meet.online/tags/GitHub-Actions/"/>
+    <category term="自动化部署" scheme="https://sido-meet.online/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
+    <category term="博客" scheme="https://sido-meet.online/tags/%E5%8D%9A%E5%AE%A2/"/>
+    <content>
+      <![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>一直以来，我都是使用传统的本地部署方式来管理Hexo博客：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></tbody></table></figure>
+
+<p>每次写完文章后都需要手动执行这些命令，虽然不算麻烦，但总觉得不够现代化。最近终于下定决心，将博客部署流程自动化，使用GitHub Action实现”写完即发布”的效果。</p>
+<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><p>我的项目结构比较特殊：</p>
+<ul>
+<li><strong>源码仓库</strong>：私有仓库，保存Hexo源码和配置文件</li>
+<li><strong>静态网页仓库</strong>：公开仓库，专门用于GitHub Pages部署</li>
+</ul>
+<p>目标很明确：修改源码后推送到私有仓库，自动触发GitHub Action，构建静态页面并部署到GitHub Pages。</p>
+<h2 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h2><h3 id="1-权限设置"><a href="#1-权限设置" class="headerlink" title="1. 权限设置"></a>1. 权限设置</h3><p>首先需要在私有仓库中配置GitHub Actions的权限：</p>
+<ol>
+<li>进入私有仓库的Settings → Actions → General</li>
+<li>找到”Workflow permissions”选项</li>
+<li>选择”Read and write permissions”（读写权限）</li>
+<li>保存设置</li>
+</ol>
+<h3 id="2-GitHub-Action配置"><a href="#2-GitHub-Action配置" class="headerlink" title="2. GitHub Action配置"></a>2. GitHub Action配置</h3><p>创建<code>.github/workflows/frontend-deploy.yml</code>文件，配置如下：</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Frontend</span> <span class="string">Hexo</span> <span class="string">Deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'source/**'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'themes/**'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'_config.yml'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'package.json'</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-and-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span> <span class="string">code</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">submodules:</span> <span class="literal">true</span></span><br><span class="line">          <span class="attr">fetch-depth:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Setup</span> <span class="string">Node.js</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">'18'</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">'npm'</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">dependencies</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Clean</span> <span class="string">Hexo</span> <span class="string">cache</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">clean</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">Hexo</span> <span class="string">site</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">to</span> <span class="string">GitHub</span> <span class="string">Pages</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">peaceiris/actions-gh-pages@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">github_token:</span> <span class="string">${{</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">}}</span></span><br><span class="line">          <span class="attr">publish_dir:</span> <span class="string">./public</span></span><br><span class="line">          <span class="attr">publish_branch:</span> <span class="string">main</span></span><br><span class="line">          <span class="attr">external_repository:</span> <span class="string">your-username/your-username.github.io</span></span><br><span class="line">          <span class="attr">cname:</span> <span class="string">your-username.github.io</span></span><br><span class="line">          <span class="attr">force_orphan:</span> <span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-SSH密钥配置"><a href="#3-SSH密钥配置" class="headerlink" title="3. SSH密钥配置"></a>3. SSH密钥配置</h3><p>由于需要部署到外部仓库，我们使用SSH密钥方式进行认证，这是最可靠和安全的方式。</p>
+<h4 id="生成SSH密钥对"><a href="#生成SSH密钥对" class="headerlink" title="生成SSH密钥对"></a>生成SSH密钥对</h4><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">"your_email@example.com"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="添加公钥到静态网页仓库"><a href="#添加公钥到静态网页仓库" class="headerlink" title="添加公钥到静态网页仓库"></a>添加公钥到静态网页仓库</h4><ol>
+<li>进入静态网页仓库 <code>your-username/your-username.github.io</code></li>
+<li>点击 Settings → Deploy keys</li>
+<li>添加生成的公钥（<code>~/.ssh/id_rsa.pub</code>）</li>
+<li>勾选 “Allow write access”</li>
+</ol>
+<h4 id="添加私钥到源码仓库Secrets"><a href="#添加私钥到源码仓库Secrets" class="headerlink" title="添加私钥到源码仓库Secrets"></a>添加私钥到源码仓库Secrets</h4><ol>
+<li>进入源码仓库 <code>your-username/your-username.github.io.source</code></li>
+<li>点击 Settings → Secrets and variables → Actions</li>
+<li>添加新的Secret：<ul>
+<li>Name: <code>DEPLOY_KEY</code></li>
+<li>Value: 私钥内容（<code>~/.ssh/id_rsa</code>）</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-Hexo配置验证"><a href="#4-Hexo配置验证" class="headerlink" title="4. Hexo配置验证"></a>4. Hexo配置验证</h3><p>确保<code>_config.yml</code>中的部署配置正确：</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:your-username/your-username.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="部署验证"><a href="#部署验证" class="headerlink" title="部署验证"></a>部署验证</h2><h3 id="1-测试部署流程"><a href="#1-测试部署流程" class="headerlink" title="1. 测试部署流程"></a>1. 测试部署流程</h3><p>完成配置后，我们可以通过以下步骤验证部署是否成功：</p>
+<ol>
+<li><strong>准备测试内容</strong>：对博客内容做一个微小的修改</li>
+<li><strong>推送测试提交</strong>：<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"测试GitHub Action部署"</span></span><br><span class="line">git push origin main</span><br></pre></td></tr></tbody></table></figure></li>
+<li><strong>查看Action运行状态</strong>：<ul>
+<li>进入私有仓库的Actions页面</li>
+<li>查看刚刚触发的workflow运行记录</li>
+<li>检查每一步的运行状态</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-验证部署结果"><a href="#2-验证部署结果" class="headerlink" title="2. 验证部署结果"></a>2. 验证部署结果</h3><ol>
+<li><strong>等待Action完成</strong>：通常需要1-2分钟</li>
+<li><strong>检查静态网页仓库</strong>：查看是否有新的提交</li>
+<li><strong>访问网站</strong>：打开GitHub Pages地址，验证修改是否生效</li>
+</ol>
+<h2 id="常见问题与解决方案"><a href="#常见问题与解决方案" class="headerlink" title="常见问题与解决方案"></a>常见问题与解决方案</h2><h3 id="1-跨仓库访问权限"><a href="#1-跨仓库访问权限" class="headerlink" title="1. 跨仓库访问权限"></a>1. 跨仓库访问权限</h3><p><strong>问题</strong>：私有仓库的Action是否能访问到公开的静态网页仓库？</p>
+<p><strong>解答</strong>：是的，我们使用SSH密钥方式，只要在静态网页仓库中添加了对应的公钥，并在源码仓库中配置了私钥Secret，GitHub Action就能成功访问并部署到外部仓库。</p>
+<h3 id="2-部署失败排查"><a href="#2-部署失败排查" class="headerlink" title="2. 部署失败排查"></a>2. 部署失败排查</h3><p>如果部署失败，可以从以下几个方面排查：</p>
+<ol>
+<li><strong>查看详细日志</strong>：进入Action运行记录，查看每一步的输出</li>
+<li><strong>检查依赖安装</strong>：<code>npm install</code>是否成功</li>
+<li><strong>检查构建过程</strong>：<code>hexo generate</code>是否生成了静态文件</li>
+<li><strong>检查部署配置</strong>：外部仓库地址和分支是否正确</li>
+<li><strong>检查SSH密钥配置</strong>：<ul>
+<li>公钥是否已添加到静态网页仓库</li>
+<li>私钥是否已正确添加到源码仓库的Secrets</li>
+<li>Secret名称是否为<code>DEPLOY_KEY</code></li>
+<li>公钥是否勾选了”Allow write access”</li>
+</ul>
+</li>
+</ol>
+<h2 id="优势总结"><a href="#优势总结" class="headerlink" title="优势总结"></a>优势总结</h2><p>相比传统的本地部署方式，GitHub Action自动部署具有以下优势：</p>
+<ol>
+<li><strong>自动化</strong>：无需手动执行部署命令，写完即发布</li>
+<li><strong>一致性</strong>：每次部署环境相同，减少部署差异</li>
+<li><strong>可追溯</strong>：每一次部署都有完整的日志记录</li>
+<li><strong>安全</strong>：无需在本地保存部署密钥</li>
+<li><strong>高效</strong>：节省手动部署的时间和精力</li>
+</ol>
+<h2 id="使用建议"><a href="#使用建议" class="headerlink" title="使用建议"></a>使用建议</h2><ol>
+<li><strong>合理设置触发条件</strong>：只在修改关键文件时触发部署</li>
+<li><strong>定期检查部署日志</strong>：确保部署流程正常运行</li>
+<li><strong>备份配置文件</strong>：将GitHub Action配置纳入版本控制</li>
+<li><strong>测试部署流程</strong>：新配置后进行测试，确保正常工作</li>
+<li><strong>关注GitHub Pages状态</strong>：定期访问网站，确保正常运行</li>
+</ol>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过GitHub Action实现Hexo博客的自动部署，是一次现代化开发流程的实践。配置完成后，我只需要专注于创作内容，剩下的部署工作全部交给自动化流程处理。这种”写完即发布”的体验，让博客创作变得更加高效和愉悦。</p>
+<p>如果你也在使用Hexo博客，不妨尝试配置GitHub Action自动部署，体验一下自动化带来的便利！</p>]]>
+    </content>
+    <id>https://sido-meet.online/2026/01/25/%E4%BB%8E%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%88%B0%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%EF%BC%9AHexo%E5%8D%9A%E5%AE%A2GitHub-Action%E9%85%8D%E7%BD%AE%E5%AE%9E%E8%B7%B5/</id>
+    <link href="https://sido-meet.online/2026/01/25/%E4%BB%8E%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%88%B0%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%EF%BC%9AHexo%E5%8D%9A%E5%AE%A2GitHub-Action%E9%85%8D%E7%BD%AE%E5%AE%9E%E8%B7%B5/"/>
+    <published>2026-01-25T11:00:00.000Z</published>
+    <summary>为源码仓库与 Pages 发布仓库分离的 Hexo 站点配置 GitHub Actions，实现推送后自动构建部署。</summary>
+    <title>从本地部署到自动部署：Hexo博客GitHub Action配置实践</title>
+    <updated>2026-01-25T11:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="内化" scheme="https://sido-meet.online/categories/%E5%86%85%E5%8C%96/"/>
+    <category term="Vibe Coding" scheme="https://sido-meet.online/tags/Vibe-Coding/"/>
+    <category term="人机协作" scheme="https://sido-meet.online/tags/%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C/"/>
+    <category term="工程实践" scheme="https://sido-meet.online/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/"/>
+    <content>
+      <![CDATA[<p>昨天我完成了博客网页从本地到服务器的部署，包含利用vibe coding构建我没学过的后端，以及利用nginx配置反向代理，实现从域名访问到服务器的部署。踩了一些坑，记录一下：</p>
+<ul>
+<li>在vibe coding的构建过程中，没有发挥人的监控作用，导致构建失败的问题，比如说呢，遇到一个问题构建docker的问题，code agent一直认为是版本问题，不断地降低版本，重构。然后版本不匹配，然后有换回去。其实只需要人监控着，人充当一个场外的观察者，打破这种循环。</li>
+<li>还有就是没有发挥主观的学习作用，虽然我对该项目没有任何经验，但是过度依赖code agent。其实，更应该做的是通过code agent提高自己的认知，进而更好的进行vibe coding。这种自上而下，抽丝剥茧的学习方式，是vibe coding过程中不可忽视的一环。否则，项目构建后，人对项目熟悉底，这就不会作为是你的项目，虽然看起来想过好，但是一问三不知。</li>
+</ul>]]>
+    </content>
+    <id>https://sido-meet.online/2026/01/02/%E4%BA%BA%E7%9A%84%E5%9C%A8vibe-coding%E4%B8%8D%E5%8F%AF%E5%8F%96%E4%BB%A3%E7%9A%84%E5%9C%B0%E4%BD%8D/</id>
+    <link href="https://sido-meet.online/2026/01/02/%E4%BA%BA%E7%9A%84%E5%9C%A8vibe-coding%E4%B8%8D%E5%8F%AF%E5%8F%96%E4%BB%A3%E7%9A%84%E5%9C%B0%E4%BD%8D/"/>
+    <published>2026-01-02T06:42:41.000Z</published>
+    <summary>从部署踩坑出发，讨论人在 Vibe Coding 中承担监督、破除循环、主动学习和系统理解的不可替代作用。</summary>
+    <title>人的在vibe coding不可取代的地位</title>
+    <updated>2026-01-02T06:42:41.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="博客开发" scheme="https://sido-meet.online/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/"/>
+    <category term="Hexo" scheme="https://sido-meet.online/tags/Hexo/"/>
+    <category term="博客技巧" scheme="https://sido-meet.online/tags/%E5%8D%9A%E5%AE%A2%E6%8A%80%E5%B7%A7/"/>
+    <category term="命令行" scheme="https://sido-meet.online/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/"/>
+    <content>
+      <![CDATA[<p>在使用Hexo创建博客文章时，<code>--tags</code>和<code>--categories</code>是两个常用的命令行参数，用于为文章添加分类和标签。虽然它们看起来功能相似，但实际上有很大的区别和不同的使用场景。本文将详细介绍这两个参数的区别、使用方法和最佳实践。</p>
+<h2 id="一、基础概念区别"><a href="#一、基础概念区别" class="headerlink" title="一、基础概念区别"></a>一、基础概念区别</h2><h3 id="1-Categories（分类）"><a href="#1-Categories（分类）" class="headerlink" title="1. Categories（分类）"></a>1. Categories（分类）</h3><p>分类是一种<strong>层级化</strong>的内容组织方式，用于将文章划分为不同的主题领域。分类具有<strong>父子关系</strong>，可以创建多层级的分类结构。</p>
+<ul>
+<li>特点：层级关系、树状结构、每个文章至少属于一个分类</li>
+<li>作用：宏观组织内容，帮助读者了解网站的主要内容结构</li>
+</ul>
+<h3 id="2-Tags（标签）"><a href="#2-Tags（标签）" class="headerlink" title="2. Tags（标签）"></a>2. Tags（标签）</h3><p>标签是一种<strong>扁平化</strong>的内容组织方式，用于为文章添加特定的关键词或主题标记。标签之间没有层级关系，是相互独立的。</p>
+<ul>
+<li>特点：扁平化、无层级、可以有多个标签</li>
+<li>作用：微观标记内容，帮助读者找到特定主题的相关文章</li>
+</ul>
+<h2 id="二、命令行使用区别"><a href="#二、命令行使用区别" class="headerlink" title="二、命令行使用区别"></a>二、命令行使用区别</h2><h3 id="1-–categories参数"><a href="#1-–categories参数" class="headerlink" title="1. –categories参数"></a>1. –categories参数</h3><p>用于为文章添加分类，可以指定单个分类或多层级分类。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单个分类</span></span><br><span class="line">hexo new post <span class="string">"Hexo入门教程"</span> --categories=<span class="string">"Hexo"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多层级分类（父分类/子分类）</span></span><br><span class="line">hexo new post <span class="string">"Hexo主题开发"</span> --categories=<span class="string">"Hexo/主题开发"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个分类（不推荐，通常每个文章属于一个主要分类）</span></span><br><span class="line">hexo new post <span class="string">"跨平台开发"</span> --categories=<span class="string">"前端开发,移动开发"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-–tags参数"><a href="#2-–tags参数" class="headerlink" title="2. –tags参数"></a>2. –tags参数</h3><p>用于为文章添加标签，可以添加多个标签，用逗号分隔。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单个标签</span></span><br><span class="line">hexo new post <span class="string">"JavaScript基础"</span> --tags=<span class="string">"JavaScript"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个标签</span></span><br><span class="line">hexo new post <span class="string">"React组件开发"</span> --tags=<span class="string">"React,组件开发,前端框架"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 包含空格的标签（需要引号包裹）</span></span><br><span class="line">hexo new post <span class="string">"生活随笔"</span> --tags=<span class="string">"生活,思考,个人成长"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="三、Front-matter中的表示区别"><a href="#三、Front-matter中的表示区别" class="headerlink" title="三、Front-matter中的表示区别"></a>三、Front-matter中的表示区别</h2><p>在生成的Markdown文件中，categories和tags在front-matter中的表示方式也不同：</p>
+<h3 id="1-Categories的表示"><a href="#1-Categories的表示" class="headerlink" title="1. Categories的表示"></a>1. Categories的表示</h3><figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Hexo主题开发</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2025-12-21</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">主题开发</span>  <span class="comment"># 多层级分类会显示为数组</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-Tags的表示"><a href="#2-Tags的表示" class="headerlink" title="2. Tags的表示"></a>2. Tags的表示</h3><figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">React组件开发</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2025-12-21</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">React</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">组件开发</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">前端框架</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">前端开发</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="四、网站显示区别"><a href="#四、网站显示区别" class="headerlink" title="四、网站显示区别"></a>四、网站显示区别</h2><h3 id="1-Categories在网站中的显示"><a href="#1-Categories在网站中的显示" class="headerlink" title="1. Categories在网站中的显示"></a>1. Categories在网站中的显示</h3><ul>
+<li>通常显示在文章页面的顶部或侧边栏</li>
+<li>可以展示完整的分类层级结构</li>
+<li>点击分类可以查看该分类下的所有文章</li>
+<li>适合用于网站的主导航或内容架构</li>
+</ul>
+<h3 id="2-Tags在网站中的显示"><a href="#2-Tags在网站中的显示" class="headerlink" title="2. Tags在网站中的显示"></a>2. Tags在网站中的显示</h3><ul>
+<li>通常显示在文章底部或侧边栏的标签云</li>
+<li>以扁平化方式展示，没有层级关系</li>
+<li>点击标签可以查看所有带有该标签的文章</li>
+<li>适合用于内容的交叉索引和发现</li>
+</ul>
+<h2 id="五、最佳实践"><a href="#五、最佳实践" class="headerlink" title="五、最佳实践"></a>五、最佳实践</h2><h3 id="1-Categories使用建议"><a href="#1-Categories使用建议" class="headerlink" title="1. Categories使用建议"></a>1. Categories使用建议</h3><ul>
+<li><strong>保持层级简洁</strong>：建议不超过3级分类</li>
+<li><strong>明确主题范围</strong>：每个分类应该有明确的主题范围</li>
+<li><strong>单一主要分类</strong>：每个文章最好只有一个主要分类</li>
+<li><strong>避免过度细分</strong>：不要创建过多的子分类</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 好的分类使用</span></span><br><span class="line">hexo new post <span class="string">"Vue路由管理"</span> --categories=<span class="string">"前端开发/Vue/路由"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 避免的分类使用（层级过深）</span></span><br><span class="line">hexo new post <span class="string">"Vue路由管理"</span> --categories=<span class="string">"前端开发/框架/Vue/核心功能/路由/管理"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-Tags使用建议"><a href="#2-Tags使用建议" class="headerlink" title="2. Tags使用建议"></a>2. Tags使用建议</h3><ul>
+<li><strong>使用具体关键词</strong>：标签应该是具体的关键词，避免过于宽泛</li>
+<li><strong>控制标签数量</strong>：每个文章建议使用3-5个标签</li>
+<li><strong>保持标签一致性</strong>：使用统一的标签命名规范</li>
+<li><strong>避免重复标签</strong>：不要创建含义相同的不同标签</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 好的标签使用</span></span><br><span class="line">hexo new post <span class="string">"JavaScript性能优化"</span> --tags=<span class="string">"JavaScript,性能优化,前端开发"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 避免的标签使用（标签过多且宽泛）</span></span><br><span class="line">hexo new post <span class="string">"JavaScript性能优化"</span> --tags=<span class="string">"编程,技术,前端,JavaScript,JS,性能,优化,开发,代码,网站"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-两者结合使用"><a href="#3-两者结合使用" class="headerlink" title="3. 两者结合使用"></a>3. 两者结合使用</h3><p>分类和标签应该结合使用，形成互补的内容组织体系：</p>
+<ul>
+<li>使用<strong>分类</strong>构建网站的宏观内容结构</li>
+<li>使用<strong>标签</strong>标记文章的具体主题和关键词</li>
+<li>通过分类快速定位内容领域</li>
+<li>通过标签发现相关主题的文章</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 结合使用示例</span></span><br><span class="line">hexo new post <span class="string">"Hexo命令行参数详解"</span> --categories=<span class="string">"博客开发/Hexo"</span> --tags=<span class="string">"Hexo,命令行,博客技巧"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="六、常见问题解答"><a href="#六、常见问题解答" class="headerlink" title="六、常见问题解答"></a>六、常见问题解答</h2><h3 id="Q-一个文章可以有多个分类吗？"><a href="#Q-一个文章可以有多个分类吗？" class="headerlink" title="Q: 一个文章可以有多个分类吗？"></a>Q: 一个文章可以有多个分类吗？</h3><p>A: 虽然Hexo支持为文章添加多个分类，但通常建议每个文章只有一个主要分类，这样可以保持内容结构的清晰性。</p>
+<h3 id="Q-标签可以有层级关系吗？"><a href="#Q-标签可以有层级关系吗？" class="headerlink" title="Q: 标签可以有层级关系吗？"></a>Q: 标签可以有层级关系吗？</h3><p>A: 不可以，标签是扁平化的内容组织方式，没有层级关系。如果需要层级结构，应该使用分类。</p>
+<h3 id="Q-如何修改文章的分类和标签？"><a href="#Q-如何修改文章的分类和标签？" class="headerlink" title="Q: 如何修改文章的分类和标签？"></a>Q: 如何修改文章的分类和标签？</h3><p>A: 可以直接编辑文章的front-matter部分，修改categories和tags字段，然后重新生成网站。</p>
+<h3 id="Q-如何查看网站的所有分类和标签？"><a href="#Q-如何查看网站的所有分类和标签？" class="headerlink" title="Q: 如何查看网站的所有分类和标签？"></a>Q: 如何查看网站的所有分类和标签？</h3><p>A: 大多数Hexo主题都会在侧边栏或专门的页面展示网站的所有分类和标签，你也可以通过修改主题模板来自定义显示方式。</p>
+<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><p><code>--tags</code>和<code>--categories</code>是Hexo中两个重要的命令行参数，它们在内容组织中扮演着不同的角色：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Categories（分类）</th>
+<th>Tags（标签）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>结构</td>
+<td>层级化（树状）</td>
+<td>扁平化（无层级）</td>
+</tr>
+<tr>
+<td>关系</td>
+<td>父子关系</td>
+<td>相互独立</td>
+</tr>
+<tr>
+<td>数量</td>
+<td>建议1-2个</td>
+<td>建议3-5个</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>宏观组织内容</td>
+<td>微观标记主题</td>
+</tr>
+<tr>
+<td>使用</td>
+<td>定义内容领域</td>
+<td>标记关键词</td>
+</tr>
+</tbody></table>
+<p>正确理解和使用这两个参数，可以帮助你更好地组织博客内容，提高读者的阅读体验和内容发现效率。希望本文能对你有所帮助！</p>]]>
+    </content>
+    <id>https://sido-meet.online/2025/12/21/hexo-tags-vs-categories-difference/</id>
+    <link href="https://sido-meet.online/2025/12/21/hexo-tags-vs-categories-difference/"/>
+    <published>2025-12-20T16:00:00.000Z</published>
+    <summary>解释 Hexo 分类的层级结构与标签的扁平结构，并给出两者在内容组织中的使用建议。</summary>
+    <title>Hexo中--tags和--categories的区别详解</title>
+    <updated>2025-12-20T16:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="博客开发" scheme="https://sido-meet.online/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/"/>
+    <category term="Hexo" scheme="https://sido-meet.online/tags/Hexo/"/>
+    <category term="博客技巧" scheme="https://sido-meet.online/tags/%E5%8D%9A%E5%AE%A2%E6%8A%80%E5%B7%A7/"/>
+    <category term="命令行" scheme="https://sido-meet.online/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/"/>
+    <content>
+      <![CDATA[<p>在使用Hexo创建博客文章时，我们经常会使用<code>hexo new post "文章标题"</code>命令。除了大家熟悉的<code>--tags</code>和<code>--categories</code>参数外，Hexo还提供了许多其他实用的命令行参数，可以帮助我们更高效地管理和创建博客内容。本文将详细介绍这些参数的使用方法。</p>
+<h2 id="一、基础信息参数"><a href="#一、基础信息参数" class="headerlink" title="一、基础信息参数"></a>一、基础信息参数</h2><h3 id="1-–title"><a href="#1-–title" class="headerlink" title="1. –title"></a>1. –title</h3><p>指定文章标题，与命令中的标题参数作用相同。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post --title=<span class="string">"Hexo命令行参数详解"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-–date"><a href="#2-–date" class="headerlink" title="2. –date"></a>2. –date</h3><p>指定文章的创建日期，格式为YYYY-MM-DD或YYYY-MM-DD HH:MM:SS。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">"回顾2025"</span> --<span class="built_in">date</span>=<span class="string">"2025-12-31"</span></span><br><span class="line">hexo new post <span class="string">"新年计划"</span> --<span class="built_in">date</span>=<span class="string">"2026-01-01 00:00:00"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-–updated"><a href="#3-–updated" class="headerlink" title="3. –updated"></a>3. –updated</h3><p>指定文章的更新日期，格式与–date相同。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">"技术分享"</span> --updated=<span class="string">"2025-12-20 15:30:00"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="4-–author"><a href="#4-–author" class="headerlink" title="4. –author"></a>4. –author</h3><p>指定文章作者。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">"团队协作经验"</span> --author=<span class="string">"张三"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="二、内容组织参数"><a href="#二、内容组织参数" class="headerlink" title="二、内容组织参数"></a>二、内容组织参数</h2><h3 id="1-–permalink"><a href="#1-–permalink" class="headerlink" title="1. –permalink"></a>1. –permalink</h3><p>指定文章的永久链接，覆盖站点配置中的permalink设置。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">"自定义链接"</span> --permalink=<span class="string">"2025/12/custom-link"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-–layout"><a href="#2-–layout" class="headerlink" title="2. –layout"></a>2. –layout</h3><p>指定使用的布局模板，默认为post。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用page布局创建页面</span></span><br><span class="line">hexo new page <span class="string">"关于我们"</span> --layout=<span class="string">"page"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用自定义布局</span></span><br><span class="line">hexo new post <span class="string">"特别文章"</span> --layout=<span class="string">"special"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="三、内容摘要参数"><a href="#三、内容摘要参数" class="headerlink" title="三、内容摘要参数"></a>三、内容摘要参数</h2><h3 id="1-–excerpt"><a href="#1-–excerpt" class="headerlink" title="1. –excerpt"></a>1. –excerpt</h3><p>指定文章的摘要内容。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">"Hexo入门教程"</span> --excerpt=<span class="string">"这是一篇详细的Hexo博客搭建教程"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-–description"><a href="#2-–description" class="headerlink" title="2. –description"></a>2. –description</h3><p>指定文章的描述信息，通常用于SEO。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">"SEO优化技巧"</span> --description=<span class="string">"分享博客SEO优化的实用方法"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="四、高级参数"><a href="#四、高级参数" class="headerlink" title="四、高级参数"></a>四、高级参数</h2><h3 id="1-–disable-linenos"><a href="#1-–disable-linenos" class="headerlink" title="1. –disable-linenos"></a>1. –disable-linenos</h3><p>禁用代码行号显示（如果主题支持的话）。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">"代码示例"</span> --disable-linenos</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-–comments"><a href="#2-–comments" class="headerlink" title="2. –comments"></a>2. –comments</h3><p>控制是否启用评论功能。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用评论</span></span><br><span class="line">hexo new post <span class="string">"讨论话题"</span> --comments=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用评论</span></span><br><span class="line">hexo new post <span class="string">"个人笔记"</span> --comments=<span class="literal">false</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-–path"><a href="#3-–path" class="headerlink" title="3. –path"></a>3. –path</h3><p>指定文章文件的保存路径，相对于source/_posts目录。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将文章保存到指定目录</span></span><br><span class="line">hexo new post <span class="string">"分类文章"</span> --path=<span class="string">"tutorials/hexo-guide"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="五、参数组合使用"><a href="#五、参数组合使用" class="headerlink" title="五、参数组合使用"></a>五、参数组合使用</h2><p>Hexo支持同时使用多个参数，实现更灵活的配置：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 同时指定标题、标签、分类、作者和摘要</span></span><br><span class="line">hexo new post <span class="string">"Hexo高级技巧"</span> \</span><br><span class="line">  --tags=<span class="string">"Hexo,博客技巧,命令行"</span> \</span><br><span class="line">  --categories=<span class="string">"技术分享"</span> \</span><br><span class="line">  --author=<span class="string">"李四"</span> \</span><br><span class="line">  --excerpt=<span class="string">"分享Hexo博客开发的高级技巧"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建带自定义日期和永久链接的文章</span></span><br><span class="line">hexo new post <span class="string">"时间管理"</span> \</span><br><span class="line">  --<span class="built_in">date</span>=<span class="string">"2025-12-15"</span> \</span><br><span class="line">  --permalink=<span class="string">"2025/12/time-management"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="六、自定义参数"><a href="#六、自定义参数" class="headerlink" title="六、自定义参数"></a>六、自定义参数</h2><p>除了上述内置参数外，你还可以在<code>scaffolds/post.md</code>模板中定义自定义参数，然后通过命令行传递：</p>
+<h3 id="1-修改模板文件"><a href="#1-修改模板文件" class="headerlink" title="1. 修改模板文件"></a>1. 修改模板文件</h3><p>编辑<code>scaffolds/post.md</code>文件，添加自定义参数：</p>
+<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: {{ title }}</span><br><span class="line">date: {{ date }}</span><br><span class="line">tags: {{ tags }}</span><br><span class="line">categories: {{ categories }}</span><br><span class="line">author: {{ author }}</span><br><span class="line">excerpt: {{ excerpt }}</span><br><span class="line"><span class="section"># 添加自定义参数</span></span><br><span class="line">cover: {{ cover }}</span><br><span class="line"><span class="section">featured: {{ featured }}</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-使用自定义参数"><a href="#2-使用自定义参数" class="headerlink" title="2. 使用自定义参数"></a>2. 使用自定义参数</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">"带封面的文章"</span> --cover=<span class="string">"/images/cover.jpg"</span> --featured=<span class="literal">true</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="七、注意事项"><a href="#七、注意事项" class="headerlink" title="七、注意事项"></a>七、注意事项</h2><ol>
+<li><strong>参数大小写</strong>：Hexo命令行参数不区分大小写，<code>--tags</code>和<code>--TAGS</code>效果相同</li>
+<li><strong>空格处理</strong>：如果参数值包含空格，需要使用引号包裹，如<code>--tags="思考,生活,随笔"</code></li>
+<li><strong>参数顺序</strong>：参数顺序不影响效果，可以放在命令的任何位置</li>
+<li><strong>简写形式</strong>：部分参数支持简写形式，如<code>-t</code>可以替代<code>--tags</code></li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Hexo提供了丰富的命令行参数，可以帮助我们更高效地创建和管理博客内容。除了常用的<code>--tags</code>和<code>--categories</code>参数外，还有许多实用的参数可以使用：</p>
+<ul>
+<li><strong>基础信息</strong>：<code>--title</code>, <code>--date</code>, <code>--updated</code>, <code>--author</code></li>
+<li><strong>内容组织</strong>：<code>--permalink</code>, <code>--layout</code></li>
+<li><strong>内容摘要</strong>：<code>--excerpt</code>, <code>--description</code></li>
+<li><strong>高级功能</strong>：<code>--disable-linenos</code>, <code>--comments</code>, <code>--path</code></li>
+<li><strong>自定义参数</strong>：支持在模板中定义和使用</li>
+</ul>
+<p>合理使用这些参数，可以大大提高我们的博客创作效率。希望本文能帮助你更好地了解和使用Hexo的命令行参数！</p>]]>
+    </content>
+    <id>https://sido-meet.online/2025/12/20/hexo-command-line-parameters-guide/</id>
+    <link href="https://sido-meet.online/2025/12/20/hexo-command-line-parameters-guide/"/>
+    <published>2025-12-19T16:00:00.000Z</published>
+    <summary>整理 Hexo 新建内容时可用的标题、日期、作者、永久链接、布局等命令行参数与使用示例。</summary>
+    <title>Hexo命令行参数详解：除了--tags和--categories还可以使用哪些？</title>
+    <updated>2025-12-19T16:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="博客开发" scheme="https://sido-meet.online/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/"/>
+    <category term="前端问题排查" scheme="https://sido-meet.online/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/"/>
+    <category term="Hexo" scheme="https://sido-meet.online/tags/Hexo/"/>
+    <category term="博客技巧" scheme="https://sido-meet.online/tags/%E5%8D%9A%E5%AE%A2%E6%8A%80%E5%B7%A7/"/>
+    <category term="JavaScript" scheme="https://sido-meet.online/tags/JavaScript/"/>
+    <category term="前端开发" scheme="https://sido-meet.online/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    <content>
+      <![CDATA[<p>在开发个人网站或博客时，导航栏是用户访问不同页面的重要入口。最近我在使用Hexo搭建个人博客时，遇到了一个问题：点击导航栏的链接（如Home、Blogs、Projects等）时，页面没有任何跳转反应。这个问题很影响用户体验，于是我进行了深入排查并成功解决。今天就来分享一下这个问题的解决过程。</p>
+<h2 id="一、问题描述"><a href="#一、问题描述" class="headerlink" title="一、问题描述"></a>一、问题描述</h2><p>网站导航栏包含多个链接：</p>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/publications"</span>&gt;</span>Publications<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/projects"</span>&gt;</span>Projects<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/blogs"</span>&gt;</span>Blogs<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>点击这些链接时，页面没有任何跳转，浏览器地址栏也没有变化。</p>
+<h2 id="二、问题代码分析"><a href="#二、问题代码分析" class="headerlink" title="二、问题代码分析"></a>二、问题代码分析</h2><p>经过排查，我发现问题出在最近添加的<code>scroll.js</code>文件中，该文件用于实现导航栏的滚动收起效果：</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Scroll listener for header behavior</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">'scroll'</span>, <span class="keyword">function</span>(<span class="params"></span>) {</span><br><span class="line">  <span class="comment">// ... 导航栏滚动逻辑</span></span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="comment">// Smooth scroll for navigation links</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">'DOMContentLoaded'</span>, <span class="keyword">function</span>(<span class="params"></span>) {</span><br><span class="line">  <span class="keyword">const</span> navLinks = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">'.nav a'</span>);</span><br><span class="line">  </span><br><span class="line">  navLinks.<span class="title function_">forEach</span>(<span class="function"><span class="params">link</span> =&gt;</span> {</span><br><span class="line">    link.<span class="title function_">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>(<span class="params">e</span>) {</span><br><span class="line">      <span class="keyword">const</span> href = <span class="variable language_">this</span>.<span class="title function_">getAttribute</span>(<span class="string">'href'</span>);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// Only handle internal links</span></span><br><span class="line">      <span class="keyword">if</span> (href.<span class="title function_">startsWith</span>(<span class="string">'#'</span>) || href.<span class="title function_">startsWith</span>(<span class="string">'/'</span>)) {</span><br><span class="line">        e.<span class="title function_">preventDefault</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Scroll to target</span></span><br><span class="line">        <span class="keyword">const</span> target = href.<span class="title function_">startsWith</span>(<span class="string">'#'</span>) ? <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(href) : <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">'top'</span>);</span><br><span class="line">        <span class="keyword">if</span> (target) {</span><br><span class="line">          target.<span class="title function_">scrollIntoView</span>({ <span class="attr">behavior</span>: <span class="string">'smooth'</span> });</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    });</span><br><span class="line">  });</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="三、问题原因"><a href="#三、问题原因" class="headerlink" title="三、问题原因"></a>三、问题原因</h2><p>问题出在这段代码的第26行：</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (href.<span class="title function_">startsWith</span>(<span class="string">'#'</span>) || href.<span class="title function_">startsWith</span>(<span class="string">'/'</span>)) {</span><br><span class="line">  e.<span class="title function_">preventDefault</span>();</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这段代码的意图是：</p>
+<ol>
+<li>对所有内部链接（以<code>#</code>或<code>/</code>开头的链接）应用平滑滚动效果</li>
+<li>使用<code>e.preventDefault()</code>阻止默认的链接跳转行为</li>
+<li>然后根据链接类型执行相应的滚动操作</li>
+</ol>
+<p>然而，这里存在一个严重的逻辑错误：</p>
+<ul>
+<li>对于以<code>#</code>开头的锚点链接（如<code>#section1</code>），我们确实想要阻止默认跳转并应用平滑滚动</li>
+<li>但对于以<code>/</code>开头的页面导航链接（如<code>/blogs</code>），我们不应该阻止默认跳转行为！</li>
+</ul>
+<p>当代码执行到<code>e.preventDefault()</code>时，它完全阻止了浏览器的默认链接跳转行为，导致所有以<code>/</code>开头的链接都无法正常跳转到目标页面。</p>
+<h2 id="四、解决方案"><a href="#四、解决方案" class="headerlink" title="四、解决方案"></a>四、解决方案</h2><p>修复这个问题很简单，我们只需要修改条件判断逻辑，仅对以<code>#</code>开头的锚点链接应用平滑滚动和<code>e.preventDefault()</code>，而让以<code>/</code>开头的导航链接保持默认的跳转行为：</p>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Smooth scroll for navigation links</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">'DOMContentLoaded'</span>, <span class="keyword">function</span>(<span class="params"></span>) {</span><br><span class="line">  <span class="keyword">const</span> navLinks = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">'.nav a'</span>);</span><br><span class="line">  </span><br><span class="line">  navLinks.<span class="title function_">forEach</span>(<span class="function"><span class="params">link</span> =&gt;</span> {</span><br><span class="line">    link.<span class="title function_">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>(<span class="params">e</span>) {</span><br><span class="line">      <span class="keyword">const</span> href = <span class="variable language_">this</span>.<span class="title function_">getAttribute</span>(<span class="string">'href'</span>);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// Only apply smooth scroll to internal anchor links</span></span><br><span class="line">      <span class="keyword">if</span> (href.<span class="title function_">startsWith</span>(<span class="string">'#'</span>)) {</span><br><span class="line">        e.<span class="title function_">preventDefault</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Scroll to target</span></span><br><span class="line">        <span class="keyword">const</span> target = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(href);</span><br><span class="line">        <span class="keyword">if</span> (target) {</span><br><span class="line">          target.<span class="title function_">scrollIntoView</span>({ <span class="attr">behavior</span>: <span class="string">'smooth'</span> });</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">      <span class="comment">// For links starting with '/', let the browser handle the navigation normally</span></span><br><span class="line">    });</span><br><span class="line">  });</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="五、如何避免类似问题"><a href="#五、如何避免类似问题" class="headerlink" title="五、如何避免类似问题"></a>五、如何避免类似问题</h2><ol>
+<li><p><strong>明确功能边界</strong>：在实现功能时，要明确区分不同类型的元素和交互行为。锚点链接和页面导航链接是两种不同的元素，应该有不同的处理方式。</p>
+</li>
+<li><p><strong>使用精确的条件判断</strong>：避免使用过于宽泛的条件判断。在这个例子中，<code>href.startsWith('#') || href.startsWith('/')</code>就是一个过于宽泛的条件，导致了非预期的行为。</p>
+</li>
+<li><p><strong>测试各种场景</strong>：在实现功能后，要测试各种可能的使用场景。不仅要测试功能正常的情况，还要测试边界情况和异常情况。</p>
+</li>
+<li><p><strong>理解事件处理机制</strong>：要深入理解JavaScript的事件处理机制，特别是<code>event.preventDefault()</code>的作用和影响范围。</p>
+</li>
+<li><p><strong>模块化设计</strong>：将不同的功能模块分开实现，避免一个功能模块影响另一个功能模块。在这个例子中，滚动效果和链接跳转是两个不同的功能，应该尽量减少它们之间的相互影响。</p>
+</li>
+</ol>
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>导航栏链接无法跳转的问题是一个典型的JavaScript事件处理错误。通过仔细分析代码，我们找到了问题所在：错误地对所有以<code>/</code>开头的链接应用了<code>e.preventDefault()</code>。修复方法是调整条件判断逻辑，仅对以<code>#</code>开头的锚点链接应用平滑滚动效果。</p>
+<p>这个问题提醒我们，在编写JavaScript代码时，要非常小心地处理事件默认行为，特别是当一个功能模块影响多个元素类型时。通过明确功能边界、使用精确的条件判断和充分测试，可以避免类似问题的发生。</p>
+<p>希望这篇文章能帮助你解决类似的导航栏跳转问题，也能让你在编写JavaScript代码时更加注意这些细节。</p>
+<hr>
+<p><strong>本文由AI辅助生成，作者：sido</strong></p>]]>
+    </content>
+    <id>https://sido-meet.online/2025/12/16/why-navigation-links-not-working/</id>
+    <link href="https://sido-meet.online/2025/12/16/why-navigation-links-not-working/"/>
+    <published>2025-12-15T16:00:00.000Z</published>
+    <summary>排查 Hexo 导航链接无法跳转的问题，定位错误的全局 click 拦截逻辑并给出安全修复方式。</summary>
+    <title>为什么导航栏跳转没有反应</title>
+    <updated>2025-12-15T16:00:00.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="博客开发" scheme="https://sido-meet.online/categories/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91/"/>
+    <category term="Hexo" scheme="https://sido-meet.online/tags/Hexo/"/>
+    <category term="博客技巧" scheme="https://sido-meet.online/tags/%E5%8D%9A%E5%AE%A2%E6%8A%80%E5%B7%A7/"/>
+    <category term="命令指南" scheme="https://sido-meet.online/tags/%E5%91%BD%E4%BB%A4%E6%8C%87%E5%8D%97/"/>
+    <content>
+      <![CDATA[<p>在使用 Hexo 构建博客的过程中，经常会遇到 <code>hexo clean</code> 和 <code>hexo generate</code> 这两个命令。很多初学者可能会有疑问：<strong>每次执行 <code>hexo generate</code> 前都必须运行 <code>hexo clean</code> 吗？</strong> 本文将详细解答这个问题，并提供最佳实践指南。</p>
+<h2 id="一、命令作用区别"><a href="#一、命令作用区别" class="headerlink" title="一、命令作用区别"></a>一、命令作用区别</h2><p>首先，让我们明确这两个命令的基本作用：</p>
+<h3 id="1-hexo-clean"><a href="#1-hexo-clean" class="headerlink" title="1. hexo clean"></a>1. <code>hexo clean</code></h3><p>清除 Hexo 的缓存文件 (<code>db.json</code>) 和已生成的静态文件 (<code>public</code> 目录)：</p>
+<ul>
+<li><strong>缓存文件 <code>db.json</code></strong>：包含站点内容索引，用于提高生成效率</li>
+<li><strong>静态文件目录 <code>public</code></strong>：最终生成的网站文件，用于部署到服务器</li>
+</ul>
+<h3 id="2-hexo-generate"><a href="#2-hexo-generate" class="headerlink" title="2. hexo generate"></a>2. <code>hexo generate</code></h3><p>根据当前配置和内容，生成新的静态文件到 <code>public</code> 目录：</p>
+<ul>
+<li>默认基于缓存进行<strong>增量更新</strong>，只重新生成有变化的内容</li>
+<li>使用 <code>--force</code> 参数可强制重新生成所有文件</li>
+</ul>
+<h2 id="二、什么时候需要先执行-hexo-clean？"><a href="#二、什么时候需要先执行-hexo-clean？" class="headerlink" title="二、什么时候需要先执行 hexo clean？"></a>二、什么时候需要先执行 <code>hexo clean</code>？</h2><p>以下情况<strong>建议先运行 <code>hexo clean</code></strong>，再执行 <code>hexo generate</code>：</p>
+<p>✅ <strong>修改了站点核心配置</strong>（<code>_config.yml</code>）<br>✅ <strong>切换或修改了主题</strong>（包括主题配置 <code>themes/主题名/_config.yml</code>）<br>✅ <strong>修改了模板文件</strong>（<code>.ejs</code>、<code>.pug</code> 等布局文件）<br>✅ <strong>安装或卸载了插件</strong>，特别是影响生成过程的插件<br>✅ <strong>网站显示异常</strong>（如旧内容未更新、样式错乱等）<br>✅ <strong>需要完全重新生成网站</strong>（如发布前的最终检查）</p>
+<h2 id="三、什么时候可以直接执行-hexo-generate？"><a href="#三、什么时候可以直接执行-hexo-generate？" class="headerlink" title="三、什么时候可以直接执行 hexo generate？"></a>三、什么时候可以直接执行 <code>hexo generate</code>？</h2><p>以下情况<strong>可以跳过 <code>hexo clean</code></strong>，直接执行 <code>hexo generate</code>：</p>
+<p>✅ <strong>仅修改了文章内容</strong>（<code>.md</code> 文件）<br>✅ <strong>仅添加了新文章或页面</strong><br>✅ <strong>仅修改了文章的 front-matter</strong>（标题、标签、日期等）<br>✅ <strong>开发过程中的快速预览</strong>（使用 <code>hexo server</code> 时会自动重新生成）</p>
+<h2 id="四、最佳实践总结"><a href="#四、最佳实践总结" class="headerlink" title="四、最佳实践总结"></a>四、最佳实践总结</h2><h3 id="1-日常写作流程"><a href="#1-日常写作流程" class="headerlink" title="1. 日常写作流程"></a>1. 日常写作流程</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建新文章</span></span><br><span class="line">hexo new post <span class="string">"文章标题"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 编辑文章内容（Markdown）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 本地预览</span></span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 直接生成（无需 clean）</span></span><br><span class="line">hexo generate</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="2-配置或主题变更流程"><a href="#2-配置或主题变更流程" class="headerlink" title="2. 配置或主题变更流程"></a>2. 配置或主题变更流程</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 修改配置文件或主题</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 清除缓存和旧文件</span></span><br><span class="line">hexo clean</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 重新生成站点</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 本地预览确认</span></span><br><span class="line">hexo server</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="3-发布前流程"><a href="#3-发布前流程" class="headerlink" title="3. 发布前流程"></a>3. 发布前流程</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清除缓存，确保生成完整文件</span></span><br><span class="line">hexo clean</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成站点</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署到服务器</span></span><br><span class="line">hexo deploy</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="五、命令组合技巧"><a href="#五、命令组合技巧" class="headerlink" title="五、命令组合技巧"></a>五、命令组合技巧</h2><p>Hexo 支持命令组合，可以简化操作：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清除并重新生成</span></span><br><span class="line">hexo clean &amp;&amp; hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除、生成并部署</span></span><br><span class="line">hexo clean &amp;&amp; hexo deploy</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="六、常见问题解答"><a href="#六、常见问题解答" class="headerlink" title="六、常见问题解答"></a>六、常见问题解答</h2><h3 id="Q-为什么我修改了配置，但生成的网站没有变化？"><a href="#Q-为什么我修改了配置，但生成的网站没有变化？" class="headerlink" title="Q: 为什么我修改了配置，但生成的网站没有变化？"></a>Q: 为什么我修改了配置，但生成的网站没有变化？</h3><p>A: 可能是缓存导致的，尝试先执行 <code>hexo clean</code> 再重新生成。</p>
+<h3 id="Q-hexo-clean-会删除我的文章吗？"><a href="#Q-hexo-clean-会删除我的文章吗？" class="headerlink" title="Q: hexo clean 会删除我的文章吗？"></a>Q: <code>hexo clean</code> 会删除我的文章吗？</h3><p>A: 不会，它只会删除缓存文件和生成的静态文件，不会影响 <code>source</code> 目录中的原始文章。</p>
+<h3 id="Q-增量更新和强制更新有什么区别？"><a href="#Q-增量更新和强制更新有什么区别？" class="headerlink" title="Q: 增量更新和强制更新有什么区别？"></a>Q: 增量更新和强制更新有什么区别？</h3><p>A: 增量更新只处理变化的内容，生成速度更快；强制更新会重新生成所有文件，确保内容完全一致。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>不是每次执行 <code>hexo generate</code> 都需要先运行 <code>hexo clean</code></strong>，这取决于你的具体操作场景。合理使用这两个命令可以提高工作效率：</p>
+<ul>
+<li><strong>日常写作</strong>：直接使用 <code>hexo generate</code> 或 <code>hexo server</code></li>
+<li><strong>配置变更</strong>：先 <code>hexo clean</code> 再 <code>hexo generate</code></li>
+<li><strong>发布前</strong>：执行 <code>hexo clean &amp;&amp; hexo generate</code> 确保完整性</li>
+</ul>
+<p>希望本文能帮助你更好地理解和使用 Hexo 的这两个核心命令！</p>]]>
+    </content>
+    <id>https://sido-meet.online/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/</id>
+    <link href="https://sido-meet.online/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/"/>
+    <published>2025-12-10T16:16:20.000Z</published>
+    <summary>解释 hexo clean 与 hexo generate 的职责差异，以及哪些情况下需要先清理缓存再构建。</summary>
+    <title>Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</title>
+    <updated>2025-12-10T16:16:20.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="生活思考" scheme="https://sido-meet.online/categories/%E7%94%9F%E6%B4%BB%E6%80%9D%E8%80%83/"/>
+    <category term="建站记录" scheme="https://sido-meet.online/tags/%E5%BB%BA%E7%AB%99%E8%AE%B0%E5%BD%95/"/>
+    <content>
+      <![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></tbody></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></tbody></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></tbody></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]>
+    </content>
+    <id>https://sido-meet.online/2025/11/27/hello-world/</id>
+    <link href="https://sido-meet.online/2025/11/27/hello-world/"/>
+    <published>2025-11-27T14:30:16.000Z</published>
+    <summary>SIDO MEET 的第一篇文章，记录这个个人网站的开始。</summary>
+    <title>Hello World</title>
+    <updated>2025-11-27T14:30:16.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>SIDO</name>
+    </author>
+    <category term="content:article"/>
+    <category term="技术教程" scheme="https://sido-meet.online/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    <category term="Hexo" scheme="https://sido-meet.online/tags/Hexo/"/>
+    <category term="GitHub" scheme="https://sido-meet.online/tags/GitHub/"/>
+    <category term="个人网站" scheme="https://sido-meet.online/tags/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/"/>
+    <content>
+      <![CDATA[<h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>Hexo 是一款基于 Node.js 的静态博客框架，能快速将 Markdown 文章渲染为静态 HTML 页面；GitHub 则可提供免费的页面托管服务。两者结合能零成本搭建高性能个人网站，本文将带你完成从环境搭建到网站上线的全流程。</p>
+<h2 id="二、前置准备"><a href="#二、前置准备" class="headerlink" title="二、前置准备"></a>二、前置准备</h2><ol>
+<li>安装 Node.js（建议 v16+）和 Git（版本无特殊要求）</li>
+<li>注册 GitHub 账号</li>
+<li>配置 GitHub SSH 密钥（避免每次部署输入账号密码）</li>
+</ol>
+<h2 id="三、步骤-1：安装并初始化-Hexo-项目"><a href="#三、步骤-1：安装并初始化-Hexo-项目" class="headerlink" title="三、步骤 1：安装并初始化 Hexo 项目"></a>三、步骤 1：安装并初始化 Hexo 项目</h2><ol>
+<li>全局安装 Hexo CLI：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></tbody></table></figure>
+<ol start="2">
+<li>初始化 Hexo 项目（替换为你的项目路径）：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init sido-meet.github.io</span><br><span class="line"><span class="built_in">cd</span> sido-meet.github.io</span><br><span class="line">npm install</span><br></pre></td></tr></tbody></table></figure>
+<ol start="3">
+<li>本地预览初始项目：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></tbody></table></figure>
+<p>访问 <code>http://localhost:4000</code> 即可查看默认页面。</p>
+<h2 id="四、步骤-2：配置-Hexo-基础参数"><a href="#四、步骤-2：配置-Hexo-基础参数" class="headerlink" title="四、步骤 2：配置 Hexo 基础参数"></a>四、步骤 2：配置 Hexo 基础参数</h2><p>修改项目根目录的  文件：</p>
+<ul>
+<li>设置网站标题、描述、作者等信息</li>
+<li>配置语言（如 <code>language: zh-CN</code>）</li>
+<li>你的项目已配置部署类型为 Git（对应文件第 104 行的 <code>type: git</code>），后续仅需补充仓库地址即可。</li>
+</ul>
+<h2 id="三、步骤-3：创建-GitHub-托管仓库"><a href="#三、步骤-3：创建-GitHub-托管仓库" class="headerlink" title="三、步骤 3：创建 GitHub 托管仓库"></a>三、步骤 3：创建 GitHub 托管仓库</h2><ol>
+<li>登录 GitHub，创建名为 <code>[你的GitHub用户名].github.io</code> 的公开仓库</li>
+<li>复制仓库的 SSH 地址（如 <code>git@github.com:yourname/yourname.github.io.git</code>）</li>
+</ol>
+<h2 id="四、步骤-4：配置-Hexo-自动部署到-GitHub"><a href="#四、步骤-4：配置-Hexo-自动部署到-GitHub" class="headerlink" title="四、步骤 4：配置 Hexo 自动部署到 GitHub"></a>四、步骤 4：配置 Hexo 自动部署到 GitHub</h2><p>在  中补充部署配置：</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:yourname/yourname.github.io.git</span> <span class="comment"># 替换为你的仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></tbody></table></figure>
+<p>安装部署插件：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="五、步骤-5：写文章并部署上线"><a href="#五、步骤-5：写文章并部署上线" class="headerlink" title="五、步骤 5：写文章并部署上线"></a>五、步骤 5：写文章并部署上线</h2><ol>
+<li>创建新文章（自动生成 Markdown 文件到 source/_posts 目录）：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">"我的第一篇文章"</span></span><br></pre></td></tr></tbody></table></figure>
+<ol start="2">
+<li>生成静态文件并部署：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></tbody></table></figure>
+<ol start="3">
+<li>访问 <code>https://[你的GitHub用户名].github.io</code> 即可查看上线后的网站。</li>
+</ol>
+<h2 id="六、常见问题排查"><a href="#六、常见问题排查" class="headerlink" title="六、常见问题排查"></a>六、常见问题排查</h2><ol>
+<li>部署失败：检查 SSH 密钥配置是否正确、仓库地址是否有误</li>
+<li>页面不更新：执行 <code>hexo clean</code> 清除缓存后重新生成部署</li>
+<li>样式异常：检查主题配置文件或静态资源路径</li>
+</ol>
+<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><p>通过 GitHub + Hexo 的组合，你可以快速拥有一个可自定义样式、支持 Markdown 写作的个人网站。后续可尝试更换主题、添加评论系统等扩展功能。</p>]]>
+    </content>
+    <id>https://sido-meet.online/2025/11/01/how-to-use-github-hexo-for-personal-website/</id>
+    <link href="https://sido-meet.online/2025/11/01/how-to-use-github-hexo-for-personal-website/"/>
+    <published>2025-11-01T02:00:00.000Z</published>
+    <summary>从环境安装、Hexo 初始化到 GitHub Pages 部署，完整演示个人静态网站的搭建流程。</summary>
+    <title>如何使用 GitHub + Hexo 快速搭建个人网站</title>
+    <updated>2025-11-01T02:00:00.000Z</updated>
+  </entry>
+</feed>

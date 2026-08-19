@@ -1,0 +1,932 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <script src="/js/bootstrap.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>词条 · SIDO MEET</title>
+  <meta name="description" content="SIDO 的个人知识与项目网站，持续记录 AI Agent、LLM 后训练、Text-to-SQL 与软件工程实践。">
+  <meta name="keywords" content="AI Agent, LLM, RLHF, Text-to-SQL, 软件工程, 技术博客">
+  <meta name="author" content="SIDO">
+  
+  <meta name="theme-color" content="#16261f">
+  <link rel="canonical" href="https://sido-meet.online/terms/">
+  <link rel="alternate" type="application/atom+xml" title="SIDO MEET · 人工写作" href="https://sido-meet.online/atom.xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/sido-meet">
+
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SIDO MEET">
+  <meta property="og:title" content="词条 · SIDO MEET">
+  <meta property="og:description" content="SIDO 的个人知识与项目网站，持续记录 AI Agent、LLM 后训练、Text-to-SQL 与软件工程实践。">
+  <meta property="og:url" content="https://sido-meet.online/terms/">
+  <meta property="og:image" content="https://sido-meet.online/images/og/default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="词条">
+  
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="词条 · SIDO MEET">
+  <meta name="twitter:description" content="SIDO 的个人知识与项目网站，持续记录 AI Agent、LLM 后训练、Text-to-SQL 与软件工程实践。">
+  <meta name="twitter:image" content="https://sido-meet.online/images/og/default.png">
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"词条 · SIDO MEET","description":"SIDO 的个人知识与项目网站，持续记录 AI Agent、LLM 后训练、Text-to-SQL 与软件工程实践。","url":"https://sido-meet.online/terms/","image":"https://sido-meet.online/images/og/default.png","author":{"@type":"Person","name":"SIDO","url":"https://sido-meet.online/about/"}}</script>
+  <link rel="stylesheet" href="/css/main.css">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/terms.css">
+  
+  <link rel="stylesheet" href="/css/refresh.css">
+  <script defer src="/js/theme.js"></script>
+  <script defer src="/js/privacy-analytics.js"></script>
+  <script defer src="/js/menu.js"></script>
+  <script defer src="/js/animation.js"></script>
+  
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="layout-terms" data-analytics-mode="local-only" data-analytics-storage-key="sido-private-views-v1">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <div class="site-wrapper">
+    
+<header class="header" id="main-header">
+  <div class="container header-content">
+    <a class="site-brand" href="/" aria-label="SIDO MEET 首页">
+      <span class="site-brand-mark" aria-hidden="true">S</span>
+      <span class="site-brand-text">SIDO<span>.MEET</span></span>
+    </a>
+
+    <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="打开导航菜单">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-navigation" id="site-navigation" aria-label="主导航">
+      <ul class="nav-list">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/blogs/">写作</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/notes/">笔记</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/ai/">AI 专栏</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/bookmarks/">收藏</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/projects/">项目</a>
+          </li>
+        
+        
+          <li class="nav-item nav-more active">
+            <details>
+              <summary class="nav-link">
+                更多
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </summary>
+              <div class="nav-more-menu">
+                
+                  <a href="/thoughts/">随想</a>
+                
+                  <a href="/terms/" aria-current="page">词条</a>
+                
+                  <a href="/schedule/">日程</a>
+                
+                  <a href="/links/">友链</a>
+                
+                  <a href="/popular/">热门</a>
+                
+                  <a href="/skill/">Skill</a>
+                
+                  <a href="/about/">关于</a>
+                
+              </div>
+            </details>
+          </li>
+        
+      </ul>
+      <div class="header-actions">
+        <a class="header-icon" href="/search/" aria-label="搜索全站内容">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="m20 20-4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </a>
+        <button class="header-icon theme-toggle" id="theme-toggle" type="button" aria-label="切换显示模式" title="切换显示模式">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </button>
+        
+        <a class="header-icon" href="https://github.com/sido-meet" target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 查看 SIDO">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M12 .7a11.6 11.6 0 0 0-3.7 22.6c.6.1.8-.2.8-.5v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 2 2.9 1.4 3.6 1.1.1-.8.4-1.4.8-1.7-2.7-.3-5.6-1.4-5.6-6a4.7 4.7 0 0 1 1.3-3.3 4.4 4.4 0 0 1 .1-3.2s1-.3 3.5 1.3a12 12 0 0 1 6.3-.1c2.4-1.6 3.5-1.3 3.5-1.3a4.4 4.4 0 0 1 .1 3.2 4.7 4.7 0 0 1 1.3 3.3c0 4.6-2.8 5.7-5.6 6 .5.4.9 1.2.9 2.4v3.1c0 .3.2.6.8.5A11.6 11.6 0 0 0 12 .7Z"/></svg>
+        </a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+
+    <main class="main" id="main-content">
+      
+<div class="terms-page" data-reveal>
+  <!-- 背景装饰 -->
+  <div class="geometric-decoration">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  
+  <!-- 页面标题部分 -->
+  <div class="hero-section" data-reveal>
+    <h1 class="page-title">
+      <span class="title-text">词条</span>
+      <span class="title-accent"></span>
+    </h1>
+    <p class="page-description">
+      解释各种概念和术语，帮助理解专业领域的知识
+    </p>
+  </div>
+  
+  <div class="terms-container">
+    <div class="terms-content">
+      <div class="terms-section" data-reveal>
+        <div class="section-header" data-reveal>
+          <h2 class="section-title">所有词条</h2>
+        </div>
+        
+        <div class="terms-grid">
+          
+            
+              <article class="term-card" id="term-agent-memory" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-growing">生长中</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    Agent Memory
+                  </h3>
+                  
+                    <p class="term-aliases">别名：智能体记忆</p>
+                  
+                  <div class="term-definition">让智能体保存、检索并利用过去信息的机制。它既包括会话内的短期状态，也包括通过结构化存储或向量检索实现的跨会话长期记忆。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>保存用户稳定偏好</li>
+                        
+                          <li>检索相似任务的历史决策</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">Agent 系统</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-ai-agent">AI Agent</a>
+                        
+                          <a href="#term-context-engineering">Context Engineering</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-ai-agent" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-growing">生长中</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    AI Agent
+                  </h3>
+                  
+                    <p class="term-aliases">别名：智能体 · Agent</p>
+                  
+                  <div class="term-definition">以模型作为决策核心，能够根据目标和环境选择步骤、调用工具并观察结果的系统。它与固定工作流的主要区别，是执行路径可以在运行时动态决定。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>根据问题选择搜索、代码或数据库工具</li>
+                        
+                          <li>依据执行结果调整下一步计划</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">Agent 系统</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-workflow">Workflow</a>
+                        
+                          <a href="#term-context-engineering">Context Engineering</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                    <a class="term-source" href="https://docs.langchain.com/oss/python/langgraph/workflows-agents" target="_blank" rel="noopener noreferrer">查看参考来源 ↗</a>
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-context-engineering" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-growing">生长中</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    Context Engineering
+                  </h3>
+                  
+                    <p class="term-aliases">别名：上下文工程</p>
+                  
+                  <div class="term-definition">为模型组织指令、工具、检索结果、历史状态和运行时信息的工程方法，目标是在有限上下文中提供完成当前任务真正需要的信息。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>根据任务动态选择记忆片段</li>
+                        
+                          <li>控制工具返回内容的粒度</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">Agent 系统</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-ai-agent">AI Agent</a>
+                        
+                          <a href="#term-agent-memory">Agent Memory</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-grpo" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-growing">生长中</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    GRPO
+                  </h3>
+                  
+                    <p class="term-aliases">别名：Group Relative Policy Optimization</p>
+                  
+                  <div class="term-definition">使用同一问题下多条采样结果的组内相对奖励估计优势，从而进行策略优化的方法。它减少了对独立价值模型的依赖，常用于可验证任务的后训练。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>数学答案的可验证奖励训练</li>
+                        
+                          <li>代码任务的测试结果奖励训练</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">LLM 后训练</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-llm-post-training">LLM Post-Training</a>
+                        
+                          <a href="#term-rlhf">RLHF</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-llm-post-training" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-evergreen">常青</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    LLM Post-Training
+                  </h3>
+                  
+                    <p class="term-aliases">别名：大模型后训练</p>
+                  
+                  <div class="term-definition">在基础预训练之后，使用指令数据、偏好数据或可验证奖励继续优化模型行为的阶段，常见方法包括 SFT、偏好优化和强化学习。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>指令监督微调</li>
+                        
+                          <li>基于人类或规则反馈的策略优化</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">LLM 后训练</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-sft">SFT</a>
+                        
+                          <a href="#term-rlhf">RLHF</a>
+                        
+                          <a href="#term-grpo">GRPO</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-rlhf" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-evergreen">常青</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    RLHF
+                  </h3>
+                  
+                    <p class="term-aliases">别名：Reinforcement Learning from Human Feedback · 人类反馈强化学习</p>
+                  
+                  <div class="term-definition">把人类偏好转化为奖励信号，再通过强化学习优化模型策略的方法族。典型流程包含监督微调、偏好或奖励建模，以及受约束的策略更新。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>对多个回答进行偏好排序</li>
+                        
+                          <li>使用奖励模型指导策略优化</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">LLM 后训练</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-llm-post-training">LLM Post-Training</a>
+                        
+                          <a href="#term-sft">SFT</a>
+                        
+                          <a href="#term-grpo">GRPO</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-schema-linking" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-evergreen">常青</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    Schema Linking
+                  </h3>
+                  
+                    <p class="term-aliases">别名：模式链接</p>
+                  
+                  <div class="term-definition">在自然语言问题与数据库表、列、值及关系之间建立对应的过程，是 Text-to-SQL 在生成查询前缩小搜索空间和减少选表错误的关键步骤。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>将“客户姓名”映射到 customers.name</li>
+                        
+                          <li>根据外键识别需要连接的表</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">数据智能</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-text-to-sql">Text-to-SQL</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-sft" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-evergreen">常青</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    SFT
+                  </h3>
+                  
+                    <p class="term-aliases">别名：Supervised Fine-Tuning · 监督微调</p>
+                  
+                  <div class="term-definition">使用高质量输入与目标输出样本对预训练模型进行监督学习，使模型掌握特定任务格式、指令遵循方式或领域行为。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>使用问答数据训练指令遵循</li>
+                        
+                          <li>使用领域样本适配专业任务</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">LLM 后训练</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-llm-post-training">LLM Post-Training</a>
+                        
+                          <a href="#term-rlhf">RLHF</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-text-to-sql" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-evergreen">常青</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    Text-to-SQL
+                  </h3>
+                  
+                    <p class="term-aliases">别名：NL2SQL</p>
+                  
+                  <div class="term-definition">将自然语言问题转换为可执行 SQL 的任务。系统需要同时理解用户意图、数据库 schema、查询约束与目标数据库方言。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>将“销售额最高的地区”转换为聚合查询</li>
+                        
+                          <li>根据表关系生成多表连接 SQL</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">数据智能</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-schema-linking">Schema Linking</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-vibe-coding" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-growing">生长中</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    Vibe Coding
+                  </h3>
+                  
+                    <p class="term-aliases">别名：AI 辅助编程</p>
+                  
+                  <div class="term-definition">通过自然语言与代码模型快速生成、修改和调试软件的开发方式。它能降低原型成本，但复杂项目仍需要人负责问题定义、架构判断、验证和维护。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>用对话快速验证产品原型</li>
+                        
+                          <li>由人拆解任务并审查模型实现</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">工程实践</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-ai-agent">AI Agent</a>
+                        
+                          <a href="#term-workflow">Workflow</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                </div>
+              </article>
+            
+              <article class="term-card" id="term-workflow" data-reveal>
+                <div class="term-card-content">
+                  <div class="term-card-meta">
+                    <span class="term-status term-status-evergreen">常青</span>
+                    <time datetime="2026-07-11">更新于 2026-07-11</time>
+                  </div>
+                  <h3 class="term-name">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                    </svg>
+                    Workflow
+                  </h3>
+                  
+                    <p class="term-aliases">别名：工作流</p>
+                  
+                  <div class="term-definition">由预先定义的步骤、分支和控制逻辑组成的执行过程。模型可以参与其中，但整体路径和边界通常由代码确定，因此更容易测试、观测和复现。</div>
+                  
+                    <div class="term-examples">
+                      <h4 class="examples-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        示例：
+                      </h4>
+                      <ul class="examples-list">
+                        
+                          <li>提取信息后再生成摘要</li>
+                        
+                          <li>Generator 与 Evaluator 循环</li>
+                        
+                      </ul>
+                    </div>
+                  
+                  
+                    <div class="term-category">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                      <span class="category-value">Agent 系统</span>
+                    </div>
+                  
+                  
+                    <div class="term-related">
+                      <span>关联词条</span>
+                      <div>
+                        
+                          <a href="#term-ai-agent">AI Agent</a>
+                        
+                      </div>
+                    </div>
+                  
+                  
+                    <a class="term-source" href="https://docs.langchain.com/oss/python/langgraph/workflows-agents" target="_blank" rel="noopener noreferrer">查看参考来源 ↗</a>
+                  
+                </div>
+              </article>
+            
+          
+        </div>
+      </div>
+      
+      <div class="sidebar">
+        <div class="sidebar-widget" data-reveal>
+          <h3 class="widget-title">分类统计</h3>
+          <div class="categories-stats">
+            
+              <div class="category-stat-item">
+                <span class="category-name">Agent 系统</span>
+                <span class="category-count">4</span>
+              </div>
+            
+              <div class="category-stat-item">
+                <span class="category-name">LLM 后训练</span>
+                <span class="category-count">4</span>
+              </div>
+            
+              <div class="category-stat-item">
+                <span class="category-name">工程实践</span>
+                <span class="category-count">1</span>
+              </div>
+            
+              <div class="category-stat-item">
+                <span class="category-name">数据智能</span>
+                <span class="category-count">2</span>
+              </div>
+            
+          </div>
+        </div>
+        
+        <div class="sidebar-widget" data-reveal>
+          <h3 class="widget-title">词条统计</h3>
+          <div class="terms-stats">
+            <div class="stat-item">
+              <span class="stat-label">总词条数</span>
+              <span class="stat-value">11</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">分类数</span>
+              <span class="stat-value">4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </main>
+    
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand-block">
+      <a class="footer-logo" href="/">SIDO<span>.MEET</span></a>
+      <p>我关注 AI Agent、LLM 后训练与 Text-to-SQL，也持续记录软件工程实践。这里既是作品集，也是一个不断生长的公开知识库。</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="页脚导航">
+      <p class="footer-heading">探索</p>
+      <ul>
+        
+          <li><a href="/blogs/">写作</a></li>
+        
+          <li><a href="/notes/">笔记</a></li>
+        
+          <li><a href="/ai/">AI 专栏</a></li>
+        
+          <li><a href="/bookmarks/">收藏</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/thoughts/">随想</a></li>
+        
+          <li><a href="/terms/">词条</a></li>
+        
+          <li><a href="/schedule/">日程</a></li>
+        
+          <li><a href="/links/">友链</a></li>
+        
+          <li><a href="/popular/">热门</a></li>
+        
+          <li><a href="/skill/">Skill</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/privacy/">隐私</a></li>
+        
+      </ul>
+    </nav>
+
+    <div class="footer-connect">
+      <p class="footer-heading">保持连接</p>
+      <p>中国 · 北京</p>
+      <div class="footer-actions">
+        <a href="/search/">全站搜索</a>
+        <a href="https://github.com/sido-meet" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        
+          <a href="/atom.xml">写作 RSS</a>
+          <a href="/notes/atom.xml">笔记 RSS</a>
+          <a href="/ai/atom.xml">AI RSS</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 SIDO · 内容持续生长，观点持续更新。</p>
+    <a href="#main-content">返回顶部 ↑</a>
+  </div>
+</footer>
+
+  </div>
+</body>
+</html>

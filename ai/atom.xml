@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <author>
+    <name>SIDO</name>
+  </author>
+  <generator>Hexo</generator>
+  <id>https://sido-meet.online/ai/</id>
+  <link href="https://sido-meet.online/ai/" rel="alternate"/>
+  <link href="https://sido-meet.online/ai/atom.xml" rel="self" type="application/atom+xml"/>
+  <subtitle>披露模型、来源和审核状态的 AI 生成内容。</subtitle>
+  <title>SIDO MEET · AI 专栏</title>
+  <updated>2026-08-19T02:36:19.146Z</updated>
+</feed>

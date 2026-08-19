@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <script src="/js/bootstrap.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>如何使用 GitHub + Hexo 快速搭建个人网站 · SIDO MEET</title>
+  <meta name="description" content="从环境安装、Hexo 初始化到 GitHub Pages 部署，完整演示个人静态网站的搭建流程。">
+  <meta name="keywords" content="AI Agent, LLM, RLHF, Text-to-SQL, 软件工程, 技术博客">
+  <meta name="author" content="SIDO">
+  
+  <meta name="theme-color" content="#16261f">
+  <link rel="canonical" href="https://sido-meet.online/2025/11/01/how-to-use-github-hexo-for-personal-website/">
+  <link rel="alternate" type="application/atom+xml" title="SIDO MEET · 人工写作" href="https://sido-meet.online/atom.xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="me" href="https://github.com/sido-meet">
+
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SIDO MEET">
+  <meta property="og:title" content="如何使用 GitHub + Hexo 快速搭建个人网站 · SIDO MEET">
+  <meta property="og:description" content="从环境安装、Hexo 初始化到 GitHub Pages 部署，完整演示个人静态网站的搭建流程。">
+  <meta property="og:url" content="https://sido-meet.online/2025/11/01/how-to-use-github-hexo-for-personal-website/">
+  <meta property="og:image" content="https://sido-meet.online/images/og/default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="如何使用 GitHub + Hexo 快速搭建个人网站">
+  <meta property="article:published_time" content="2025-11-01T02:00:00.000Z">
+  <meta property="article:modified_time" content="2025-11-01T02:00:00.000Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="如何使用 GitHub + Hexo 快速搭建个人网站 · SIDO MEET">
+  <meta name="twitter:description" content="从环境安装、Hexo 初始化到 GitHub Pages 部署，完整演示个人静态网站的搭建流程。">
+  <meta name="twitter:image" content="https://sido-meet.online/images/og/default.png">
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何使用 GitHub + Hexo 快速搭建个人网站","description":"从环境安装、Hexo 初始化到 GitHub Pages 部署，完整演示个人静态网站的搭建流程。","url":"https://sido-meet.online/2025/11/01/how-to-use-github-hexo-for-personal-website/","image":"https://sido-meet.online/images/og/default.png","datePublished":"2025-11-01T02:00:00.000Z","dateModified":"2025-11-01T02:00:00.000Z","author":{"@type":"Person","name":"SIDO","url":"https://sido-meet.online/about/","sameAs":["https://github.com/sido-meet"]},"publisher":{"@type":"Person","name":"SIDO"}}</script>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/blog.css">
+  <link rel="stylesheet" href="/css/content.css">
+  <link rel="stylesheet" href="/css/post.css">
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/refresh.css">
+  <script defer src="/js/theme.js"></script>
+  <script defer src="/js/privacy-analytics.js"></script>
+  <script defer src="/js/menu.js"></script>
+  <script defer src="/js/animation.js"></script>
+  
+    <script defer src="/js/article-tools.js"></script>
+    <script defer src="/js/image-lightbox.js"></script>
+    <script defer src="/js/code-block.js"></script>
+  
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="layout-post" data-analytics-mode="local-only" data-analytics-storage-key="sido-private-views-v1">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <div class="site-wrapper">
+    
+<header class="header" id="main-header">
+  <div class="container header-content">
+    <a class="site-brand" href="/" aria-label="SIDO MEET 首页">
+      <span class="site-brand-mark" aria-hidden="true">S</span>
+      <span class="site-brand-text">SIDO<span>.MEET</span></span>
+    </a>
+
+    <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-expanded="false" aria-controls="site-navigation" aria-label="打开导航菜单">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-navigation" id="site-navigation" aria-label="主导航">
+      <ul class="nav-list">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          <li class="nav-item active">
+            <a class="nav-link" href="/blogs/" aria-current="page">写作</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/notes/">笔记</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/ai/">AI 专栏</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/bookmarks/">收藏</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/projects/">项目</a>
+          </li>
+        
+        
+          <li class="nav-item nav-more">
+            <details>
+              <summary class="nav-link">
+                更多
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </summary>
+              <div class="nav-more-menu">
+                
+                  <a href="/thoughts/">随想</a>
+                
+                  <a href="/terms/">词条</a>
+                
+                  <a href="/schedule/">日程</a>
+                
+                  <a href="/links/">友链</a>
+                
+                  <a href="/popular/">热门</a>
+                
+                  <a href="/skill/">Skill</a>
+                
+                  <a href="/about/">关于</a>
+                
+              </div>
+            </details>
+          </li>
+        
+      </ul>
+      <div class="header-actions">
+        <a class="header-icon" href="/search/" aria-label="搜索全站内容">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="m20 20-4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </a>
+        <button class="header-icon theme-toggle" id="theme-toggle" type="button" aria-label="切换显示模式" title="切换显示模式">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </button>
+        
+        <a class="header-icon" href="https://github.com/sido-meet" target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 查看 SIDO">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M12 .7a11.6 11.6 0 0 0-3.7 22.6c.6.1.8-.2.8-.5v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 2 2.9 1.4 3.6 1.1.1-.8.4-1.4.8-1.7-2.7-.3-5.6-1.4-5.6-6a4.7 4.7 0 0 1 1.3-3.3 4.4 4.4 0 0 1 .1-3.2s1-.3 3.5 1.3a12 12 0 0 1 6.3-.1c2.4-1.6 3.5-1.3 3.5-1.3a4.4 4.4 0 0 1 .1 3.2 4.7 4.7 0 0 1 1.3 3.3c0 4.6-2.8 5.7-5.6 6 .5.4.9 1.2.9 2.4v3.1c0 .3.2.6.8.5A11.6 11.6 0 0 0 12 .7Z"/></svg>
+        </a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+
+    <main class="main" id="main-content">
+      
+
+<!-- Reading Progress Bar -->
+<div class="reading-progress" id="reading-progress"></div>
+
+<!-- Post Header -->
+<section class="post-header" data-reveal>
+  <div class="container">
+    <div class="post-header-content" data-reveal>
+      <span class="post-content-kind content-type-badge content-type-article">人工写作</span>
+      
+        <div class="post-category">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/">技术教程</a>
+        </div>
+      
+      <h1 class="post-title">如何使用 GitHub + Hexo 快速搭建个人网站</h1>
+      <div class="post-meta">
+        <div class="post-meta-row">
+          <span class="post-meta-item">作者：SIDO</span>
+          <span class="post-meta-item">
+            <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            2025-11-01
+          </span>
+          
+        </div>
+        <div class="post-meta-row">
+          
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14,2H6A2,2,0,0,0,4,4V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V8Z"></path>
+                <polyline points="14,2 14,8 20,8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10,9 9,9 8,9"></polyline>
+              </svg>
+              522 字
+            </span>
+            <span class="post-meta-item">
+              <svg class="meta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12,6 12,12 16,14"></polyline>
+              </svg>
+              2 分钟阅读
+            </span>
+            <span class="post-meta-item local-view-item" data-local-view-count hidden>
+              本机阅读 <strong>0</strong> 次
+            </span>
+          
+          
+        </div>
+      </div>
+      
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" class="post-tag">Hexo</a>
+          
+            <a href="/tags/GitHub/" class="post-tag">GitHub</a>
+          
+            <a href="/tags/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/" class="post-tag">个人网站</a>
+          
+        </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Post Content -->
+<section class="post-content-section" data-reveal>
+  <div class="container">
+    <div class="post-reading-layout has-toc">
+      
+        <aside class="post-toc" aria-label="文章目录">
+          <details open>
+            <summary>文章目录 <span>9</span></summary>
+            <nav class="post-toc-nav" aria-label="本文章节">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="toc-text">一、前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%89%8D%E7%BD%AE%E5%87%86%E5%A4%87"><span class="toc-text">二、前置准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%AD%A5%E9%AA%A4-1%EF%BC%9A%E5%AE%89%E8%A3%85%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96-Hexo-%E9%A1%B9%E7%9B%AE"><span class="toc-text">三、步骤 1：安装并初始化 Hexo 项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%AD%A5%E9%AA%A4-2%EF%BC%9A%E9%85%8D%E7%BD%AE-Hexo-%E5%9F%BA%E7%A1%80%E5%8F%82%E6%95%B0"><span class="toc-text">四、步骤 2：配置 Hexo 基础参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%AD%A5%E9%AA%A4-3%EF%BC%9A%E5%88%9B%E5%BB%BA-GitHub-%E6%89%98%E7%AE%A1%E4%BB%93%E5%BA%93"><span class="toc-text">三、步骤 3：创建 GitHub 托管仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%AD%A5%E9%AA%A4-4%EF%BC%9A%E9%85%8D%E7%BD%AE-Hexo-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%88%B0-GitHub"><span class="toc-text">四、步骤 4：配置 Hexo 自动部署到 GitHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%AD%A5%E9%AA%A4-5%EF%BC%9A%E5%86%99%E6%96%87%E7%AB%A0%E5%B9%B6%E9%83%A8%E7%BD%B2%E4%B8%8A%E7%BA%BF"><span class="toc-text">五、步骤 5：写文章并部署上线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-text">六、常见问题排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">七、总结</span></a></li></ol>
+            </nav>
+          </details>
+        </aside>
+      
+
+      <article class="post">
+        
+
+        
+
+        
+          <section class="post-series" aria-labelledby="post-series-title">
+            <div class="post-series-heading">
+              <div>
+                <p>Series / 系列</p>
+                <h2 id="post-series-title">Hexo 博客工程化</h2>
+              </div>
+              <span>1 / 9</span>
+            </div>
+            <ol>
+              
+                <li class="is-current">
+                  <span>01</span>
+                  
+                    <strong aria-current="page">如何使用 GitHub + Hexo 快速搭建个人网站</strong>
+                  
+                </li>
+              
+                <li class="">
+                  <span>02</span>
+                  
+                    <a href="/2025/12/20/hexo-command-line-parameters-guide/">Hexo命令行参数详解：除了--tags和--categories还可以使用哪些？</a>
+                  
+                </li>
+              
+                <li class="">
+                  <span>03</span>
+                  
+                    <a href="/2025/12/21/hexo-tags-vs-categories-difference/">Hexo中--tags和--categories的区别详解</a>
+                  
+                </li>
+              
+                <li class="">
+                  <span>04</span>
+                  
+                    <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/">Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</a>
+                  
+                </li>
+              
+                <li class="">
+                  <span>05</span>
+                  
+                    <a href="/2025/12/16/why-navigation-links-not-working/">为什么导航栏跳转没有反应</a>
+                  
+                </li>
+              
+                <li class="">
+                  <span>06</span>
+                  
+                    <a href="/2026/01/25/%E4%BB%8E%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%88%B0%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%EF%BC%9AHexo%E5%8D%9A%E5%AE%A2GitHub-Action%E9%85%8D%E7%BD%AE%E5%AE%9E%E8%B7%B5/">从本地部署到自动部署：Hexo博客GitHub Action配置实践</a>
+                  
+                </li>
+              
+                <li class="">
+                  <span>07</span>
+                  
+                    <a href="/2026/01/27/Hexo%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/">Hexo博客评论系统方案对比</a>
+                  
+                </li>
+              
+                <li class="">
+                  <span>08</span>
+                  
+                    <a href="/2026/02/12/hexo%E5%8D%9A%E5%AE%A2%E7%9A%84updated%E5%AD%97%E6%AE%B5/">hexo博客的updated字段</a>
+                  
+                </li>
+              
+                <li class="">
+                  <span>09</span>
+                  
+                    <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/">Hexo主题优化：简化category和tag页面实现</a>
+                  
+                </li>
+              
+            </ol>
+          </section>
+        
+
+        <div class="post-content" data-reveal>
+          <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>Hexo 是一款基于 Node.js 的静态博客框架，能快速将 Markdown 文章渲染为静态 HTML 页面；GitHub 则可提供免费的页面托管服务。两者结合能零成本搭建高性能个人网站，本文将带你完成从环境搭建到网站上线的全流程。</p>
+<h2 id="二、前置准备"><a href="#二、前置准备" class="headerlink" title="二、前置准备"></a>二、前置准备</h2><ol>
+<li>安装 Node.js（建议 v16+）和 Git（版本无特殊要求）</li>
+<li>注册 GitHub 账号</li>
+<li>配置 GitHub SSH 密钥（避免每次部署输入账号密码）</li>
+</ol>
+<h2 id="三、步骤-1：安装并初始化-Hexo-项目"><a href="#三、步骤-1：安装并初始化-Hexo-项目" class="headerlink" title="三、步骤 1：安装并初始化 Hexo 项目"></a>三、步骤 1：安装并初始化 Hexo 项目</h2><ol>
+<li>全局安装 Hexo CLI：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></tbody></table></figure>
+<ol start="2">
+<li>初始化 Hexo 项目（替换为你的项目路径）：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init sido-meet.github.io</span><br><span class="line"><span class="built_in">cd</span> sido-meet.github.io</span><br><span class="line">npm install</span><br></pre></td></tr></tbody></table></figure>
+<ol start="3">
+<li>本地预览初始项目：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></tbody></table></figure>
+<p>访问 <code>http://localhost:4000</code> 即可查看默认页面。</p>
+<h2 id="四、步骤-2：配置-Hexo-基础参数"><a href="#四、步骤-2：配置-Hexo-基础参数" class="headerlink" title="四、步骤 2：配置 Hexo 基础参数"></a>四、步骤 2：配置 Hexo 基础参数</h2><p>修改项目根目录的  文件：</p>
+<ul>
+<li>设置网站标题、描述、作者等信息</li>
+<li>配置语言（如 <code>language: zh-CN</code>）</li>
+<li>你的项目已配置部署类型为 Git（对应文件第 104 行的 <code>type: git</code>），后续仅需补充仓库地址即可。</li>
+</ul>
+<h2 id="三、步骤-3：创建-GitHub-托管仓库"><a href="#三、步骤-3：创建-GitHub-托管仓库" class="headerlink" title="三、步骤 3：创建 GitHub 托管仓库"></a>三、步骤 3：创建 GitHub 托管仓库</h2><ol>
+<li>登录 GitHub，创建名为 <code>[你的GitHub用户名].github.io</code> 的公开仓库</li>
+<li>复制仓库的 SSH 地址（如 <code>git@github.com:yourname/yourname.github.io.git</code>）</li>
+</ol>
+<h2 id="四、步骤-4：配置-Hexo-自动部署到-GitHub"><a href="#四、步骤-4：配置-Hexo-自动部署到-GitHub" class="headerlink" title="四、步骤 4：配置 Hexo 自动部署到 GitHub"></a>四、步骤 4：配置 Hexo 自动部署到 GitHub</h2><p>在  中补充部署配置：</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:yourname/yourname.github.io.git</span> <span class="comment"># 替换为你的仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></tbody></table></figure>
+<p>安装部署插件：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="五、步骤-5：写文章并部署上线"><a href="#五、步骤-5：写文章并部署上线" class="headerlink" title="五、步骤 5：写文章并部署上线"></a>五、步骤 5：写文章并部署上线</h2><ol>
+<li>创建新文章（自动生成 Markdown 文件到 source/_posts 目录）：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">"我的第一篇文章"</span></span><br></pre></td></tr></tbody></table></figure>
+<ol start="2">
+<li>生成静态文件并部署：</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></tbody></table></figure>
+<ol start="3">
+<li>访问 <code>https://[你的GitHub用户名].github.io</code> 即可查看上线后的网站。</li>
+</ol>
+<h2 id="六、常见问题排查"><a href="#六、常见问题排查" class="headerlink" title="六、常见问题排查"></a>六、常见问题排查</h2><ol>
+<li>部署失败：检查 SSH 密钥配置是否正确、仓库地址是否有误</li>
+<li>页面不更新：执行 <code>hexo clean</code> 清除缓存后重新生成部署</li>
+<li>样式异常：检查主题配置文件或静态资源路径</li>
+</ol>
+<h2 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h2><p>通过 GitHub + Hexo 的组合，你可以快速拥有一个可自定义样式、支持 Markdown 写作的个人网站。后续可尝试更换主题、添加评论系统等扩展功能。</p>
+
+        </div>
+        
+
+        <section class="post-share" aria-labelledby="post-share-title" data-share-title="如何使用 GitHub + Hexo 快速搭建个人网站" data-share-url="https://sido-meet.online/2025/11/01/how-to-use-github-hexo-for-personal-website/">
+          <div>
+            <p>Share / 分享</p>
+            <h2 id="post-share-title">把这篇文章分享给需要的人</h2>
+          </div>
+          <div class="post-share-actions">
+            <button class="post-action-button" type="button" data-share-action="native" hidden>系统分享</button>
+            <button class="post-action-button post-action-button-primary" type="button" data-share-action="copy">复制链接</button>
+          </div>
+          <p class="post-share-status" role="status" aria-live="polite"></p>
+        </section>
+
+        
+          <nav class="post-pagination" aria-label="相邻文章">
+            <span></span>
+            
+              <a class="post-pagination-link post-pagination-older" href="/2025/12/20/hexo-command-line-parameters-guide/">
+                <span>下一篇 · 系列 →</span>
+                <strong>Hexo命令行参数详解：除了--tags和--categories还可以使用哪些？</strong>
+              </a>
+            
+          </nav>
+        
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Related Posts -->
+<section class="related-posts" data-reveal>
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <h2 class="section-title">相关文章</h2>
+    </div>
+    <div class="posts-grid">
+      
+      
+        
+          <article class="post-card" data-reveal>
+            <div class="post-card-content">
+              <div class="post-card-header">
+                <span class="post-date">2026-02-14</span>
+                
+                
+                  <span class="post-category">博客开发</span>
+                
+              </div>
+              <h3 class="post-card-title">
+                <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/">Hexo主题优化：简化category和tag页面实现</a>
+              </h3>
+              
+              
+                <p class="post-card-excerpt">通过抽取共享归档模板，减少 Hexo category 与 tag 页面中的重复代码并提升主题可维护性。</p>
+              
+              <div class="post-card-footer">
+                <a href="/2026/02/14/Hexo%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AE%80%E5%8C%96category%E5%92%8Ctag%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0/" class="read-more">阅读更多 →</a>
+              </div>
+            </div>
+          </article>
+        
+          <article class="post-card" data-reveal>
+            <div class="post-card-content">
+              <div class="post-card-header">
+                <span class="post-date">2025-12-11</span>
+                
+                
+                  <span class="post-category">博客开发</span>
+                
+              </div>
+              <h3 class="post-card-title">
+                <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/">Hexo 中 hexo generate 之前都需要使用 hexo clean 命令吗？</a>
+              </h3>
+              
+              
+                <p class="post-card-excerpt">解释 hexo clean 与 hexo generate 的职责差异，以及哪些情况下需要先清理缓存再构建。</p>
+              
+              <div class="post-card-footer">
+                <a href="/2025/12/11/Hexo-%E4%B8%AD-hexo-generate-%E4%B9%8B%E5%89%8D%E9%83%BD%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8-hexo-clean-%E5%91%BD%E4%BB%A4%E5%90%97%EF%BC%9F/" class="read-more">阅读更多 →</a>
+              </div>
+            </div>
+          </article>
+        
+          <article class="post-card" data-reveal>
+            <div class="post-card-content">
+              <div class="post-card-header">
+                <span class="post-date">2025-12-20</span>
+                
+                
+                  <span class="post-category">博客开发</span>
+                
+              </div>
+              <h3 class="post-card-title">
+                <a href="/2025/12/20/hexo-command-line-parameters-guide/">Hexo命令行参数详解：除了--tags和--categories还可以使用哪些？</a>
+              </h3>
+              
+              
+                <p class="post-card-excerpt">整理 Hexo 新建内容时可用的标题、日期、作者、永久链接、布局等命令行参数与使用示例。</p>
+              
+              <div class="post-card-footer">
+                <a href="/2025/12/20/hexo-command-line-parameters-guide/" class="read-more">阅读更多 →</a>
+              </div>
+            </div>
+          </article>
+        
+      
+    </div>
+  </div>
+</section>
+
+<!-- Comments -->
+
+<section class="post-comments" data-reveal>
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <h2 class="section-title">评论</h2>
+    </div>
+    <div class="comments-container" data-reveal>
+      <script src="https://giscus.app/client.js"
+              data-repo="sido-meet/sido-meet.github.io"
+              data-repo-id="R_kgDOQePF5Q"
+              data-category="Announcements"
+              data-category-id="DIC_kwDOQePF5c4C1irw"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-theme="preferred_color_scheme"
+              data-lang="zh-CN"
+              data-loading="lazy"
+              crossorigin="anonymous"
+              async>
+      </script>
+      <p class="comments-fallback">评论区未显示？可直接前往 <a href="https://github.com/sido-meet/sido-meet.github.io/discussions" target="_blank" rel="noopener noreferrer">GitHub Discussions</a> 参与讨论。</p>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+    
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand-block">
+      <a class="footer-logo" href="/">SIDO<span>.MEET</span></a>
+      <p>我关注 AI Agent、LLM 后训练与 Text-to-SQL，也持续记录软件工程实践。这里既是作品集，也是一个不断生长的公开知识库。</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="页脚导航">
+      <p class="footer-heading">探索</p>
+      <ul>
+        
+          <li><a href="/blogs/">写作</a></li>
+        
+          <li><a href="/notes/">笔记</a></li>
+        
+          <li><a href="/ai/">AI 专栏</a></li>
+        
+          <li><a href="/bookmarks/">收藏</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/thoughts/">随想</a></li>
+        
+          <li><a href="/terms/">词条</a></li>
+        
+          <li><a href="/schedule/">日程</a></li>
+        
+          <li><a href="/links/">友链</a></li>
+        
+          <li><a href="/popular/">热门</a></li>
+        
+          <li><a href="/skill/">Skill</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/privacy/">隐私</a></li>
+        
+      </ul>
+    </nav>
+
+    <div class="footer-connect">
+      <p class="footer-heading">保持连接</p>
+      <p>中国 · 北京</p>
+      <div class="footer-actions">
+        <a href="/search/">全站搜索</a>
+        <a href="https://github.com/sido-meet" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        
+          <a href="/atom.xml">写作 RSS</a>
+          <a href="/notes/atom.xml">笔记 RSS</a>
+          <a href="/ai/atom.xml">AI RSS</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 SIDO · 内容持续生长，观点持续更新。</p>
+    <a href="#main-content">返回顶部 ↑</a>
+  </div>
+</footer>
+
+  </div>
+</body>
+</html>
