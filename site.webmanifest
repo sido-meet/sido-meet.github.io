@@ -1,0 +1,16 @@
+{
+  "name": "SIDO MEET",
+  "short_name": "SIDO",
+  "description": "SIDO 的 AI 工程、研究学习与软件实践个人网站",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f6f1",
+  "theme_color": "#16261f",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
