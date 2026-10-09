@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">SIDO MEET</title>
+  <desc id="desc">SIDO MEET AI Engineering Notes 默认社交分享图</desc>
+  <rect width="1200" height="630" fill="#16261f"/>
+  <circle cx="1080" cy="-20" r="310" fill="none" stroke="#d8ff72" stroke-opacity=".14" stroke-width="2"/>
+  <circle cx="1080" cy="-20" r="220" fill="none" stroke="#d8ff72" stroke-opacity=".09" stroke-width="70"/>
+  <path d="M0 530C230 455 384 590 608 510s381-56 592-3v123H0Z" fill="#294137"/>
+  <rect x="72" y="70" width="72" height="72" rx="18" fill="#d8ff72"/>
+  <text x="108" y="121" text-anchor="middle" fill="#16261f" font-family="Georgia, serif" font-size="48" font-weight="700">S</text>
+  <text x="72" y="225" fill="#d8ff72" font-family="ui-monospace, monospace" font-size="22" font-weight="700" letter-spacing="5">AI ENGINEERING NOTES</text>
+  <text x="68" y="343" fill="#ffffff" font-family="Georgia, 'Noto Serif SC', serif" font-size="92" font-weight="700" letter-spacing="-3">SIDO MEET</text>
+  <text x="72" y="414" fill="#a9b9ae" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="30">把学习、实验与思考，沉淀成可复用的知识</text>
+  <text x="72" y="560" fill="#df8b70" font-family="ui-monospace, monospace" font-size="18" letter-spacing="2">SIDO-MEET.GITHUB.IO</text>
+</svg>

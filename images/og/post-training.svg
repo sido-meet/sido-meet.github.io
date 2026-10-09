@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">LLM Post-Training 学习指南</title>
+  <desc id="desc">SIDO MEET 精选内容封面</desc>
+  <rect width="1200" height="630" fill="#eef1e9"/>
+  <path d="M0 0h1200v96H0z" fill="#16261f"/>
+  <g transform="translate(750 145)">
+    <rect width="340" height="340" rx="34" fill="#16261f"/>
+    <path d="M62 252c41-105 84-64 119-147 27-64 65-67 101-8" fill="none" stroke="#d8ff72" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="62" cy="252" r="17" fill="#c9684b"/><circle cx="181" cy="105" r="17" fill="#8fd5b0"/><circle cx="282" cy="97" r="17" fill="#d8ff72"/>
+    <path d="M62 286h220" stroke="#3f6b5a" stroke-width="2" stroke-dasharray="6 8"/>
+  </g>
+  <text x="72" y="63" fill="#d8ff72" font-family="ui-monospace, monospace" font-size="20" font-weight="700" letter-spacing="4">02 / LEARNING PATH</text>
+  <text x="68" y="245" fill="#16261f" font-family="Georgia, serif" font-size="83" font-weight="700">LLM</text>
+  <text x="68" y="335" fill="#16261f" font-family="Georgia, serif" font-size="83" font-weight="700">POST-TRAINING</text>
+  <text x="72" y="405" fill="#9f4a35" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="31" font-weight="700">从轻量复现到分布式 RLHF</text>
+  <text x="72" y="462" fill="#435047" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="23">ms-swift · verl · OpenRLHF · MiniMind</text>
+  <text x="72" y="558" fill="#294b3e" font-family="ui-monospace, monospace" font-size="18" font-weight="700" letter-spacing="2">SIDO MEET / AI ENGINEERING NOTES</text>
+</svg>
